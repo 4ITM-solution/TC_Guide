@@ -222,7 +222,7 @@ function renderCuts(data) {
       <div class="cut-body">
         <div class="cut-image-wrap">
           <button class="img-replace-btn" onclick="triggerImgReplace(${i})">🔄 Replace</button>
-          <img src="${cut.img}" alt="${cut.label}" class="cut-img" />
+          <img alt="${cut.label}" class="cut-img" id="cut-img-${i}" />
         </div>
         <div class="cut-info">
           <div class="scene-label">🎬 SCENE</div>
@@ -234,6 +234,9 @@ function renderCuts(data) {
         </div>
       </div>`;
     container.appendChild(card);
+    // Set img src separately to avoid template literal size issues
+    const imgEl = container.querySelector(`#cut-img-${i}`);
+    if (imgEl) imgEl.src = cut.img;
   });
 }
 
