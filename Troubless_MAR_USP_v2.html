@@ -364,7 +364,7 @@ function buildCard(cut, idx){
 function renderCuts(){
   var wrap = document.getElementById('cuts-wrap');
   if(!wrap) return;
-  wrap.innerHTML = '';
+  if(wrap.children.length > 0) return; // preserve user edits on re-render
   for(var i = 0; i < CUTS_DATA.length; i++){
     wrap.appendChild(buildCard(CUTS_DATA[i], i));
   }
@@ -372,6 +372,7 @@ function renderCuts(){
 // Render cut cards - using multiple strategies to ensure it runs
 function doRender(){
   try { renderCuts(); } catch(e){ console.error('renderCuts error:', e); }
+  try { activateEditMode(); } catch(e){ console.error('activateEditMode error:', e); }
 }
 // Strategy 1: defer to next tick (handles Chrome inline script timing)
 setTimeout(doRender, 0);
@@ -414,10 +415,7 @@ async function saveHTML(){
     a.click();
   }
 }
-// Edit mode activation - works whether DOM is loading or complete
-if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', activateEditMode);
-}
+// Edit mode activation is called inside doRender() after renderCuts()
 function activateEditMode(){
   if(new URLSearchParams(window.location.search).get('edit') === '1'){
     var bar = document.getElementById('edit-bar');
