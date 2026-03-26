@@ -388,7 +388,35 @@ async function saveHTML(){
   var btn = document.getElementById('btn-save');
   var bar = document.getElementById('edit-bar');
   var barStyle = bar ? bar.style.display : '';
-  // 저장 전: edit mode 흔적 제거
+
+  // Step 1: DOM 편집 텍스트 → CUTS_DATA 역동기화
+  document.querySelectorAll('#cuts-wrap .cut-card').forEach(function(card){
+    var idx = parseInt(card.getAttribute('data-index'));
+    if(isNaN(idx) || !CUTS_DATA[idx]) return;
+    var s = card.querySelector('[data-f="scene"]'); if(s) CUTS_DATA[idx].scene = s.innerText.trim();
+    var d = card.querySelector('[data-f="direction"]'); if(d) CUTS_DATA[idx].direction = d.innerText.trim();
+    var u = card.querySelector('[data-f="mainUsp"]'); if(u) CUTS_DATA[idx].mainUsp = u.innerText.trim();
+    var pm = card.querySelector('[data-f="productionMethod"]');
+    if(pm){ var lis = pm.querySelectorAll('li'); if(lis.length) CUTS_DATA[idx].productionMethod = Array.from(lis).map(function(li,i){ return (i+1)+'. '+li.innerText.trim(); }).join('\n'); }
+    var caps = card.querySelectorAll('.caption-opt span');
+    if(caps.length) CUTS_DATA[idx].captions = Array.from(caps).map(function(el){ return el.innerText.trim(); });
+  });
+
+  // Step 2: CUTS_DATA → script 태그 반영 (저장 파일에 텍스트 편집 내용 보존)
+  var scriptEl = document.querySelector('script');
+  var origScript = scriptEl ? scriptEl.textContent : '';
+  if(scriptEl){
+    var cStart = origScript.indexOf('const CUTS_DATA = [');
+    var cEnd = origScript.indexOf('];\n\nfunction', cStart);
+    if(cEnd === -1) cEnd = origScript.indexOf('];\nfunction', cStart);
+    if(cStart > -1 && cEnd > -1){
+      scriptEl.textContent = origScript.substring(0, cStart)
+        + 'const CUTS_DATA = ' + JSON.stringify(CUTS_DATA, null, 2) + ';'
+        + origScript.substring(cEnd + 1);
+    }
+  }
+
+  // Step 3: edit mode 흔적 제거
   if(bar) bar.style.display = 'none';
   document.body.classList.remove('edit-mode');
   var ceEls = document.querySelectorAll('[contenteditable]');
@@ -396,13 +424,18 @@ async function saveHTML(){
   document.querySelectorAll('.cut-img-wrap img, .pb-img img').forEach(function(img){
     img.style.cursor = ''; img.removeAttribute('title');
   });
-  // cuts-wrap 비우기: base64 중복 저장 방지 (파일 잘림 원인)
+
+  // Step 4: cuts-wrap 비우기 (base64 중복 방지 — 파일 잘림 원인)
   var cutsWrap = document.getElementById('cuts-wrap');
   var cutsHtml = cutsWrap ? cutsWrap.innerHTML : '';
   if(cutsWrap) cutsWrap.innerHTML = '';
+
+  // Step 5: outerHTML 캡처
   var htmlStr = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-  // 저장 후: 복원
+
+  // Step 6: 모두 복원 (현재 세션 계속 편집 가능)
   if(cutsWrap) cutsWrap.innerHTML = cutsHtml;
+  if(scriptEl) scriptEl.textContent = origScript;
   if(bar) bar.style.display = barStyle;
   document.body.classList.add('edit-mode');
   ceEls.forEach(function(el){ el.contentEditable = 'true'; });
