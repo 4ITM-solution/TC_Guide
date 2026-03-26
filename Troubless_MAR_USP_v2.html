@@ -417,8 +417,6 @@ async function saveHTML(){
 // Edit mode activation - works whether DOM is loading or complete
 if(document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', activateEditMode);
-} else {
-  activateEditMode();
 }
 function activateEditMode(){
   if(new URLSearchParams(window.location.search).get('edit') === '1'){
