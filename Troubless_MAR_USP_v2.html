@@ -374,7 +374,10 @@ function renderCuts(){
   }
 }
 // Render cut cards - using multiple strategies to ensure it runs
+var _rendered = false;
 function doRender(){
+  if(_rendered) return;
+  _rendered = true;
   try { renderCuts(); } catch(e){ console.error('renderCuts error:', e); }
   try { activateEditMode(); } catch(e){ console.error('activateEditMode error:', e); }
 }
