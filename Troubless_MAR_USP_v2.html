@@ -410,7 +410,7 @@ async function saveHTML(){
   });
 
   // Step 2: CUTS_DATA → script 태그 반영 (저장 파일에 텍스트 편집 내용 보존)
-  var scriptEl = document.querySelector('script');
+  var scriptEl = Array.from(document.querySelectorAll('script')).find(function(s){ return s.textContent.includes('const CUTS_DATA = ['); });
   var origScript = scriptEl ? scriptEl.textContent : '';
   if(scriptEl){
     var cStart = origScript.indexOf('const CUTS_DATA = [');
@@ -447,10 +447,8 @@ async function saveHTML(){
   if(scriptEl) scriptEl.textContent = origScript;
   if(bar) bar.style.display = barStyle;
   document.body.classList.add('edit-mode');
-  ceEls.forEach(function(el){ el.contentEditable = 'true'; });
-  document.querySelectorAll('.cut-img-wrap img, .pb-img img').forEach(function(img){
-    img.style.cursor = 'pointer'; img.title = '클릭하여 이미지 교체';
-  });
+  // cuts-wrap 복원 후 새 노드에 contenteditable 재적용 (ceEls는 detach됐으므로)
+  activateEditMode();
   var blob = new Blob([htmlStr], {type: 'text/html'});
   try {
     if(!_fileHandle){
