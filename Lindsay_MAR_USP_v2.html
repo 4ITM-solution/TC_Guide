@@ -448,7 +448,7 @@ function buildCard(cut, idx){
 
   inner += '<div class="cut-body">';
 
-  if(cut.label==='HOOK'){
+  if(cut.label.startsWith('HOOK')){
     if(cut.mainUsp){
       inner += '<div><div class="field-label">Main USP</div><div class="field-usp" data-f="mainUsp">'+cut.mainUsp+'</div></div>';
     }
