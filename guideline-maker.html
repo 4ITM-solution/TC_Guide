@@ -187,10 +187,6 @@
       <p>4AM 내부 팀 전용</p>
     </div>
     <div class="form-group">
-      <label>이메일</label>
-      <input type="email" id="auth-email" placeholder="name@4am.team" autocomplete="email">
-    </div>
-    <div class="form-group">
       <label>비밀번호</label>
       <input type="password" id="auth-password" placeholder="••••••••" autocomplete="current-password">
     </div>
@@ -261,27 +257,19 @@ async function sbFetch(path, options = {}) {
   return text ? JSON.parse(text) : null;
 }
 
-async function signIn(email, password) {
-  const data = await sbFetch('/auth/v1/token?grant_type=password', {
-    method: 'POST',
-    body: JSON.stringify({ email, password })
-  });
-  localStorage.setItem('gm_session', JSON.stringify(data));
-  return data;
+// ── Auth (공유 비밀번호 방식) ──
+const APP_PASSWORD = 'toqursptl1!';
+
+function getSession() {
+  return localStorage.getItem('gm_authed') === 'true';
+}
+
+function setSession() {
+  localStorage.setItem('gm_authed', 'true');
 }
 
 async function signOut() {
-  const session = getSession();
-  if (session) {
-    await sbFetch('/auth/v1/logout', { method: 'POST' }).catch(() => {});
-  }
-  localStorage.removeItem('gm_session');
-}
-
-function getSession() {
-  const s = localStorage.getItem('gm_session');
-  if (!s) return null;
-  try { return JSON.parse(s); } catch { return null; }
+  localStorage.removeItem('gm_authed');
 }
 
 // ── Data fetching ──
@@ -301,41 +289,17 @@ function showToast(msg, duration = 2500) {
   setTimeout(() => t.classList.remove('show'), duration);
 }
 
-// ── Auth ──
-function getSession() {
-  const s = localStorage.getItem('gm_session');
-  if (!s) return null;
-  try {
-    const parsed = JSON.parse(s);
-    // 만료 체크
-    if (parsed.expires_at && Date.now() / 1000 > parsed.expires_at) {
-      localStorage.removeItem('gm_session');
-      return null;
-    }
-    return parsed;
-  } catch { return null; }
-}
-
-document.getElementById('btn-login').addEventListener('click', async () => {
-  const email = document.getElementById('auth-email').value.trim();
+document.getElementById('btn-login').addEventListener('click', () => {
   const password = document.getElementById('auth-password').value;
   const errEl = document.getElementById('auth-error');
-  const btn = document.getElementById('btn-login');
 
-  if (!email || !password) { errEl.textContent = '이메일과 비밀번호를 입력해주세요.'; errEl.style.display = 'block'; return; }
-
-  btn.textContent = '로그인 중...'; btn.disabled = true;
-  errEl.style.display = 'none';
-
-  try {
-    const data = await signIn(email, password);
-    showApp(data.user.email);
+  if (password === APP_PASSWORD) {
+    setSession();
+    showApp();
     loadDashboard();
-  } catch (e) {
-    errEl.textContent = '로그인 실패: ' + (e.message || '이메일 또는 비밀번호를 확인해주세요.');
+  } else {
+    errEl.textContent = '비밀번호가 올바르지 않습니다.';
     errEl.style.display = 'block';
-  } finally {
-    btn.textContent = '로그인'; btn.disabled = false;
   }
 });
 
@@ -350,10 +314,10 @@ document.getElementById('btn-logout').addEventListener('click', async () => {
 });
 
 // ── App ──
-function showApp(email) {
+function showApp() {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app-screen').style.display = 'block';
-  document.getElementById('user-email-display').textContent = email;
+  document.getElementById('user-email-display').textContent = '4AM 팀';
 }
 
 function showView(view) {
@@ -514,9 +478,8 @@ document.getElementById('btn-back').addEventListener('click', () => {
 
 // ── Init ──
 (function init() {
-  const session = getSession();
-  if (session) {
-    showApp(session.user?.email || '팀원');
+  if (getSession()) {
+    showApp();
     loadDashboard();
   }
 })();
