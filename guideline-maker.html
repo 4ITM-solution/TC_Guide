@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guideline Maker</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" defer></script>
 <style>
   :root {
     --pink: #ff6b9d;
@@ -60,14 +59,11 @@
   .app-header .user-info { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
   .btn-logout { background: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; color: var(--muted); transition: all 0.2s; }
   .btn-logout:hover { border-color: var(--pink); color: var(--pink); }
-
   .app-body { max-width: 1100px; margin: 0 auto; padding: 28px 20px; }
 
   /* ── DASHBOARD ── */
-  #dashboard-view {}
   .page-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
   .page-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-
   .filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
   .filter-btn {
     padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border);
@@ -75,19 +71,14 @@
     transition: all 0.2s; font-weight: 500;
   }
   .filter-btn.active, .filter-btn:hover { border-color: var(--pink); color: var(--pink); background: #fff0f6; }
-
   .gl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
   .gl-card {
     background: var(--card); border-radius: var(--radius); padding: 20px;
-    border: 1.5px solid var(--border); cursor: pointer; transition: all 0.2s;
-    position: relative;
+    border: 1.5px solid var(--border); cursor: pointer; transition: all 0.2s; position: relative;
   }
   .gl-card:hover { border-color: var(--pink); box-shadow: var(--shadow); transform: translateY(-2px); }
   .gl-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
-  .gl-badge {
-    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
+  .gl-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
   .gl-badge.published { background: #e8f5e9; color: #2e7d32; }
   .gl-badge.draft { background: #fff8e1; color: #f57f17; }
   .gl-version { font-size: 11px; color: var(--muted); font-weight: 600; }
@@ -95,10 +86,7 @@
   .gl-card .gl-product { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
   .gl-card-footer { display: flex; align-items: center; justify-content: space-between; }
   .gl-cut-count { font-size: 12px; color: var(--muted); }
-  .gl-url-btn {
-    font-size: 11px; color: var(--pink); text-decoration: none; font-weight: 600;
-    display: flex; align-items: center; gap: 4px;
-  }
+  .gl-url-btn { font-size: 11px; color: var(--pink); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 4px; }
   .gl-url-btn:hover { text-decoration: underline; }
   .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
   .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
@@ -117,9 +105,9 @@
     border: 1.5px solid #ffd6e8;
   }
   .detail-header h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
-  .detail-header .detail-meta { font-size: 13px; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+  .detail-meta { font-size: 13px; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
   .detail-meta span { display: flex; align-items: center; gap: 4px; }
-  .detail-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .detail-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; align-items: center; }
   .btn-secondary {
     padding: 8px 16px; border-radius: 8px; border: 1.5px solid var(--border);
     font-size: 13px; font-weight: 600; cursor: pointer; background: var(--card);
@@ -135,46 +123,100 @@
   .btn-deploy:hover { background: var(--pink-dark); }
   .btn-deploy:disabled { opacity: 0.5; cursor: not-allowed; }
 
+  /* Edit mode toggle */
+  .edit-mode-badge {
+    font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+    background: #fff3cd; color: #856404; border: 1px solid #ffc107;
+    display: none;
+  }
+  .edit-mode-badge.visible { display: inline-block; }
+
+  /* ── CUT LIST ── */
   .cuts-list { display: flex; flex-direction: column; gap: 12px; }
   .cut-item {
     background: var(--card); border-radius: var(--radius); border: 1.5px solid var(--border);
-    overflow: hidden; transition: border 0.2s;
+    overflow: visible; transition: border 0.2s;
   }
-  .cut-item:hover { border-color: #e0e0f0; }
+  .cut-item.editing { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,107,157,0.12); }
   .cut-item-inner { display: flex; gap: 0; }
+
+  /* ── THUMB + IMAGE UPLOAD ── */
   .cut-thumb {
     width: 100px; flex-shrink: 0; background: #f0f0f5;
-    overflow: hidden; position: relative;
+    overflow: hidden; position: relative; cursor: default;
   }
   .cut-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .cut-thumb .no-img { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 24px; min-height: 80px; }
+  .cut-thumb.uploadable { cursor: pointer; }
+  .cut-thumb.uploadable:hover .img-overlay { opacity: 1; }
+  .img-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.2s; color: #fff; font-size: 11px; font-weight: 700; gap: 4px;
+  }
+  .img-overlay .upload-icon { font-size: 20px; }
+  .img-upload-input { display: none; }
+
+  /* ── CUT BODY ── */
   .cut-body { padding: 14px 16px; flex: 1; min-width: 0; }
   .cut-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .cut-label-badge {
-    font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
+  .cut-label-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
   .label-hook { background: #ffe0e8; color: #c0004a; }
   .label-cut { background: #e8f0ff; color: #1a4ab8; }
   .label-result { background: #e8f5e9; color: #1b5e20; }
   .cut-fast-badge { font-size: 10px; color: #ff8c00; font-weight: 700; }
-  .cut-scene { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .cut-direction { font-size: 12px; color: var(--muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .cut-order { font-size: 11px; color: var(--muted); margin-left: auto; }
 
-  /* ── LOADING ── */
+  /* Scene & Direction - view mode */
+  .cut-scene { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
+  .cut-direction { font-size: 12px; color: var(--muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .cut-direction.expanded { display: block; -webkit-line-clamp: unset; }
+
+  /* Edit fields */
+  .cut-edit-fields { display: none; flex-direction: column; gap: 8px; margin-top: 6px; }
+  .cut-edit-fields.visible { display: flex; }
+  .edit-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
+  .edit-input, .edit-textarea {
+    width: 100%; padding: 8px 10px; border: 1.5px solid var(--border);
+    border-radius: 8px; font-size: 13px; font-family: inherit;
+    outline: none; transition: border 0.2s; background: #fafafa; resize: vertical;
+  }
+  .edit-input:focus, .edit-textarea:focus { border-color: var(--pink); background: #fff; }
+  .edit-textarea { min-height: 70px; }
+  .cut-edit-actions { display: flex; gap: 8px; margin-top: 8px; justify-content: flex-end; }
+  .btn-save-cut {
+    padding: 6px 14px; border-radius: 8px; border: none;
+    background: var(--pink); color: #fff; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-save-cut:hover { background: var(--pink-dark); }
+  .btn-save-cut:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-cancel-cut {
+    padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: var(--card); color: var(--muted); font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-cancel-cut:hover { border-color: var(--muted); color: var(--text); }
+  .edit-pencil-btn {
+    margin-left: auto; background: none; border: none; cursor: pointer;
+    font-size: 14px; color: var(--muted); padding: 2px 4px; border-radius: 4px;
+    transition: color 0.2s;
+  }
+  .edit-pencil-btn:hover { color: var(--pink); }
+
+  /* ── LOADING / TOAST ── */
   .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid #ffd6e8; border-top-color: var(--pink); border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-overlay { display: flex; align-items: center; justify-content: center; padding: 40px; }
-
-  /* ── TOAST ── */
   #toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
     background: #1a1a2e; color: #fff; padding: 10px 20px; border-radius: 10px;
-    font-size: 13px; font-weight: 600; transition: transform 0.3s; z-index: 999;
-    pointer-events: none;
+    font-size: 13px; font-weight: 600; transition: transform 0.3s; z-index: 9999;
+    pointer-events: none; white-space: nowrap;
   }
   #toast.show { transform: translateX(-50%) translateY(0); }
+  #toast.success { background: #1b5e20; }
+  #toast.error { background: #b71c1c; }
 </style>
 </head>
 <body>
@@ -215,11 +257,9 @@
     <div id="dashboard-view">
       <div class="page-title">가이드라인</div>
       <div class="page-sub">제품별 USP 가이드라인을 확인하고 편집하세요.</div>
-
       <div class="filter-bar" id="filter-bar">
         <button class="filter-btn active" data-filter="all">전체</button>
       </div>
-
       <div class="gl-grid" id="gl-grid">
         <div class="loading-overlay"><div class="spinner"></div></div>
       </div>
@@ -242,8 +282,10 @@
 <script>
 const SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
+const STORAGE_BUCKET = 'cut-images';
+const APP_PASSWORD = 'toqursptl1!';
 
-// ── Supabase API helpers ──
+// ── Supabase helpers ──
 async function sbFetch(path, options = {}) {
   const headers = {
     'apikey': SUPABASE_ANON_KEY,
@@ -260,48 +302,60 @@ async function sbFetch(path, options = {}) {
   return text ? JSON.parse(text) : null;
 }
 
-// ── Auth (공유 비밀번호 방식) ──
-const APP_PASSWORD = 'toqursptl1!';
-
-function getSession() {
-  return localStorage.getItem('gm_authed') === 'true';
+async function sbUpload(filePath, file) {
+  // Delete existing if any, then upload
+  await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
+    method: 'DELETE',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+  });
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY, 'Content-Type': file.type },
+    body: file
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || err.error || 'Upload failed');
+  }
+  return `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
 }
 
-function setSession() {
-  localStorage.setItem('gm_authed', 'true');
-}
+// ── Auth ──
+function getSession() { return localStorage.getItem('gm_authed') === 'true'; }
+function setSession() { localStorage.setItem('gm_authed', 'true'); }
+async function signOut() { localStorage.removeItem('gm_authed'); }
 
-async function signOut() {
-  localStorage.removeItem('gm_authed');
+// ── Toast ──
+let toastTimer = null;
+function showToast(msg, type = '', duration = 2800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = type ? `show ${type}` : 'show';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = type || ''; }, duration);
 }
 
 // ── Data fetching ──
 async function fetchGuidelines() {
   return await sbFetch('/rest/v1/gl_guidelines?select=*,gl_products(name,brand),gl_types(name)&order=created_at.desc');
 }
-
 async function fetchCuts(guidelineId) {
   return await sbFetch('/rest/v1/gl_cuts?guideline_id=eq.' + guidelineId + '&order=order.asc');
 }
-
-// ── Toast ──
-function showToast(msg, duration = 2500) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
+async function updateCut(id, fields) {
+  return await sbFetch('/rest/v1/gl_cuts?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'Prefer': 'return=representation' },
+    body: JSON.stringify(fields)
+  });
 }
 
+// ── Auth events ──
 document.getElementById('btn-login').addEventListener('click', () => {
   const email = document.getElementById('auth-email').value.trim();
   const password = document.getElementById('auth-password').value;
   const errEl = document.getElementById('auth-error');
-
-  if (!email) {
-    errEl.textContent = '이메일을 입력해주세요.';
-    errEl.style.display = 'block';
-    return;
-  }
+  if (!email) { errEl.textContent = '이메일을 입력해주세요.'; errEl.style.display = 'block'; return; }
   if (password === APP_PASSWORD) {
     localStorage.setItem('gm_email', email);
     setSession();
@@ -312,14 +366,8 @@ document.getElementById('btn-login').addEventListener('click', () => {
     errEl.style.display = 'block';
   }
 });
-
-document.getElementById('auth-email').addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.getElementById('auth-password').focus();
-});
-document.getElementById('auth-password').addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.getElementById('btn-login').click();
-});
-
+document.getElementById('auth-email').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('auth-password').focus(); });
+document.getElementById('auth-password').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('btn-login').click(); });
 document.getElementById('btn-logout').addEventListener('click', async () => {
   await signOut();
   document.getElementById('app-screen').style.display = 'none';
@@ -330,10 +378,8 @@ document.getElementById('btn-logout').addEventListener('click', async () => {
 function showApp(email) {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app-screen').style.display = 'block';
-  const displayEmail = email || localStorage.getItem('gm_email') || '4AM 팀';
-  document.getElementById('user-email-display').textContent = displayEmail;
+  document.getElementById('user-email-display').textContent = email || localStorage.getItem('gm_email') || '4AM 팀';
 }
-
 function showView(view) {
   document.getElementById('dashboard-view').style.display = view === 'dashboard' ? 'block' : 'none';
   document.getElementById('detail-view').style.display = view === 'detail' ? 'block' : 'none';
@@ -344,35 +390,28 @@ async function loadDashboard() {
   showView('dashboard');
   const grid = document.getElementById('gl-grid');
   grid.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
-
   try {
     const guidelines = await fetchGuidelines();
     renderDashboard(guidelines);
   } catch (e) {
-    grid.innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><div>' + e.message + '</div></div>';
+    grid.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div>${e.message}</div></div>`;
   }
 }
 
 function renderDashboard(guidelines) {
   const grid = document.getElementById('gl-grid');
   const filterBar = document.getElementById('filter-bar');
-
   if (!guidelines || guidelines.length === 0) {
     grid.innerHTML = '<div class="empty-state"><div class="icon">📋</div><div>가이드라인이 없습니다.</div></div>';
     return;
   }
-
-  // 필터 버튼 (제품별)
   const products = [...new Set(guidelines.map(g => g.gl_products?.name).filter(Boolean))];
   filterBar.innerHTML = '<button class="filter-btn active" data-filter="all">전체</button>';
   products.forEach(p => {
     const btn = document.createElement('button');
-    btn.className = 'filter-btn';
-    btn.dataset.filter = p;
-    btn.textContent = p;
+    btn.className = 'filter-btn'; btn.dataset.filter = p; btn.textContent = p;
     filterBar.appendChild(btn);
   });
-
   filterBar.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -383,8 +422,6 @@ function renderDashboard(guidelines) {
       });
     });
   });
-
-  // 카드 렌더
   grid.innerHTML = guidelines.map(g => `
     <div class="gl-card" data-id="${g.id}" data-product="${g.gl_products?.name || ''}">
       <div class="gl-card-top">
@@ -399,30 +436,28 @@ function renderDashboard(guidelines) {
       </div>
     </div>
   `).join('');
-
   grid.querySelectorAll('.gl-card').forEach(card => {
     card.addEventListener('click', () => loadDetail(card.dataset.id));
   });
 }
 
 // ── Detail ──
+let currentGuidelineId = null;
+
 async function loadDetail(id) {
+  currentGuidelineId = id;
   showView('detail');
   const headerEl = document.getElementById('detail-header');
   const cutsEl = document.getElementById('cuts-list');
   headerEl.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
   cutsEl.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
-
   try {
-    const [guidelines, cuts] = await Promise.all([
-      fetchGuidelines(),
-      fetchCuts(id)
-    ]);
+    const [guidelines, cuts] = await Promise.all([fetchGuidelines(), fetchCuts(id)]);
     const gl = guidelines.find(g => g.id === id);
     if (!gl) throw new Error('가이드라인을 찾을 수 없습니다.');
     renderDetail(gl, cuts);
   } catch (e) {
-    headerEl.innerHTML = '<div>' + e.message + '</div>';
+    headerEl.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div>${e.message}</div></div>`;
     cutsEl.innerHTML = '';
   }
 }
@@ -446,45 +481,213 @@ function renderDetail(gl, cuts) {
     </div>
     <div class="detail-actions">
       ${gl.github_url ? `<a href="${gl.github_url}" target="_blank" class="btn-secondary" style="text-decoration:none">🔗 가이드라인 보기</a>` : ''}
-      <button class="btn-deploy" id="btn-deploy" onclick="deployGuideline('${gl.id}', '${gl.github_url || ''}')">🚀 재배포</button>
     </div>
   `;
 
   const cutsEl = document.getElementById('cuts-list');
   if (!cuts || cuts.length === 0) {
-    cutsEl.innerHTML = '<div class="empty-state"><div class="icon">✂️</div><div>컷 데이터가 없습니다.<br><small>Claude에서 생성 후 DB에 적재해주세요.</small></div></div>';
+    cutsEl.innerHTML = '<div class="empty-state"><div class="icon">✂️</div><div>컷 데이터가 없습니다.</div></div>';
     return;
   }
 
-  cutsEl.innerHTML = cuts.map(cut => {
-    const labelClass = cut.label.startsWith('HOOK') ? 'label-hook' : cut.label === 'RESULT' ? 'label-result' : 'label-cut';
-    return `
-    <div class="cut-item">
+  cutsEl.innerHTML = cuts.map(cut => buildCutCard(cut, gl.id)).join('');
+  attachCutEvents(cutsEl, cuts, gl.id);
+}
+
+function buildCutCard(cut, guidelineId) {
+  const labelClass = cut.label.startsWith('HOOK') ? 'label-hook' : cut.label === 'RESULT' ? 'label-result' : 'label-cut';
+  const captionsText = Array.isArray(cut.captions) ? cut.captions.join('\n') : (cut.captions || '');
+  return `
+    <div class="cut-item" data-cut-id="${cut.id}">
       <div class="cut-item-inner">
-        <div class="cut-thumb">
+        <div class="cut-thumb uploadable" data-cut-id="${cut.id}" data-guideline-id="${guidelineId}" title="클릭하여 이미지 교체">
           ${cut.img_url
             ? `<img src="${cut.img_url}" alt="${cut.label}" loading="lazy">`
             : `<div class="no-img">🎬</div>`}
+          <div class="img-overlay">
+            <span class="upload-icon">📷</span>
+            <span>이미지 교체</span>
+          </div>
+          <input type="file" class="img-upload-input" accept="image/jpeg,image/png,image/webp">
         </div>
         <div class="cut-body">
           <div class="cut-top">
             <span class="cut-label-badge ${labelClass}">${cut.label}</span>
             ${cut.pacing === 'fast' ? '<span class="cut-fast-badge">⚡ Quick Cut</span>' : ''}
             <span class="cut-order">#${cut.order + 1}</span>
+            <button class="edit-pencil-btn" data-cut-id="${cut.id}" title="편집">✏️</button>
           </div>
-          <div class="cut-scene">${cut.scene || ''}</div>
-          <div class="cut-direction">${cut.direction || ''}</div>
+          <!-- View mode -->
+          <div class="cut-view-mode">
+            <div class="cut-scene">${escHtml(cut.scene || '')}</div>
+            <div class="cut-direction">${escHtml(cut.direction || '')}</div>
+          </div>
+          <!-- Edit mode -->
+          <div class="cut-edit-fields" data-cut-id="${cut.id}">
+            <div>
+              <div class="edit-label">씬 (Scene)</div>
+              <input class="edit-input" data-field="scene" value="${escAttr(cut.scene || '')}">
+            </div>
+            <div>
+              <div class="edit-label">디렉션 (Direction)</div>
+              <textarea class="edit-textarea" data-field="direction">${escHtml(cut.direction || '')}</textarea>
+            </div>
+            <div>
+              <div class="edit-label">캡션 (한 줄씩 입력)</div>
+              <textarea class="edit-textarea" data-field="captions" style="min-height:55px">${escHtml(captionsText)}</textarea>
+            </div>
+            <div class="cut-edit-actions">
+              <button class="btn-cancel-cut">취소</button>
+              <button class="btn-save-cut" data-cut-id="${cut.id}">저장</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  `}).join('');
+  `;
 }
 
-function deployGuideline(id, currentUrl) {
-  if (!currentUrl) { showToast('⚠️ 배포 URL이 없습니다. Claude에서 배포 후 URL을 등록해주세요.'); return; }
-  showToast('🚀 배포 기능은 곧 추가됩니다!');
+function attachCutEvents(container, cuts, guidelineId) {
+  // ── Edit pencil toggle ──
+  container.querySelectorAll('.edit-pencil-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cutId = btn.dataset.cutId;
+      toggleEditMode(container, cutId);
+    });
+  });
+
+  // ── Cancel edit ──
+  container.querySelectorAll('.btn-cancel-cut').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cutItem = btn.closest('.cut-item');
+      closeEditMode(cutItem);
+    });
+  });
+
+  // ── Save cut ──
+  container.querySelectorAll('.btn-save-cut').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const cutId = btn.dataset.cutId;
+      const editFields = container.querySelector(`.cut-edit-fields[data-cut-id="${cutId}"]`);
+      const sceneVal = editFields.querySelector('[data-field="scene"]').value.trim();
+      const directionVal = editFields.querySelector('[data-field="direction"]').value.trim();
+      const captionsRaw = editFields.querySelector('[data-field="captions"]').value;
+      const captionsArr = captionsRaw.split('\n').map(s => s.trim()).filter(Boolean);
+
+      btn.disabled = true;
+      btn.textContent = '저장 중…';
+      try {
+        await updateCut(cutId, { scene: sceneVal, direction: directionVal, captions: captionsArr });
+        // Update view mode display
+        const cutItem = container.querySelector(`.cut-item[data-cut-id="${cutId}"]`);
+        cutItem.querySelector('.cut-scene').textContent = sceneVal;
+        const dirEl = cutItem.querySelector('.cut-direction');
+        dirEl.textContent = directionVal;
+        closeEditMode(cutItem);
+        showToast('✅ 저장 완료', 'success');
+      } catch (e) {
+        showToast('❌ ' + e.message, 'error');
+        btn.disabled = false;
+        btn.textContent = '저장';
+      }
+    });
+  });
+
+  // ── Image upload ──
+  container.querySelectorAll('.cut-thumb.uploadable').forEach(thumb => {
+    const input = thumb.querySelector('.img-upload-input');
+    thumb.addEventListener('click', () => input.click());
+    input.addEventListener('change', async () => {
+      const file = input.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) { showToast('❌ 5MB 이하 이미지만 업로드 가능합니다', 'error'); return; }
+
+      const cutId = thumb.dataset.cutId;
+      const ext = file.name.split('.').pop().toLowerCase();
+      const filePath = `${guidelineId}/${cutId}.${ext}`;
+
+      // Optimistic preview
+      const reader = new FileReader();
+      reader.onload = e => {
+        thumb.innerHTML = `
+          <img src="${e.target.result}" alt="preview" style="opacity:0.6">
+          <div class="img-overlay" style="opacity:1"><div class="spinner"></div></div>
+          <input type="file" class="img-upload-input" accept="image/jpeg,image/png,image/webp" style="display:none">
+        `;
+      };
+      reader.readAsDataURL(file);
+
+      try {
+        const publicUrl = await sbUpload(filePath, file);
+        // Add cache-bust
+        const urlWithCache = publicUrl + '?t=' + Date.now();
+        await updateCut(cutId, { img_url: publicUrl });
+        thumb.innerHTML = `
+          <img src="${urlWithCache}" alt="uploaded" loading="lazy">
+          <div class="img-overlay">
+            <span class="upload-icon">📷</span>
+            <span>이미지 교체</span>
+          </div>
+          <input type="file" class="img-upload-input" accept="image/jpeg,image/png,image/webp" style="display:none">
+        `;
+        // Re-attach input event
+        const newInput = thumb.querySelector('.img-upload-input');
+        thumb.addEventListener('click', () => newInput.click());
+        newInput.addEventListener('change', () => {
+          input.dispatchEvent(new Event('change'));
+        });
+        showToast('✅ 이미지 업로드 완료', 'success');
+      } catch (e) {
+        showToast('❌ ' + e.message, 'error');
+        // Restore
+        thumb.innerHTML = `
+          <div class="no-img">🎬</div>
+          <div class="img-overlay"><span class="upload-icon">📷</span><span>이미지 교체</span></div>
+          <input type="file" class="img-upload-input" accept="image/jpeg,image/png,image/webp" style="display:none">
+        `;
+      }
+    });
+  });
 }
 
+function toggleEditMode(container, cutId) {
+  const cutItem = container.querySelector(`.cut-item[data-cut-id="${cutId}"]`);
+  const editFields = cutItem.querySelector('.cut-edit-fields');
+  const isOpen = editFields.classList.contains('visible');
+  // Close any other open editors first
+  container.querySelectorAll('.cut-edit-fields.visible').forEach(el => {
+    if (el !== editFields) closeEditMode(el.closest('.cut-item'));
+  });
+  if (isOpen) {
+    closeEditMode(cutItem);
+  } else {
+    openEditMode(cutItem);
+  }
+}
+
+function openEditMode(cutItem) {
+  cutItem.classList.add('editing');
+  cutItem.querySelector('.cut-edit-fields').classList.add('visible');
+  cutItem.querySelector('.cut-view-mode').style.display = 'none';
+  const saveBtn = cutItem.querySelector('.btn-save-cut');
+  if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = '저장'; }
+}
+
+function closeEditMode(cutItem) {
+  cutItem.classList.remove('editing');
+  cutItem.querySelector('.cut-edit-fields').classList.remove('visible');
+  cutItem.querySelector('.cut-view-mode').style.display = 'block';
+}
+
+// ── Util ──
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── Back button ──
 document.getElementById('btn-back').addEventListener('click', () => {
   showView('dashboard');
   loadDashboard();
@@ -497,7 +700,6 @@ document.getElementById('btn-back').addEventListener('click', () => {
     loadDashboard();
   }
 })();
-
 </script>
 </body>
 </html>
