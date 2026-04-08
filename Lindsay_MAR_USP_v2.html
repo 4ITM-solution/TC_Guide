@@ -510,8 +510,21 @@ function activateEditMode(){
         input.onchange=function(e){
           var file=e.target.files[0];
           if(!file) return;
+          // PNG → JPEG 80% 변환 + 최대 1080px 리사이즈
           var reader=new FileReader();
-          reader.onload=function(ev){ img.src=ev.target.result; };
+          reader.onload=function(ev){
+            var image=new Image();
+            image.onload=function(){
+              var MAX=1080;
+              var w=image.width, h=image.height;
+              if(w>MAX||h>MAX){ var r=Math.min(MAX/w,MAX/h); w=Math.round(w*r); h=Math.round(h*r); }
+              var canvas=document.createElement('canvas');
+              canvas.width=w; canvas.height=h;
+              canvas.getContext('2d').drawImage(image,0,0,w,h);
+              img.src=canvas.toDataURL('image/jpeg',0.80);
+            };
+            image.src=ev.target.result;
+          };
           reader.readAsDataURL(file);
         };
         input.click();
