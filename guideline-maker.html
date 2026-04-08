@@ -187,6 +187,10 @@
       <p>4AM 내부 팀 전용</p>
     </div>
     <div class="form-group">
+      <label>이메일</label>
+      <input type="email" id="auth-email" placeholder="name@4am.team" autocomplete="email">
+    </div>
+    <div class="form-group">
       <label>비밀번호</label>
       <input type="password" id="auth-password" placeholder="••••••••" autocomplete="current-password">
     </div>
@@ -290,12 +294,19 @@ function showToast(msg, duration = 2500) {
 }
 
 document.getElementById('btn-login').addEventListener('click', () => {
+  const email = document.getElementById('auth-email').value.trim();
   const password = document.getElementById('auth-password').value;
   const errEl = document.getElementById('auth-error');
 
+  if (!email) {
+    errEl.textContent = '이메일을 입력해주세요.';
+    errEl.style.display = 'block';
+    return;
+  }
   if (password === APP_PASSWORD) {
+    localStorage.setItem('gm_email', email);
     setSession();
-    showApp();
+    showApp(email);
     loadDashboard();
   } else {
     errEl.textContent = '비밀번호가 올바르지 않습니다.';
@@ -303,6 +314,9 @@ document.getElementById('btn-login').addEventListener('click', () => {
   }
 });
 
+document.getElementById('auth-email').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('auth-password').focus();
+});
 document.getElementById('auth-password').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('btn-login').click();
 });
@@ -314,10 +328,11 @@ document.getElementById('btn-logout').addEventListener('click', async () => {
 });
 
 // ── App ──
-function showApp() {
+function showApp(email) {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app-screen').style.display = 'block';
-  document.getElementById('user-email-display').textContent = '4AM 팀';
+  const displayEmail = email || localStorage.getItem('gm_email') || '4AM 팀';
+  document.getElementById('user-email-display').textContent = displayEmail;
 }
 
 function showView(view) {
