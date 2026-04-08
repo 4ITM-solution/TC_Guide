@@ -513,13 +513,13 @@ async function saveHTML(){
   document.querySelectorAll('#cuts-wrap .cut-card').forEach(function(card){
     var idx=parseInt(card.getAttribute('data-index'));
     if(isNaN(idx)||!CUTS_DATA[idx]) return;
-    var s=card.querySelector('[data-f="scene"]'); if(s) CUTS_DATA[idx].scene=s.innerText.trim();
-    var d=card.querySelector('[data-f="direction"]'); if(d) CUTS_DATA[idx].direction=d.innerText.trim();
-    var u=card.querySelector('[data-f="mainUsp"]'); if(u) CUTS_DATA[idx].mainUsp=u.innerText.trim();
+    var s=card.querySelector('[data-f="scene"]'); if(s) CUTS_DATA[idx].scene=s.innerHTML.trim();
+    var d=card.querySelector('[data-f="direction"]'); if(d) CUTS_DATA[idx].direction=d.innerHTML.trim();
+    var u=card.querySelector('[data-f="mainUsp"]'); if(u) CUTS_DATA[idx].mainUsp=u.innerHTML.trim();
     var pm=card.querySelector('[data-f="productionMethod"]');
-    if(pm){ var lis=pm.querySelectorAll('li'); if(lis.length) CUTS_DATA[idx].productionMethod=Array.from(lis).map(function(li,i){ return (i+1)+'. '+li.innerText.trim(); }).join('\n'); }
+    if(pm){ var lis=pm.querySelectorAll('li'); if(lis.length) CUTS_DATA[idx].productionMethod=Array.from(lis).map(function(li,i){ return (i+1)+'. '+li.innerHTML.trim(); }).join('\n'); }
     var caps=card.querySelectorAll('.caption-opt span');
-    if(caps.length) CUTS_DATA[idx].captions=Array.from(caps).map(function(el){ return el.innerText.trim(); });
+    if(caps.length) CUTS_DATA[idx].captions=Array.from(caps).map(function(el){ return el.innerHTML.trim(); });
   });
 
   // Step 2: CUTS_DATA -> script tag
@@ -587,4 +587,4 @@ async function saveHTML(){
 </div>
 
 
-</body></html>                
+</body></html>
