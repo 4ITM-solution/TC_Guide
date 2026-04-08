@@ -95,41 +95,44 @@
   #detail-view { display: none; }
   .back-btn {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 13px; color: var(--muted); cursor: pointer; margin-bottom: 20px;
+    font-size: 13px; color: var(--muted); cursor: pointer; margin-bottom: 0;
     background: none; border: none; padding: 0;
   }
   .back-btn:hover { color: var(--pink); }
-  .detail-header {
-    background: linear-gradient(135deg, #fff0f6 0%, #f7f0ff 100%);
-    border-radius: var(--radius); padding: 24px; margin-bottom: 24px;
-    border: 1.5px solid #ffd6e8;
+
+  /* ── DETAIL TOOLBAR ── */
+  .detail-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0 14px; gap: 10px; flex-wrap: wrap;
   }
-  .detail-header h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
-  .detail-meta { font-size: 13px; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
-  .detail-meta span { display: flex; align-items: center; gap: 4px; }
-  .detail-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; align-items: center; }
+  .toolbar-right { display: flex; gap: 8px; align-items: center; }
   .btn-secondary {
-    padding: 8px 16px; border-radius: 8px; border: 1.5px solid var(--border);
+    padding: 7px 14px; border-radius: 8px; border: 1.5px solid var(--border);
     font-size: 13px; font-weight: 600; cursor: pointer; background: var(--card);
-    color: var(--text); transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+    color: var(--text); transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+    text-decoration: none;
   }
   .btn-secondary:hover { border-color: var(--pink); color: var(--pink); }
-  .btn-deploy {
-    padding: 8px 16px; border-radius: 8px; border: none;
+  .btn-edit-toggle {
+    padding: 7px 14px; border-radius: 8px; border: none;
     font-size: 13px; font-weight: 700; cursor: pointer;
-    background: var(--pink); color: #fff; transition: all 0.2s;
-    display: flex; align-items: center; gap: 6px;
+    background: #fff3cd; color: #856404; border: 1.5px solid #ffc107;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
   }
-  .btn-deploy:hover { background: var(--pink-dark); }
-  .btn-deploy:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-edit-toggle:hover { background: #ffe69c; }
+  .btn-edit-toggle.active { background: var(--pink); color: #fff; border-color: var(--pink); }
 
-  /* Edit mode toggle */
-  .edit-mode-badge {
-    font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
-    background: #fff3cd; color: #856404; border: 1px solid #ffc107;
-    display: none;
+  /* ── IFRAME WRAPPER ── */
+  .gl-iframe-wrap {
+    border-radius: var(--radius); overflow: hidden;
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow);
+    background: var(--card);
   }
-  .edit-mode-badge.visible { display: inline-block; }
+  .gl-iframe-wrap iframe {
+    width: 100%; border: none; display: block;
+    min-height: 80vh;
+  }
 
   /* ── CUT LIST ── */
   .cuts-list { display: flex; flex-direction: column; gap: 12px; }
@@ -267,9 +270,11 @@
 
     <!-- DETAIL VIEW -->
     <div id="detail-view">
-      <button class="back-btn" id="btn-back">← 목록으로</button>
-      <div class="detail-header" id="detail-header"></div>
-      <div class="cuts-list" id="cuts-list">
+      <div class="detail-toolbar">
+        <button class="back-btn" id="btn-back">← 목록으로</button>
+        <div class="toolbar-right" id="toolbar-right"></div>
+      </div>
+      <div class="gl-iframe-wrap" id="gl-iframe-wrap">
         <div class="loading-overlay"><div class="spinner"></div></div>
       </div>
     </div>
@@ -441,254 +446,88 @@ function renderDashboard(guidelines) {
   });
 }
 
-// ── Detail ──
-let currentGuidelineId = null;
+// ── Detail (iframe 방식) ──
+let currentGl = null;
+let isEditMode = false;
 
 async function loadDetail(id) {
-  currentGuidelineId = id;
   showView('detail');
-  const headerEl = document.getElementById('detail-header');
-  const cutsEl = document.getElementById('cuts-list');
-  headerEl.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
-  cutsEl.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
+  const wrap = document.getElementById('gl-iframe-wrap');
+  const toolbar = document.getElementById('toolbar-right');
+  wrap.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
+  toolbar.innerHTML = '';
+  isEditMode = false;
+
   try {
-    const [guidelines, cuts] = await Promise.all([fetchGuidelines(), fetchCuts(id)]);
+    const guidelines = await fetchGuidelines();
     const gl = guidelines.find(g => g.id === id);
     if (!gl) throw new Error('가이드라인을 찾을 수 없습니다.');
-    renderDetail(gl, cuts);
+    currentGl = gl;
+    renderDetailIframe(gl);
   } catch (e) {
-    headerEl.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div>${e.message}</div></div>`;
-    cutsEl.innerHTML = '';
+    wrap.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div>${e.message}</div></div>`;
   }
 }
 
-function renderDetail(gl, cuts) {
-  const headerEl = document.getElementById('detail-header');
-  headerEl.innerHTML = `
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
-      <div>
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-          <span class="gl-badge ${gl.status}">${gl.status === 'published' ? '배포됨' : '초안'}</span>
-          <span class="gl-version">${gl.version?.toUpperCase()}</span>
-        </div>
-        <h2>${gl.angle_name || '(앵글 없음)'}</h2>
-        <div class="detail-meta">
-          <span>🏷️ ${gl.gl_products?.brand || ''} · ${gl.gl_products?.name || ''}</span>
-          <span>📋 ${cuts.length}컷</span>
-          ${gl.deployed_at ? `<span>🚀 ${new Date(gl.deployed_at).toLocaleDateString('ko-KR')} 배포</span>` : ''}
-        </div>
-      </div>
-    </div>
-    <div class="detail-actions">
-      ${gl.github_url ? `<a href="${gl.github_url}" target="_blank" class="btn-secondary" style="text-decoration:none">🔗 가이드라인 보기</a>` : ''}
-    </div>
-  `;
+function renderDetailIframe(gl) {
+  const wrap = document.getElementById('gl-iframe-wrap');
+  const toolbar = document.getElementById('toolbar-right');
 
-  const cutsEl = document.getElementById('cuts-list');
-  if (!cuts || cuts.length === 0) {
-    cutsEl.innerHTML = '<div class="empty-state"><div class="icon">✂️</div><div>컷 데이터가 없습니다.</div></div>';
+  if (!gl.github_url) {
+    wrap.innerHTML = `<div class="empty-state"><div class="icon">🔗</div><div>배포된 URL이 없습니다.<br><small>Claude에서 배포 후 github_url을 등록해주세요.</small></div></div>`;
     return;
   }
 
-  cutsEl.innerHTML = cuts.map(cut => buildCutCard(cut, gl.id)).join('');
-  attachCutEvents(cutsEl, cuts, gl.id);
-}
+  // iframe 렌더 (view mode)
+  wrap.innerHTML = `<iframe id="gl-iframe" src="${gl.github_url}" loading="lazy"
+    onload="autoResizeIframe(this)"></iframe>`;
 
-function buildCutCard(cut, guidelineId) {
-  const labelClass = cut.label.startsWith('HOOK') ? 'label-hook' : cut.label === 'RESULT' ? 'label-result' : 'label-cut';
-  const captionsText = Array.isArray(cut.captions) ? cut.captions.join('\n') : (cut.captions || '');
-  return `
-    <div class="cut-item" data-cut-id="${cut.id}">
-      <div class="cut-item-inner">
-        <div class="cut-thumb uploadable" data-cut-id="${cut.id}" data-guideline-id="${guidelineId}" title="클릭하여 이미지 교체">
-          ${cut.img_url
-            ? `<img src="${cut.img_url}" alt="${cut.label}" loading="lazy">`
-            : `<div class="no-img">🎬</div>`}
-          <div class="img-overlay">
-            <span class="upload-icon">📷</span>
-            <span>이미지 교체</span>
-          </div>
-          <input type="file" class="img-upload-input" accept="image/jpeg,image/png,image/webp">
-        </div>
-        <div class="cut-body">
-          <div class="cut-top">
-            <span class="cut-label-badge ${labelClass}">${cut.label}</span>
-            ${cut.pacing === 'fast' ? '<span class="cut-fast-badge">⚡ Quick Cut</span>' : ''}
-            <span class="cut-order">#${cut.order + 1}</span>
-            <button class="edit-pencil-btn" data-cut-id="${cut.id}" title="편집">✏️</button>
-          </div>
-          <!-- View mode -->
-          <div class="cut-view-mode">
-            <div class="cut-scene">${escHtml(cut.scene || '')}</div>
-            <div class="cut-direction">${escHtml(cut.direction || '')}</div>
-          </div>
-          <!-- Edit mode -->
-          <div class="cut-edit-fields" data-cut-id="${cut.id}">
-            <div>
-              <div class="edit-label">씬 (Scene)</div>
-              <input class="edit-input" data-field="scene" value="${escAttr(cut.scene || '')}">
-            </div>
-            <div>
-              <div class="edit-label">디렉션 (Direction)</div>
-              <textarea class="edit-textarea" data-field="direction">${escHtml(cut.direction || '')}</textarea>
-            </div>
-            <div>
-              <div class="edit-label">캡션 (한 줄씩 입력)</div>
-              <textarea class="edit-textarea" data-field="captions" style="min-height:55px">${escHtml(captionsText)}</textarea>
-            </div>
-            <div class="cut-edit-actions">
-              <button class="btn-cancel-cut">취소</button>
-              <button class="btn-save-cut" data-cut-id="${cut.id}">저장</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  // iframe 높이 자동 조정
+  const iframe = document.getElementById('gl-iframe');
+  iframe.addEventListener('load', () => autoResizeIframe(iframe));
+
+  // 툴바 버튼
+  toolbar.innerHTML = `
+    <a href="${gl.github_url}" target="_blank" class="btn-secondary">🔗 새 탭에서 보기</a>
+    <button class="btn-edit-toggle" id="btn-edit-toggle">✏️ 편집 모드</button>
   `;
-}
 
-function attachCutEvents(container, cuts, guidelineId) {
-  // ── Edit pencil toggle ──
-  container.querySelectorAll('.edit-pencil-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cutId = btn.dataset.cutId;
-      toggleEditMode(container, cutId);
-    });
-  });
-
-  // ── Cancel edit ──
-  container.querySelectorAll('.btn-cancel-cut').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cutItem = btn.closest('.cut-item');
-      closeEditMode(cutItem);
-    });
-  });
-
-  // ── Save cut ──
-  container.querySelectorAll('.btn-save-cut').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const cutId = btn.dataset.cutId;
-      const editFields = container.querySelector(`.cut-edit-fields[data-cut-id="${cutId}"]`);
-      const sceneVal = editFields.querySelector('[data-field="scene"]').value.trim();
-      const directionVal = editFields.querySelector('[data-field="direction"]').value.trim();
-      const captionsRaw = editFields.querySelector('[data-field="captions"]').value;
-      const captionsArr = captionsRaw.split('\n').map(s => s.trim()).filter(Boolean);
-
-      btn.disabled = true;
-      btn.textContent = '저장 중…';
-      try {
-        await updateCut(cutId, { scene: sceneVal, direction: directionVal, captions: captionsArr });
-        // Update view mode display
-        const cutItem = container.querySelector(`.cut-item[data-cut-id="${cutId}"]`);
-        cutItem.querySelector('.cut-scene').textContent = sceneVal;
-        const dirEl = cutItem.querySelector('.cut-direction');
-        dirEl.textContent = directionVal;
-        closeEditMode(cutItem);
-        showToast('✅ 저장 완료', 'success');
-      } catch (e) {
-        showToast('❌ ' + e.message, 'error');
-        btn.disabled = false;
-        btn.textContent = '저장';
-      }
-    });
-  });
-
-  // ── Image upload ──
-  container.querySelectorAll('.cut-thumb.uploadable').forEach(thumb => {
-    const input = thumb.querySelector('.img-upload-input');
-    thumb.addEventListener('click', () => input.click());
-    input.addEventListener('change', async () => {
-      const file = input.files[0];
-      if (!file) return;
-      if (file.size > 5 * 1024 * 1024) { showToast('❌ 5MB 이하 이미지만 업로드 가능합니다', 'error'); return; }
-
-      const cutId = thumb.dataset.cutId;
-      const ext = file.name.split('.').pop().toLowerCase();
-      const filePath = `${guidelineId}/${cutId}.${ext}`;
-
-      // Optimistic preview
-      const reader = new FileReader();
-      reader.onload = e => {
-        thumb.innerHTML = `
-          <img src="${e.target.result}" alt="preview" style="opacity:0.6">
-          <div class="img-overlay" style="opacity:1"><div class="spinner"></div></div>
-          <input type="file" class="img-upload-input" accept="image/jpeg,image/png,image/webp" style="display:none">
-        `;
-      };
-      reader.readAsDataURL(file);
-
-      try {
-        const publicUrl = await sbUpload(filePath, file);
-        // Add cache-bust
-        const urlWithCache = publicUrl + '?t=' + Date.now();
-        await updateCut(cutId, { img_url: publicUrl });
-        thumb.innerHTML = `
-          <img src="${urlWithCache}" alt="uploaded" loading="lazy">
-          <div class="img-overlay">
-            <span class="upload-icon">📷</span>
-            <span>이미지 교체</span>
-          </div>
-          <input type="file" class="img-upload-input" accept="image/jpeg,image/png,image/webp" style="display:none">
-        `;
-        // Re-attach input event
-        const newInput = thumb.querySelector('.img-upload-input');
-        thumb.addEventListener('click', () => newInput.click());
-        newInput.addEventListener('change', () => {
-          input.dispatchEvent(new Event('change'));
-        });
-        showToast('✅ 이미지 업로드 완료', 'success');
-      } catch (e) {
-        showToast('❌ ' + e.message, 'error');
-        // Restore
-        thumb.innerHTML = `
-          <div class="no-img">🎬</div>
-          <div class="img-overlay"><span class="upload-icon">📷</span><span>이미지 교체</span></div>
-          <input type="file" class="img-upload-input" accept="image/jpeg,image/png,image/webp" style="display:none">
-        `;
-      }
-    });
+  document.getElementById('btn-edit-toggle').addEventListener('click', () => {
+    isEditMode = !isEditMode;
+    const btn = document.getElementById('btn-edit-toggle');
+    const iframe = document.getElementById('gl-iframe');
+    if (isEditMode) {
+      iframe.src = gl.github_url + '?edit=1';
+      btn.textContent = '✅ 편집 중…';
+      btn.classList.add('active');
+      showToast('✏️ 편집 모드 켜짐 — 각 컷에서 직접 수정하세요', '', 3500);
+    } else {
+      iframe.src = gl.github_url;
+      btn.textContent = '✏️ 편집 모드';
+      btn.classList.remove('active');
+      showToast('👁️ 보기 모드로 전환됨');
+    }
+    iframe.addEventListener('load', () => autoResizeIframe(iframe), { once: true });
   });
 }
 
-function toggleEditMode(container, cutId) {
-  const cutItem = container.querySelector(`.cut-item[data-cut-id="${cutId}"]`);
-  const editFields = cutItem.querySelector('.cut-edit-fields');
-  const isOpen = editFields.classList.contains('visible');
-  // Close any other open editors first
-  container.querySelectorAll('.cut-edit-fields.visible').forEach(el => {
-    if (el !== editFields) closeEditMode(el.closest('.cut-item'));
-  });
-  if (isOpen) {
-    closeEditMode(cutItem);
-  } else {
-    openEditMode(cutItem);
+function autoResizeIframe(iframe) {
+  try {
+    const h = iframe.contentDocument?.body?.scrollHeight;
+    if (h && h > 200) iframe.style.height = h + 'px';
+  } catch(e) {
+    // cross-origin: fallback to fixed height
+    iframe.style.height = '90vh';
   }
-}
-
-function openEditMode(cutItem) {
-  cutItem.classList.add('editing');
-  cutItem.querySelector('.cut-edit-fields').classList.add('visible');
-  cutItem.querySelector('.cut-view-mode').style.display = 'none';
-  const saveBtn = cutItem.querySelector('.btn-save-cut');
-  if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = '저장'; }
-}
-
-function closeEditMode(cutItem) {
-  cutItem.classList.remove('editing');
-  cutItem.querySelector('.cut-edit-fields').classList.remove('visible');
-  cutItem.querySelector('.cut-view-mode').style.display = 'block';
-}
-
-// ── Util ──
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function escAttr(s) {
-  return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 // ── Back button ──
 document.getElementById('btn-back').addEventListener('click', () => {
+  // iframe src 초기화해서 로딩 취소
+  const iframe = document.getElementById('gl-iframe');
+  if (iframe) iframe.src = 'about:blank';
+  isEditMode = false;
+  currentGl = null;
   showView('dashboard');
   loadDashboard();
 });
