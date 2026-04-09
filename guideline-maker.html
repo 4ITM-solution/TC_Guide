@@ -786,28 +786,21 @@ init();
 }
 
 async function deployFromDB(gl) {
-  const filename = gl.github_url.split('/').pop();
-  if (!filename || !filename.endsWith('.html')) throw new Error('배포 파일명을 알 수 없습니다.');
-
-  // DB에서 최신 데이터 fetch
-  const [glRows, cuts] = await Promise.all([
-    sbFetch('/rest/v1/gl_guidelines?id=eq.' + gl.id + '&select=*,gl_products(name,brand)'),
-    sbFetch('/rest/v1/gl_cuts?guideline_id=eq.' + gl.id + '&order=order.asc')
-  ]);
-  const fullGl = glRows[0];
-
-  // HTML 생성
-  const htmlContent = buildGuidelineHTML(fullGl, cuts);
-
-  // GitHub push
-  await githubPushFile(filename, htmlContent, `✨ Update ${filename} via Guideline Maker`);
-
-  // Supabase status → published
-  await sbFetch('/rest/v1/gl_guidelines?id=eq.' + gl.id, {
-    method: 'PATCH',
-    headers: { 'Prefer': 'return=minimal' },
-    body: JSON.stringify({ status: 'published' })
-  });
+  // Edge Function 호출 — GitHub Token은 서버에 내장됨 (팀원 입력 불필요)
+  const res = await fetch(
+    'https://dynqedcbmanvyfdlruni.supabase.co/functions/v1/deploy-guideline',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify({ guideline_id: gl.id })
+    }
+  );
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.error || '배포 실패');
+  return data;
 }
 
 // ── Auth ──
