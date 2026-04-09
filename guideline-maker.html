@@ -448,15 +448,159 @@ async function githubPushFile(filename, htmlContent, commitMsg) {
   return await res.json();
 }
 
-async function deployToGithub(gl, file) {
-  // github_url에서 파일명 추출: .../TC_Guide/Lindsay_MAR_USP_v1.html → Lindsay_MAR_USP_v1.html
+function buildGuidelineHTML(gl, cuts) {
+  const brand = gl.gl_products?.brand || '';
+  const productName = gl.gl_products?.name || '';
+  const badge = brand.toUpperCase() + ' · USP GUIDELINE';
+  const glId = gl.id;
+
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${gl.angle_name || ''}</title>
+<style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --pink:#FF6B9D;--pink-dark:#E8447A;--pink-light:#FFE8F2;--pink-mid:#FFB3D0;
+      --blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;
+      --text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;
+      --radius:14px;
+    }
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    .site-header{background:linear-gradient(135deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center;}
+    .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px;}
+    .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
+    .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
+    .cuts-section{padding:16px 16px 32px}
+    .cuts-section-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px}
+    .cuts-list{display:flex;flex-direction:column;gap:14px}
+    .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07)}
+    .cut-inner{display:flex;flex-direction:column}
+    @media(min-width:600px){.cut-inner{flex-direction:row;align-items:stretch}.cut-img-wrap{width:240px;flex-shrink:0}}
+    .cut-img-wrap{position:relative;background:#f0f0f0;overflow:hidden}
+    .cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover;max-height:320px}
+    @media(min-width:600px){.cut-img-wrap img{aspect-ratio:auto;height:100%;max-height:none}}
+    .cut-no-img{width:100%;aspect-ratio:9/16;max-height:320px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;background:#f5f5f8}
+    @media(min-width:600px){.cut-no-img{height:100%;max-height:none;aspect-ratio:auto}}
+    .cut-badge-row{position:absolute;top:8px;left:8px;display:flex;gap:6px;align-items:center}
+    .cut-label{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:100px}
+    .label-hook{background:#FF4757;color:#fff}
+    .label-result{background:#2ED573;color:#fff}
+    .label-cut{background:rgba(0,0,0,0.55);color:#fff}
+    .cut-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:10px}
+    .field-label{font-size:9px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+    .field-scene{font-size:15px;font-weight:800;line-height:1.3;color:var(--text)}
+    .field-usp{font-size:13px;font-weight:700;color:var(--pink-dark);line-height:1.4}
+    .field-direction{font-size:12px;line-height:1.65;color:#444}
+    .field-pm ol{padding-left:16px}
+    .field-pm li{font-size:12px;line-height:1.6;color:#444;margin-bottom:2px}
+    .cut-sep{border:none;border-top:1px solid #f0f0f0}
+    .caption-options{display:flex;flex-direction:column;gap:6px}
+    .caption-opt{background:var(--pink-light);border-radius:8px;padding:7px 10px}
+    .caption-opt span{font-size:12px;color:var(--pink-dark);font-weight:600;line-height:1.5}
+    .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
+    .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .error-state{text-align:center;padding:60px 20px;color:#e05555;font-size:14px}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-badge">${badge}</div>
+  <h1 id="gl-title">로딩 중…</h1>
+  <div class="header-concept" id="gl-product">로딩 중…</div>
+</header>
+<section class="cuts-section">
+  <div class="cuts-section-label">CUT GUIDE</div>
+  <div class="cuts-list" id="cuts-wrap">
+    <div class="loading-state"><div class="spinner"></div><div>가이드라인 불러오는 중…</div></div>
+  </div>
+</section>
+<script>
+const SUPABASE_URL='${SUPABASE_URL}';
+const ANON_KEY='${SUPABASE_ANON_KEY}';
+const GUIDELINE_ID='${glId}';
+async function sbGet(path){
+  const res=await fetch(SUPABASE_URL+path,{headers:{'apikey':ANON_KEY,'Authorization':'Bearer '+ANON_KEY}});
+  if(!res.ok) throw new Error('DB 오류 '+res.status);
+  return res.json();
+}
+function labelClass(label){
+  if(label==='HOOK'||label.startsWith('HOOK')) return 'cut-label label-hook';
+  if(label==='RESULT') return 'cut-label label-result';
+  return 'cut-label label-cut';
+}
+function buildCard(cut){
+  const card=document.createElement('div');
+  card.className='cut-card';
+  card.dataset.id=cut.id;
+  const imgHtml=cut.img_url?'<img src="'+cut.img_url+'" alt="'+cut.label+'" />'
+    :'<div class="cut-no-img">이미지 없음</div>';
+  let body='';
+  if(cut.main_usp) body+='<div><div class="field-label">Main USP</div><div class="field-usp">'+cut.main_usp+'</div></div>';
+  if(cut.production_method){
+    const steps=cut.production_method.split('\\n').filter(s=>s.trim());
+    body+='<div><div class="field-label">Production Method</div><div class="field-pm"><ol>'
+      +steps.map(s=>'<li>'+s.replace(/^\\d+\\.\\s*/,'')+'</li>').join('')+'</ol></div></div>';
+  }
+  if(cut.main_usp||cut.production_method) body+='<hr class="cut-sep">';
+  body+='<div><div class="field-label">Scene</div><div class="field-scene">'+(cut.scene||'')+'</div></div>';
+  body+='<hr class="cut-sep">';
+  body+='<div><div class="field-label">Direction</div><div class="field-direction">'+(cut.direction||'')+'</div></div>';
+  const captions=Array.isArray(cut.captions)?cut.captions:[];
+  if(captions.length){
+    body+='<hr class="cut-sep">';
+    body+='<div><div class="field-label">Caption Options</div><div class="caption-options">'
+      +captions.map(c=>'<div class="caption-opt"><span>'+c+'</span></div>').join('')+'</div></div>';
+  }
+  card.innerHTML='<div class="cut-inner"><div class="cut-img-wrap">'+imgHtml
+    +'<div class="cut-badge-row"><span class="'+labelClass(cut.label)+'">'+cut.label+'</span></div>'
+    +'</div><div class="cut-body">'+body+'</div></div>';
+  return card;
+}
+async function init(){
+  const wrap=document.getElementById('cuts-wrap');
+  try{
+    const[glRows,cuts]=await Promise.all([
+      sbGet('/rest/v1/gl_guidelines?id=eq.'+GUIDELINE_ID+'&select=*,gl_products(name,brand)'),
+      sbGet('/rest/v1/gl_cuts?guideline_id=eq.'+GUIDELINE_ID+'&order=order.asc')
+    ]);
+    const gl=glRows[0];
+    if(!gl) throw new Error('가이드라인을 찾을 수 없습니다');
+    document.getElementById('gl-title').textContent=gl.angle_name||'';
+    document.getElementById('gl-product').textContent=(gl.gl_products?.brand||'')+' · '+(gl.gl_products?.name||'');
+    wrap.innerHTML='';
+    cuts.forEach(cut=>wrap.appendChild(buildCard(cut)));
+  }catch(e){
+    wrap.innerHTML='<div class="error-state">⚠️ '+e.message+'</div>';
+  }
+}
+init();
+<\/script>
+</body>
+</html>`;
+}
+
+async function deployFromDB(gl) {
   const filename = gl.github_url.split('/').pop();
   if (!filename || !filename.endsWith('.html')) throw new Error('배포 파일명을 알 수 없습니다.');
 
-  const htmlContent = await file.text();
+  // DB에서 최신 데이터 fetch
+  const [glRows, cuts] = await Promise.all([
+    sbFetch('/rest/v1/gl_guidelines?id=eq.' + gl.id + '&select=*,gl_products(name,brand)'),
+    sbFetch('/rest/v1/gl_cuts?guideline_id=eq.' + gl.id + '&order=order.asc')
+  ]);
+  const fullGl = glRows[0];
+
+  // HTML 생성
+  const htmlContent = buildGuidelineHTML(fullGl, cuts);
+
+  // GitHub push
   await githubPushFile(filename, htmlContent, `✨ Update ${filename} via Guideline Maker`);
 
-  // Supabase status → published 업데이트
+  // Supabase status → published
   await sbFetch('/rest/v1/gl_guidelines?id=eq.' + gl.id, {
     method: 'PATCH',
     headers: { 'Prefer': 'return=minimal' },
@@ -648,53 +792,25 @@ function renderDetailIframe(gl) {
   // 툴바 버튼
   toolbar.innerHTML = `
     <a href="${gl.github_url}" target="_blank" class="btn-secondary">🔗 새 탭에서 보기</a>
-    <button class="btn-edit-toggle" id="btn-edit-toggle">✏️ 편집 모드</button>
-    <label class="btn-deploy" id="btn-deploy" title="편집 후 저장한 HTML 파일을 선택하면 GitHub에 자동 배포됩니다">
-      🚀 배포
-      <input type="file" id="deploy-file-input" accept=".html" style="display:none">
-    </label>
+    <button class="btn-deploy" id="btn-deploy">🚀 배포</button>
   `;
 
-  document.getElementById('btn-edit-toggle').addEventListener('click', () => {
-    isEditMode = !isEditMode;
-    const btn = document.getElementById('btn-edit-toggle');
-    const iframe = document.getElementById('gl-iframe');
-    if (isEditMode) {
-      iframe.src = gl.github_url + '?edit=1';
-      btn.textContent = '✅ 편집 중…';
-      btn.classList.add('active');
-      showToast('✏️ 편집 모드 켜짐 — 수정 후 💾 Save File → 🚀 배포 순으로 진행하세요', '', 4000);
-    } else {
-      iframe.src = gl.github_url;
-      btn.textContent = '✏️ 편집 모드';
-      btn.classList.remove('active');
-      showToast('👁️ 보기 모드로 전환됨');
-    }
-    iframe.addEventListener('load', () => autoResizeIframe(iframe), { once: true });
-  });
-
-  document.getElementById('deploy-file-input').addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  document.getElementById('btn-deploy').addEventListener('click', async () => {
     const deployBtn = document.getElementById('btn-deploy');
-    deployBtn.style.opacity = '0.6';
-    deployBtn.style.pointerEvents = 'none';
-    deployBtn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;border-color:#444;border-top-color:#fff"></span> 배포 중…';
+    deployBtn.disabled = true;
+    deployBtn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;border-color:#444;border-top-color:#fff;display:inline-block"></span> 배포 중…';
     try {
-      await deployToGithub(gl, file);
+      await deployFromDB(gl);
       currentGl = { ...currentGl, status: 'published' };
       showToast('🎉 배포 완료! GitHub Pages에 반영까지 1~2분 소요됩니다', 'success', 4000);
-      deployBtn.innerHTML = '✅ 배포됨';
+      deployBtn.textContent = '✅ 배포됨';
       deployBtn.style.background = '#2e7d32';
     } catch(err) {
       showToast('❌ 배포 실패: ' + err.message, 'error', 5000);
-      deployBtn.innerHTML = '🚀 배포';
-      deployBtn.style.opacity = '';
-      deployBtn.style.pointerEvents = '';
+      deployBtn.textContent = '🚀 배포';
+      deployBtn.disabled = false;
       deployBtn.style.background = '';
     }
-    // reset file input
-    e.target.value = '';
   });
 }
 
