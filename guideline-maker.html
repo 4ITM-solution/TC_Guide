@@ -220,6 +220,60 @@
   #toast.show { transform: translateX(-50%) translateY(0); }
   #toast.success { background: #1b5e20; }
   #toast.error { background: #b71c1c; }
+
+  /* ── DEPLOY BUTTON ── */
+  .btn-deploy {
+    padding: 7px 16px; border-radius: 8px; border: none;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    background: #1a1a2e; color: #fff;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-deploy:hover { background: #2d2d4e; }
+  .btn-deploy:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* ── SETTINGS MODAL ── */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .modal-backdrop.open { opacity: 1; pointer-events: all; }
+  .modal-card {
+    background: #fff; border-radius: 18px; padding: 32px 28px;
+    width: 100%; max-width: 440px; box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+    transform: translateY(16px); transition: transform 0.2s;
+  }
+  .modal-backdrop.open .modal-card { transform: translateY(0); }
+  .modal-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+  .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+  .btn-modal-cancel {
+    padding: 9px 18px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: var(--card); color: var(--muted); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-modal-cancel:hover { border-color: var(--muted); color: var(--text); }
+  .btn-modal-save {
+    padding: 9px 18px; border-radius: 8px; border: none;
+    background: var(--pink); color: #fff; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-modal-save:hover { background: var(--pink-dark); }
+  .token-hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .token-hint a { color: var(--pink); }
+
+  /* ── HEADER SETTINGS BTN ── */
+  .btn-settings {
+    background: none; border: 1px solid var(--border); padding: 5px 10px;
+    border-radius: 8px; font-size: 13px; cursor: pointer; color: var(--muted);
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;
+  }
+  .btn-settings:hover { border-color: var(--pink); color: var(--pink); }
+  .token-status {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: #ccc; margin-right: 2px; transition: background 0.3s;
+  }
+  .token-status.ok { background: #4caf50; }
 </style>
 </head>
 <body>
@@ -250,6 +304,7 @@
     <div class="logo">✦ Guideline Maker</div>
     <div class="user-info">
       <span id="user-email-display"></span>
+      <button class="btn-settings" id="btn-settings"><span class="token-status" id="token-status"></span>GitHub 설정</button>
       <button class="btn-logout" id="btn-logout">로그아웃</button>
     </div>
   </header>
@@ -284,11 +339,32 @@
 
 <div id="toast"></div>
 
+<!-- SETTINGS MODAL -->
+<div class="modal-backdrop" id="settings-modal">
+  <div class="modal-card">
+    <div class="modal-title">⚙️ GitHub 배포 설정</div>
+    <div class="modal-sub">GitHub Personal Access Token을 저장하면 웹앱에서 바로 배포할 수 있어요.<br>Token은 이 브라우저에만 저장되며 서버로 전송되지 않아요.</div>
+    <div class="form-group">
+      <label>GitHub Personal Access Token</label>
+      <input type="password" id="github-token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+      <div class="token-hint">
+        <a href="https://github.com/settings/tokens/new?scopes=repo&description=GuidelineMaker" target="_blank">→ GitHub에서 Token 발급</a> (repo 권한 필요)
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" id="btn-settings-cancel">취소</button>
+      <button class="btn-modal-save" id="btn-settings-save">저장</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
 const STORAGE_BUCKET = 'cut-images';
 const APP_PASSWORD = 'toqursptl1!';
+const GITHUB_REPO = '4ITM-solution/TC_Guide';
+const GITHUB_BRANCH = 'main';
 
 // ── Supabase helpers ──
 async function sbFetch(path, options = {}) {
@@ -325,6 +401,69 @@ async function sbUpload(filePath, file) {
   return `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
 }
 
+// ── GitHub Token ──
+function getGithubToken() { return localStorage.getItem('gm_github_token') || ''; }
+function setGithubToken(t) { localStorage.setItem('gm_github_token', t); }
+function updateTokenStatus() {
+  const dot = document.getElementById('token-status');
+  if (dot) dot.className = 'token-status' + (getGithubToken() ? ' ok' : '');
+}
+
+// ── GitHub API ──
+async function githubGetFileSha(filename) {
+  const token = getGithubToken();
+  const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}?ref=${GITHUB_BRANCH}`, {
+    headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error('GitHub 파일 정보 조회 실패: ' + res.status);
+  const data = await res.json();
+  return data.sha;
+}
+
+async function githubPushFile(filename, htmlContent, commitMsg) {
+  const token = getGithubToken();
+  if (!token) throw new Error('GitHub Token이 설정되지 않았습니다.\n오른쪽 상단 "GitHub 설정"에서 Token을 입력해주세요.');
+  const sha = await githubGetFileSha(filename);
+  const encoded = btoa(unescape(encodeURIComponent(htmlContent)));
+  const body = {
+    message: commitMsg || `Update ${filename} via Guideline Maker`,
+    content: encoded,
+    branch: GITHUB_BRANCH
+  };
+  if (sha) body.sha = sha;
+  const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${filename}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'token ' + token,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || 'GitHub push 실패: ' + res.status);
+  }
+  return await res.json();
+}
+
+async function deployToGithub(gl, file) {
+  // github_url에서 파일명 추출: .../TC_Guide/Lindsay_MAR_USP_v1.html → Lindsay_MAR_USP_v1.html
+  const filename = gl.github_url.split('/').pop();
+  if (!filename || !filename.endsWith('.html')) throw new Error('배포 파일명을 알 수 없습니다.');
+
+  const htmlContent = await file.text();
+  await githubPushFile(filename, htmlContent, `✨ Update ${filename} via Guideline Maker`);
+
+  // Supabase status → published 업데이트
+  await sbFetch('/rest/v1/gl_guidelines?id=eq.' + gl.id, {
+    method: 'PATCH',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ status: 'published' })
+  });
+}
+
 // ── Auth ──
 function getSession() { return localStorage.getItem('gm_authed') === 'true'; }
 function setSession() { localStorage.setItem('gm_authed', 'true'); }
@@ -354,6 +493,26 @@ async function updateCut(id, fields) {
     body: JSON.stringify(fields)
   });
 }
+
+// ── Settings modal events ──
+document.getElementById('btn-settings').addEventListener('click', () => {
+  document.getElementById('github-token-input').value = getGithubToken();
+  document.getElementById('settings-modal').classList.add('open');
+});
+document.getElementById('btn-settings-cancel').addEventListener('click', () => {
+  document.getElementById('settings-modal').classList.remove('open');
+});
+document.getElementById('btn-settings-save').addEventListener('click', () => {
+  const t = document.getElementById('github-token-input').value.trim();
+  setGithubToken(t);
+  updateTokenStatus();
+  document.getElementById('settings-modal').classList.remove('open');
+  showToast(t ? '✅ GitHub Token 저장됨' : '🗑️ Token 삭제됨', t ? 'success' : '');
+});
+document.getElementById('settings-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('settings-modal'))
+    document.getElementById('settings-modal').classList.remove('open');
+});
 
 // ── Auth events ──
 document.getElementById('btn-login').addEventListener('click', () => {
@@ -490,6 +649,10 @@ function renderDetailIframe(gl) {
   toolbar.innerHTML = `
     <a href="${gl.github_url}" target="_blank" class="btn-secondary">🔗 새 탭에서 보기</a>
     <button class="btn-edit-toggle" id="btn-edit-toggle">✏️ 편집 모드</button>
+    <label class="btn-deploy" id="btn-deploy" title="편집 후 저장한 HTML 파일을 선택하면 GitHub에 자동 배포됩니다">
+      🚀 배포
+      <input type="file" id="deploy-file-input" accept=".html" style="display:none">
+    </label>
   `;
 
   document.getElementById('btn-edit-toggle').addEventListener('click', () => {
@@ -500,7 +663,7 @@ function renderDetailIframe(gl) {
       iframe.src = gl.github_url + '?edit=1';
       btn.textContent = '✅ 편집 중…';
       btn.classList.add('active');
-      showToast('✏️ 편집 모드 켜짐 — 각 컷에서 직접 수정하세요', '', 3500);
+      showToast('✏️ 편집 모드 켜짐 — 수정 후 💾 Save File → 🚀 배포 순으로 진행하세요', '', 4000);
     } else {
       iframe.src = gl.github_url;
       btn.textContent = '✏️ 편집 모드';
@@ -508,6 +671,30 @@ function renderDetailIframe(gl) {
       showToast('👁️ 보기 모드로 전환됨');
     }
     iframe.addEventListener('load', () => autoResizeIframe(iframe), { once: true });
+  });
+
+  document.getElementById('deploy-file-input').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const deployBtn = document.getElementById('btn-deploy');
+    deployBtn.style.opacity = '0.6';
+    deployBtn.style.pointerEvents = 'none';
+    deployBtn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;border-color:#444;border-top-color:#fff"></span> 배포 중…';
+    try {
+      await deployToGithub(gl, file);
+      currentGl = { ...currentGl, status: 'published' };
+      showToast('🎉 배포 완료! GitHub Pages에 반영까지 1~2분 소요됩니다', 'success', 4000);
+      deployBtn.innerHTML = '✅ 배포됨';
+      deployBtn.style.background = '#2e7d32';
+    } catch(err) {
+      showToast('❌ 배포 실패: ' + err.message, 'error', 5000);
+      deployBtn.innerHTML = '🚀 배포';
+      deployBtn.style.opacity = '';
+      deployBtn.style.pointerEvents = '';
+      deployBtn.style.background = '';
+    }
+    // reset file input
+    e.target.value = '';
   });
 }
 
@@ -534,6 +721,7 @@ document.getElementById('btn-back').addEventListener('click', () => {
 
 // ── Init ──
 (function init() {
+  updateTokenStatus();
   if (getSession()) {
     showApp();
     loadDashboard();
