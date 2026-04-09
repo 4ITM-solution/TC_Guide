@@ -1158,11 +1158,24 @@ function renderDetail(gl, p, cuts, variants) {
     deployBtn.disabled = true;
     deployBtn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;border-color:#444;border-top-color:#fff;display:inline-block"></span> 배포 중…';
     try {
-      await deployFromDB(gl);
+      const result = await deployFromDB(gl);
       currentGl = { ...currentGl, status: 'published' };
-      showToast('🎉 배포 완료! GitHub Pages에 반영까지 1~2분 소요됩니다', 'success', 4000);
+      const url = result.url;
+      try {
+        await navigator.clipboard.writeText(url);
+        showToast('🎉 배포 완료! 링크가 클립보드에 복사됐어요 🔗', 'success', 4000);
+      } catch {
+        showToast('🎉 배포 완료! ' + url, 'success', 6000);
+      }
       deployBtn.textContent = '✅ 배포됨';
       deployBtn.style.background = '#2e7d32';
+      // 툴바에 링크 버튼 추가
+      const linkBtn = document.createElement('a');
+      linkBtn.href = url;
+      linkBtn.target = '_blank';
+      linkBtn.className = 'btn-secondary';
+      linkBtn.textContent = '🔗 링크 열기';
+      deployBtn.insertAdjacentElement('afterend', linkBtn);
     } catch(err) {
       showToast('❌ 배포 실패: ' + err.message, 'error', 5000);
       deployBtn.textContent = '🚀 배포';
