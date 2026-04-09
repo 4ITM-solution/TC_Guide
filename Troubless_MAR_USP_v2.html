@@ -87,6 +87,8 @@
     .ref-title{font-size:13px;font-weight:700;margin-bottom:2px}
     .ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .ref-arrow{color:var(--muted);font-size:18px}
+        .amazon-btn{display:inline-block;margin-top:4px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
+    .amazon-btn:hover{opacity:0.88}
     .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
     .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
     .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
@@ -140,6 +142,7 @@
           <div class="pb-section-label">💧 Texture Notes</div>
           <div class="pb-section-body" id="pb-texture"></div>
         </div>
+        <a id="pb-amazon-btn" href="#" target="_blank" class="amazon-btn" style="display:none">🛒 View on Amazon</a>
       </div>
     </div>
   </section>
@@ -362,6 +365,13 @@ async function init() {
     }
 
     // Footer
+
+    // Amazon Button in product card
+    const amazonBtnEl = document.getElementById('pb-amazon-btn');
+    if (amazonBtnEl && p.footer_link) {
+      amazonBtnEl.href = p.footer_link;
+      amazonBtnEl.style.display = '';
+    }
     const footerLinkEl = document.getElementById('footer-link');
     if (footerLinkEl) {
       if (p.footer_link) {
