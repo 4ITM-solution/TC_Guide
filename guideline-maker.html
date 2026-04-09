@@ -1019,25 +1019,7 @@ document.getElementById('start-modal').addEventListener('click', e => {
     document.getElementById('start-modal').classList.remove('open');
 });
 
-// ── Settings modal events ──
-document.getElementById('btn-settings').addEventListener('click', () => {
-  document.getElementById('github-token-input').value = getGithubToken();
-  document.getElementById('settings-modal').classList.add('open');
-});
-document.getElementById('btn-settings-cancel').addEventListener('click', () => {
-  document.getElementById('settings-modal').classList.remove('open');
-});
-document.getElementById('btn-settings-save').addEventListener('click', () => {
-  const t = document.getElementById('github-token-input').value.trim();
-  setGithubToken(t);
-  updateTokenStatus();
-  document.getElementById('settings-modal').classList.remove('open');
-  showToast(t ? '✅ GitHub Token 저장됨' : '🗑️ Token 삭제됨', t ? 'success' : '');
-});
-document.getElementById('settings-modal').addEventListener('click', e => {
-  if (e.target === document.getElementById('settings-modal'))
-    document.getElementById('settings-modal').classList.remove('open');
-});
+// ── Settings modal 제거됨 (GitHub Token은 Edge Function 서버에 내장) ──
 
 // ── Auth events ──
 document.getElementById('btn-login').addEventListener('click', () => {
