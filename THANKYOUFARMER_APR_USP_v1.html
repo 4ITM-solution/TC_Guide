@@ -78,20 +78,26 @@
   .captions-list{display:flex;flex-direction:column;gap:7px}
   .caption-item{background:#f7f7fa;border-radius:10px;padding:9px 12px;font-size:12px;line-height:1.5;color:var(--text)}
 
-  /* TAGS */
-  .tags-section{padding:16px 16px 0}
-  .tags-wrap{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 2px 10px rgba(0,0,0,0.06)}
-  .tags-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
-  .tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-  .tag{background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px}
-  .mention{background:#e8f0fe;color:var(--blue)}
+  /* HASHTAGS & MENTIONS */
+  .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
+  @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
+  .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
+  .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
+  .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}
+  .hashtag{background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
+  .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+  .mention-item:last-child{border-bottom:none}
+  .mention-at{color:var(--brand-dark);font-weight:700}
 
-  /* REF */
-  .ref-section{padding:12px 16px 0}
-  .ref-wrap{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 10px rgba(0,0,0,0.06);display:flex;flex-direction:column;gap:8px}
-  .ref-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px}
-  .ref-link{font-size:13px;color:var(--blue);text-decoration:none;font-weight:600}
-  .ref-link:hover{text-decoration:underline}
+  /* REF VIDEOS */
+  .refs-section{margin:20px 16px 0}
+  .refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .ref-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
+  .ref-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+  .ref-info{flex:1;min-width:0}
+  .ref-title{font-size:13px;font-weight:700;margin-bottom:2px}
+  .ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ref-arrow{color:var(--muted);font-size:18px}
 
   /* FOOTER */
   .footer{padding:24px 16px;text-align:center;color:var(--muted);font-size:12px;margin-top:16px}
@@ -182,10 +188,22 @@ async function render() {
 
   const uspPills  = (p.usp_pills  || []).map(u => `<span class="pill">${u}</span>`).join('');
   const ingPills  = (p.ingredient_pills || []).map(i => `<span class="pill pill-blue">${i}</span>`).join('');
-  const hashtags  = (g.hashtags  || []).map(h => `<span class="tag">${h}</span>`).join('');
-  const mentions  = (g.mentions  || []).map(m => `<span class="tag mention">${m}</span>`).join('');
-  const refVideos = (g.ref_videos || []).map(v =>
-    `<a href="${v.url}" target="_blank" class="ref-link">🎬 ${v.title}</a>`).join('');
+  const hashtags  = (g.hashtags  || []).map(h => `<span class="hashtag">${h}</span>`).join('');
+  const mentions  = (g.mentions  || []).map(m =>
+    `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
+  ).join('');
+  const refVideos = (g.ref_videos || []).map(v => {
+    const domain = v.url.replace(/https?:\/\//, '').split('/')[0];
+    const path   = v.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40);
+    return `<a class="ref-card" href="${v.url}" target="_blank">
+      <div class="ref-icon">🎵</div>
+      <div class="ref-info">
+        <div class="ref-title">${v.title}</div>
+        <div class="ref-url">${domain + path}</div>
+      </div>
+      <div class="ref-arrow">›</div>
+    </a>`;
+  }).join('');
 
   const textureBlock = p.texture_notes ? `
     <hr class="pb-divider">
@@ -232,21 +250,21 @@ async function render() {
 
     <div class="cuts-wrap">${cutsHTML}</div>
 
-    <section class="tags-section">
-      <div class="tags-wrap">
-        <div class="tags-label">Hashtags</div>
-        <div class="tags-row">${hashtags}</div>
-        <div class="tags-label">Mentions</div>
-        <div class="tags-row">${mentions}</div>
+    <div class="hm-section">
+      <div class="hm-card">
+        <div class="hm-title"># Hashtags</div>
+        <div class="hashtag-wrap">${hashtags}</div>
       </div>
-    </section>
+      <div class="hm-card">
+        <div class="hm-title">@ Mention Accounts</div>
+        ${mentions}
+      </div>
+    </div>
 
-    <section class="ref-section">
-      <div class="ref-wrap">
-        <div class="ref-label">Reference Videos</div>
-        ${refVideos}
-      </div>
-    </section>
+    <div class="refs-section">
+      <h3>📎 Additional Reference Videos</h3>
+      ${refVideos}
+    </div>
 
     <footer class="footer">
       THANKYOUFARMER · Rice Pure Essential Toner · USP Seeding Guide ${g.version}<br>
