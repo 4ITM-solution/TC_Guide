@@ -839,6 +839,13 @@ async function updateCut(id, fields) {
     body: JSON.stringify(fields)
   });
 }
+async function updateProduct(id, fields) {
+  return await sbFetch('/rest/v1/gl_products?id=eq.' + id, {
+    method: 'PATCH',
+    headers: { 'Prefer': 'return=representation' },
+    body: JSON.stringify(fields)
+  });
+}
 
 // ── Prompt / Start Guideline ──
 let promptsCache = {};
@@ -1202,41 +1209,77 @@ function renderDetail(gl, p, cuts, variants) {
     </header>
 
     <section class="gl-product-section">
-      <div class="gl-product-brief">
-        <div class="gl-pb-img">
-          ${p.product_img_url ? `<img src="${p.product_img_url}" alt="${p.name || ''}">` : '<div style="width:100%;aspect-ratio:1/1;background:#f0f0f0;max-height:340px"></div>'}
+      <div class="gl-product-brief" id="product-brief-card">
+        <div class="gl-pb-img" id="pb-img-wrap" style="position:relative;cursor:pointer">
+          ${p.product_img_url ? `<img id="pb-product-img" src="${p.product_img_url}" alt="${p.name || ''}">` : '<div id="pb-product-img-placeholder" style="width:100%;aspect-ratio:1/1;background:#f0f0f0;max-height:340px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:13px">이미지 없음</div>'}
+          <div class="gl-img-overlay" id="pb-img-overlay">📤<span style="font-size:10px">이미지 변경</span></div>
+          <input type="file" id="pb-img-upload" accept="image/*" style="display:none">
         </div>
         <div class="gl-pb-info">
-          <div class="gl-pb-name">${p.name || ''}</div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+            <div class="gl-pb-name js-pb-name">${p.name || ''}</div>
+            <button class="gl-edit-btn js-product-edit-btn" style="flex-shrink:0">✏️ 편집</button>
+          </div>
           ${Array.isArray(p.usp_pills) && p.usp_pills.length ? `
             <div>
               <div class="gl-pb-section-label">Key USP</div>
-              <div class="gl-pills">${p.usp_pills.map(x => `<span class="gl-pill">${x}</span>`).join('')}</div>
-            </div>` : ''}
+              <div class="gl-pills js-usp-pills">${p.usp_pills.map(x => `<span class="gl-pill">${x}</span>`).join('')}</div>
+            </div>` : `<div><div class="gl-pb-section-label">Key USP</div><div class="gl-pills js-usp-pills"></div></div>`}
           <hr class="gl-pb-divider">
           ${Array.isArray(p.ingredient_pills) && p.ingredient_pills.length ? `
             <div>
               <div class="gl-pb-section-label">Key Ingredients</div>
-              <div class="gl-pills">${p.ingredient_pills.map(x => `<span class="gl-pill gl-pill-blue">${x}</span>`).join('')}</div>
+              <div class="gl-pills js-ingredient-pills">${p.ingredient_pills.map(x => `<span class="gl-pill gl-pill-blue">${x}</span>`).join('')}</div>
             </div>
             <hr class="gl-pb-divider">` : ''}
           ${p.usage_method ? `
             <div>
               <div class="gl-pb-section-label">Usage Method</div>
-              <ol class="gl-pb-section-body">${p.usage_method.split('\n').map(l => `<li>${l.replace(/^\d+\.\s*/,'')}</li>`).join('')}</ol>
+              <ol class="gl-pb-section-body js-usage-method">${p.usage_method.split('\n').map(l => `<li>${l.replace(/^\d+\.\s*/,'')}</li>`).join('')}</ol>
             </div>
             <hr class="gl-pb-divider">` : ''}
           ${p.precautions ? `
             <div>
               <div class="gl-pb-section-label">⚠️ Usage Precautions</div>
-              <ul class="gl-pb-section-body">${p.precautions.split('\n').map(l => `<li>${l.replace(/^•\s*/,'')}</li>`).join('')}</ul>
+              <ul class="gl-pb-section-body js-precautions">${p.precautions.split('\n').map(l => `<li>${l.replace(/^•\s*/,'')}</li>`).join('')}</ul>
             </div>
             <hr class="gl-pb-divider">` : ''}
           ${p.texture_notes ? `
             <div>
               <div class="gl-pb-section-label">💧 Texture Notes</div>
-              <div class="gl-pb-section-body">${p.texture_notes}</div>
+              <div class="gl-pb-section-body js-texture-notes">${p.texture_notes}</div>
             </div>` : ''}
+        </div>
+      </div>
+      <!-- 제품 편집 필드 -->
+      <div class="gl-edit-fields" id="product-edit-fields" style="border-radius:0 0 14px 14px;margin-top:-1px">
+        <div>
+          <div class="edit-label">제품명</div>
+          <input class="edit-input" id="pe-name" value="${(p.name || '').replace(/"/g, '&quot;')}">
+        </div>
+        <div>
+          <div class="edit-label">Key USP (줄바꿈으로 구분)</div>
+          <textarea class="edit-textarea" id="pe-usp-pills">${Array.isArray(p.usp_pills) ? p.usp_pills.join('\n') : ''}</textarea>
+        </div>
+        <div>
+          <div class="edit-label">Key Ingredients (줄바꿈으로 구분, 없으면 비워두기)</div>
+          <textarea class="edit-textarea" id="pe-ingredient-pills">${Array.isArray(p.ingredient_pills) ? p.ingredient_pills.join('\n') : ''}</textarea>
+        </div>
+        <div>
+          <div class="edit-label">Usage Method (줄바꿈으로 구분)</div>
+          <textarea class="edit-textarea" id="pe-usage-method" style="min-height:120px">${p.usage_method || ''}</textarea>
+        </div>
+        <div>
+          <div class="edit-label">Usage Precautions (줄바꿈으로 구분)</div>
+          <textarea class="edit-textarea" id="pe-precautions">${p.precautions || ''}</textarea>
+        </div>
+        <div>
+          <div class="edit-label">Texture Notes</div>
+          <textarea class="edit-textarea" id="pe-texture-notes">${p.texture_notes || ''}</textarea>
+        </div>
+        <div class="cut-edit-actions">
+          <button class="btn-cancel-cut" id="pe-cancel">취소</button>
+          <button class="btn-save-cut" id="pe-save">💾 저장</button>
         </div>
       </div>
     </section>
@@ -1298,6 +1341,88 @@ function renderDetail(gl, p, cuts, variants) {
   // 컷 카드 렌더
   const cutsWrap = document.getElementById('gl-cuts-wrap');
   cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
+
+  // ── 제품 브리프 편집 ──
+  const productEditBtn = container.querySelector('.js-product-edit-btn');
+  const productEditFields = document.getElementById('product-edit-fields');
+
+  productEditBtn.addEventListener('click', () => {
+    const isEditing = productEditFields.classList.contains('visible');
+    productEditFields.classList.toggle('visible', !isEditing);
+    productEditBtn.textContent = isEditing ? '✏️ 편집' : '✖️ 닫기';
+  });
+
+  document.getElementById('pe-cancel').addEventListener('click', () => {
+    productEditFields.classList.remove('visible');
+    productEditBtn.textContent = '✏️ 편집';
+  });
+
+  document.getElementById('pe-save').addEventListener('click', async () => {
+    const saveBtn = document.getElementById('pe-save');
+    saveBtn.disabled = true;
+    saveBtn.textContent = '저장 중…';
+
+    const fields = {
+      name: document.getElementById('pe-name').value.trim(),
+      usp_pills: document.getElementById('pe-usp-pills').value.split('\n').map(s => s.trim()).filter(Boolean),
+      ingredient_pills: document.getElementById('pe-ingredient-pills').value.split('\n').map(s => s.trim()).filter(Boolean),
+      usage_method: document.getElementById('pe-usage-method').value.trim(),
+      precautions: document.getElementById('pe-precautions').value.trim(),
+      texture_notes: document.getElementById('pe-texture-notes').value.trim(),
+    };
+    if (!fields.ingredient_pills.length) fields.ingredient_pills = null;
+
+    try {
+      await updateProduct(p.id, fields);
+      // 뷰 업데이트
+      const nameEl = container.querySelector('.js-pb-name');
+      if (nameEl) nameEl.textContent = fields.name;
+      const uspEl = container.querySelector('.js-usp-pills');
+      if (uspEl && fields.usp_pills.length) uspEl.innerHTML = fields.usp_pills.map(x => `<span class="gl-pill">${x}</span>`).join('');
+      const usageEl = container.querySelector('.js-usage-method');
+      if (usageEl && fields.usage_method) usageEl.innerHTML = fields.usage_method.split('\n').map(l => `<li>${l.replace(/^\d+\.\s*/,'')}</li>`).join('');
+      const precEl = container.querySelector('.js-precautions');
+      if (precEl && fields.precautions) precEl.innerHTML = fields.precautions.split('\n').map(l => `<li>${l.replace(/^•\s*/,'')}</li>`).join('');
+      const texEl = container.querySelector('.js-texture-notes');
+      if (texEl) texEl.textContent = fields.texture_notes;
+      productEditFields.classList.remove('visible');
+      productEditBtn.textContent = '✏️ 편집';
+      showToast('✅ 제품 정보 저장됨', 'success', 1800);
+    } catch(e) {
+      showToast('❌ 저장 실패: ' + e.message, 'error');
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = '💾 저장';
+    }
+  });
+
+  // 제품 이미지 업로드
+  const pbImgWrap = document.getElementById('pb-img-wrap');
+  const pbImgOverlay = document.getElementById('pb-img-overlay');
+  const pbImgUpload = document.getElementById('pb-img-upload');
+  pbImgOverlay.addEventListener('click', (e) => { e.stopPropagation(); pbImgUpload.click(); });
+  pbImgUpload.addEventListener('change', async () => {
+    const file = pbImgUpload.files[0];
+    if (!file) return;
+    pbImgWrap.style.opacity = '0.5';
+    try {
+      const storageUrl = await sbUpload(`cut-images/${gl.id}/product_img.jpg`, file);
+      await updateProduct(p.id, { product_img_url: storageUrl });
+      let img = document.getElementById('pb-product-img');
+      if (!img) {
+        img = document.createElement('img');
+        img.id = 'pb-product-img';
+        document.getElementById('pb-img-placeholder')?.remove();
+        pbImgWrap.insertBefore(img, pbImgWrap.firstChild);
+      }
+      img.src = storageUrl + '?t=' + Date.now();
+      showToast('🖼️ 제품 이미지 업로드 완료', 'success');
+    } catch(e) {
+      showToast('❌ 업로드 실패: ' + e.message, 'error');
+    } finally {
+      pbImgWrap.style.opacity = '';
+    }
+  });
 }
 
 // ── Cut Card Builder (원본 디자인 + 편집 오버레이) ──
