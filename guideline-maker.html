@@ -1337,7 +1337,7 @@ function renderDetail(gl, p, cuts, variants) {
 
   // ── 제품 브리프 편집 ──
   const productEditBtn = container.querySelector('.js-product-edit-btn');
-  const productEditFields = document.getElementById('product-edit-fields');
+  const productEditFields = container.querySelector('#product-edit-fields');
 
   productEditBtn.addEventListener('click', () => {
     const isEditing = productEditFields.classList.contains('visible');
@@ -1345,23 +1345,23 @@ function renderDetail(gl, p, cuts, variants) {
     productEditBtn.textContent = isEditing ? '✏️ 편집' : '✖️ 닫기';
   });
 
-  document.getElementById('pe-cancel').addEventListener('click', () => {
+  container.querySelector('#pe-cancel').addEventListener('click', () => {
     productEditFields.classList.remove('visible');
     productEditBtn.textContent = '✏️ 편집';
   });
 
-  document.getElementById('pe-save').addEventListener('click', async () => {
-    const saveBtn = document.getElementById('pe-save');
+  container.querySelector('#pe-save').addEventListener('click', async () => {
+    const saveBtn = container.querySelector('#pe-save');
     saveBtn.disabled = true;
     saveBtn.textContent = '저장 중…';
 
     const fields = {
-      name: document.getElementById('pe-name').value.trim(),
-      usp_pills: document.getElementById('pe-usp-pills').value.split('\n').map(s => s.trim()).filter(Boolean),
-      ingredient_pills: document.getElementById('pe-ingredient-pills').value.split('\n').map(s => s.trim()).filter(Boolean),
-      usage_method: document.getElementById('pe-usage-method').value.trim(),
-      precautions: document.getElementById('pe-precautions').value.trim(),
-      texture_notes: document.getElementById('pe-texture-notes').value.trim(),
+      name: container.querySelector('#pe-name').value.trim(),
+      usp_pills: container.querySelector('#pe-usp-pills').value.split('\n').map(s => s.trim()).filter(Boolean),
+      ingredient_pills: container.querySelector('#pe-ingredient-pills').value.split('\n').map(s => s.trim()).filter(Boolean),
+      usage_method: container.querySelector('#pe-usage-method').value.trim(),
+      precautions: container.querySelector('#pe-precautions').value.trim(),
+      texture_notes: container.querySelector('#pe-texture-notes').value.trim(),
     };
     if (!fields.ingredient_pills.length) fields.ingredient_pills = null;
 
@@ -1390,9 +1390,9 @@ function renderDetail(gl, p, cuts, variants) {
   });
 
   // 제품 이미지 업로드
-  const pbImgWrap = document.getElementById('pb-img-wrap');
-  const pbImgOverlay = document.getElementById('pb-img-overlay');
-  const pbImgUpload = document.getElementById('pb-img-upload');
+  const pbImgWrap = container.querySelector('#pb-img-wrap');
+  const pbImgOverlay = container.querySelector('#pb-img-overlay');
+  const pbImgUpload = container.querySelector('#pb-img-upload');
   pbImgOverlay.addEventListener('click', (e) => { e.stopPropagation(); pbImgUpload.click(); });
   pbImgUpload.addEventListener('change', async () => {
     const file = pbImgUpload.files[0];
@@ -1401,11 +1401,11 @@ function renderDetail(gl, p, cuts, variants) {
     try {
       const storageUrl = await sbUpload(`cut-images/${gl.id}/product_img.jpg`, file);
       await updateProduct(p.id, { product_img_url: storageUrl });
-      let img = document.getElementById('pb-product-img');
+      let img = container.querySelector('#pb-product-img');
       if (!img) {
         img = document.createElement('img');
         img.id = 'pb-product-img';
-        document.getElementById('pb-img-placeholder')?.remove();
+        container.querySelector('#pb-img-placeholder')?.remove();
         pbImgWrap.insertBefore(img, pbImgWrap.firstChild);
       }
       img.src = storageUrl + '?t=' + Date.now();
