@@ -1195,7 +1195,7 @@ function renderDetail(gl, p, cuts, variants) {
         <div class="gl-pb-info">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
             <div class="gl-pb-name js-pb-name">${p.name || ''}</div>
-            <button class="gl-edit-btn js-product-edit-btn" style="flex-shrink:0">✏️ 편집</button>
+            <button class="js-product-edit-btn" style="flex-shrink:0;background:rgba(255,255,255,0.9);border:1.5px solid #ebebef;border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:#888;transition:all 0.2s;white-space:nowrap">✏️ 편집</button>
           </div>
           ${Array.isArray(p.usp_pills) && p.usp_pills.length ? `
             <div>
