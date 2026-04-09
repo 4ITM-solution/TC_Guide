@@ -122,62 +122,100 @@
   .btn-edit-toggle:hover { background: #ffe69c; }
   .btn-edit-toggle.active { background: var(--pink); color: #fff; border-color: var(--pink); }
 
-  /* ── IFRAME WRAPPER ── */
+  /* ── IFRAME WRAPPER / DETAIL CONTAINER ── */
   .gl-iframe-wrap {
     border-radius: var(--radius); overflow: hidden;
     border: 1.5px solid var(--border);
     box-shadow: var(--shadow);
-    background: var(--card);
-  }
-  .gl-iframe-wrap iframe {
-    width: 100%; border: none; display: block;
-    min-height: 80vh;
+    background: var(--bg);
   }
 
-  /* ── CUT LIST ── */
-  .cuts-list { display: flex; flex-direction: column; gap: 12px; }
-  .cut-item {
-    background: var(--card); border-radius: var(--radius); border: 1.5px solid var(--border);
-    overflow: visible; transition: border 0.2s;
-  }
-  .cut-item.editing { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,107,157,0.12); }
-  .cut-item-inner { display: flex; gap: 0; }
+  /* ── ORIGINAL GUIDELINE DESIGN ── */
+  .gl-detail { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f7f7fa; color: #1e1e2e; }
+  .gl-detail :root { --pink:#FF6B9D;--pink-dark:#E8447A;--pink-light:#FFE8F2;--pink-mid:#FFB3D0;--blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;--text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px; }
+  .gl-site-header { background: linear-gradient(135deg, #FF6B9D 0%, #E8447A 100%); color: #fff; padding: 22px 18px 20px; text-align: center; }
+  .gl-header-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.45); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; margin-bottom: 12px; }
+  .gl-site-header h1 { font-size: clamp(18px,5vw,26px); font-weight: 900; line-height: 1.25; letter-spacing: -0.3px; }
+  .gl-header-concept { font-size: 13px; color: rgba(255,255,255,0.82); margin-top: 6px; font-weight: 500; }
+  .gl-product-section { padding: 16px 16px 0; }
+  .gl-product-brief { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 14px rgba(0,0,0,0.07); display: flex; flex-direction: column; }
+  @media(min-width:600px) { .gl-product-brief { flex-direction: row; align-items: stretch; } .gl-pb-img { width: 280px; flex-shrink: 0; } .gl-pb-img img { aspect-ratio: auto; width: 100%; height: 100%; max-height: none; object-fit: cover; } }
+  .gl-pb-img { background: #f0f0f0; overflow: hidden; }
+  .gl-pb-img img { width: 100%; display: block; aspect-ratio: 1/1; object-fit: cover; max-height: 340px; object-position: center; }
+  .gl-pb-info { padding: 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .gl-pb-name { font-size: 14px; font-weight: 900; line-height: 1.35; }
+  .gl-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+  .gl-pill { background: #FFE8F2; color: #E8447A; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+  .gl-pill-blue { background: #e8f0fe; color: #1A73E8; }
+  .gl-pb-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 5px; }
+  .gl-pb-section-body { font-size: 12px; line-height: 1.6; }
+  .gl-pb-section-body li { margin-left: 14px; margin-bottom: 2px; }
+  .gl-pb-divider { border: none; border-top: 1px solid #f0f0f0; margin: 0; }
+  .gl-variant-strip { padding: 14px 16px 0; }
+  .gl-variant-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
+  .gl-variant-thumbs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .gl-variant-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; width: 68px; }
+  .gl-variant-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; border: 2px solid transparent; }
+  .gl-variant-item.active img { border-color: #FF6B9D; }
+  .gl-variant-item span { font-size: 10px; font-weight: 700; color: #888; text-align: center; line-height: 1.2; }
+  .gl-variant-item.active span { color: #E8447A; }
+  .gl-angle-header { margin: 20px 16px 10px; }
+  .gl-angle-header .ah-sub { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #888; margin-bottom: 4px; }
+  .gl-angle-header h2 { font-size: 22px; font-weight: 900; }
+  .gl-cuts-wrap { padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
+  .gl-cut-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); position: relative; }
+  .gl-cut-card.editing { outline: 2px solid #FF6B9D; }
+  .gl-cut-inner { display: flex; flex-direction: column; }
+  @media(min-width:520px) { .gl-cut-inner { flex-direction: row; } .gl-cut-img-wrap { width: 30%; flex-shrink: 0; max-height: 88vh; } }
+  .gl-cut-img-wrap { position: relative; background: #111; }
+  .gl-cut-img-wrap img { width: 100%; display: block; aspect-ratio: 9/16; object-fit: cover; }
+  @media(min-width:520px) { .gl-cut-img-wrap img { aspect-ratio: auto; width: 100%; height: 100%; max-height: 88vh; object-fit: cover; } }
+  .gl-cut-no-img { width: 100%; aspect-ratio: 9/16; display: flex; align-items: center; justify-content: center; color: #888; font-size: 13px; background: #f5f5f8; }
+  @media(min-width:520px) { .gl-cut-no-img { height: 100%; max-height: 88vh; aspect-ratio: auto; } }
+  .gl-cut-badge-row { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .gl-cut-label { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; color: #fff; }
+  .gl-label-hook { background: #FF4757; }
+  .gl-label-cut { background: #1A73E8; }
+  .gl-label-result { background: #2ED573; color: #1a1a1a; }
+  .gl-cut-ts { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.45); padding: 3px 8px; border-radius: 100px; }
+  .gl-cut-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 11px; position: relative; }
+  .gl-edit-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); border: 1.5px solid #ebebef; border-radius: 8px; padding: 4px 8px; font-size: 12px; cursor: pointer; color: #888; transition: all 0.2s; z-index: 2; }
+  .gl-edit-btn:hover { border-color: #FF6B9D; color: #FF6B9D; background: #fff; }
+  .gl-field-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: #888; margin-bottom: 3px; }
+  .gl-field-scene { font-size: 14px; font-weight: 700; line-height: 1.45; }
+  .gl-cut-sep { border: none; border-top: 1px solid #f0f0f0; }
+  .gl-field-direction { font-size: 13px; line-height: 1.65; }
+  .gl-field-usp { display: inline-block; background: #FFE8F2; color: #E8447A; font-size: 12px; font-weight: 800; padding: 5px 14px; border-radius: 100px; border: 1px solid #FFB3D0; }
+  .gl-field-pm { font-size: 12px; line-height: 1.7; background: #fffbf0; border-left: 3px solid #FFA502; padding: 8px 12px; border-radius: 0 8px 8px 0; }
+  .gl-field-pm ol { margin-left: 16px; }
+  .gl-field-pm li { margin-bottom: 3px; }
+  .gl-caption-options { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .gl-caption-opt { display: flex; align-items: flex-start; gap: 7px; font-size: 13px; line-height: 1.5; }
+  .gl-caption-opt::before { content: '•'; color: #FF6B9D; font-size: 16px; line-height: 1.2; flex-shrink: 0; }
+  .gl-hm-section { margin: 24px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+  @media(min-width:520px) { .gl-hm-section { flex-direction: row; gap: 16px; } }
+  .gl-hm-card { background: #fff; border-radius: 14px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); flex: 1; }
+  .gl-hm-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: #888; margin-bottom: 12px; }
+  .gl-hashtag-wrap { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 2px; }
+  .gl-hashtag { background: #FFE8F2; color: #E8447A; font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 100px; }
+  .gl-mention-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .gl-mention-item:last-child { border-bottom: none; }
+  .gl-mention-at { color: #E8447A; font-weight: 700; }
+  .gl-refs-section { margin: 20px 16px 0; }
+  .gl-refs-section h3 { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
+  .gl-ref-card { background: #fff; border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); display: flex; align-items: center; gap: 12px; text-decoration: none; color: #1e1e2e; margin-bottom: 10px; }
+  .gl-ref-icon { width: 40px; height: 40px; background: #000; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
+  .gl-ref-info { flex: 1; min-width: 0; }
+  .gl-ref-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .gl-ref-url { font-size: 11px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gl-site-footer { text-align: center; padding: 24px 16px 32px; color: #888; font-size: 12px; }
+  .gl-img-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; color: #fff; font-size: 11px; font-weight: 700; gap: 4px; cursor: pointer; }
+  .gl-cut-img-wrap:hover .gl-img-overlay { opacity: 1; }
+  .gl-img-upload-input { display: none; }
 
-  /* ── THUMB + IMAGE UPLOAD ── */
-  .cut-thumb {
-    width: 100px; flex-shrink: 0; background: #f0f0f5;
-    overflow: hidden; position: relative; cursor: default;
-  }
-  .cut-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .cut-thumb .no-img { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 24px; min-height: 80px; }
-  .cut-thumb.uploadable { cursor: pointer; }
-  .cut-thumb.uploadable:hover .img-overlay { opacity: 1; }
-  .img-overlay {
-    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 0.2s; color: #fff; font-size: 11px; font-weight: 700; gap: 4px;
-  }
-  .img-overlay .upload-icon { font-size: 20px; }
-  .img-upload-input { display: none; }
-
-  /* ── CUT BODY ── */
-  .cut-body { padding: 14px 16px; flex: 1; min-width: 0; }
-  .cut-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .cut-label-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .label-hook { background: #ffe0e8; color: #c0004a; }
-  .label-cut { background: #e8f0ff; color: #1a4ab8; }
-  .label-result { background: #e8f5e9; color: #1b5e20; }
-  .cut-fast-badge { font-size: 10px; color: #ff8c00; font-weight: 700; }
-  .cut-order { font-size: 11px; color: var(--muted); margin-left: auto; }
-
-  /* Scene & Direction - view mode */
-  .cut-scene { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
-  .cut-direction { font-size: 12px; color: var(--muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .cut-direction.expanded { display: block; -webkit-line-clamp: unset; }
-
-  /* Edit fields */
-  .cut-edit-fields { display: none; flex-direction: column; gap: 8px; margin-top: 6px; }
-  .cut-edit-fields.visible { display: flex; }
+  /* Edit overlay fields */
+  .gl-edit-fields { display: none; flex-direction: column; gap: 8px; padding: 12px 16px 16px; background: #fff8fc; border-top: 1.5px solid #FFE8F2; }
+  .gl-edit-fields.visible { display: flex; }
   .edit-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
   .edit-input, .edit-textarea {
     width: 100%; padding: 8px 10px; border: 1.5px solid var(--border);
@@ -200,12 +238,6 @@
     cursor: pointer; transition: all 0.2s;
   }
   .btn-cancel-cut:hover { border-color: var(--muted); color: var(--text); }
-  .edit-pencil-btn {
-    margin-left: auto; background: none; border: none; cursor: pointer;
-    font-size: 14px; color: var(--muted); padding: 2px 4px; border-radius: 4px;
-    transition: color 0.2s;
-  }
-  .edit-pencil-btn:hover { color: var(--pink); }
 
   /* ── LOADING / TOAST ── */
   .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid #ffd6e8; border-top-color: var(--pink); border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -1099,7 +1131,7 @@ function renderDashboard(guidelines) {
   });
 }
 
-// ── Detail (DB 직접 렌더링 + 인라인 편집) ──
+// ── Detail (원본 디자인 + 인라인 편집) ──
 let currentGl = null;
 let currentCuts = [];
 
@@ -1111,21 +1143,24 @@ async function loadDetail(id) {
   toolbar.innerHTML = '';
 
   try {
-    const [guidelines, cuts] = await Promise.all([
-      fetchGuidelines(),
-      fetchCuts(id)
+    const [glRows, cuts, variantRows] = await Promise.all([
+      sbFetch(`/rest/v1/gl_guidelines?id=eq.${id}&select=*,gl_products(*),gl_types(name)`),
+      fetchCuts(id),
+      sbFetch(`/rest/v1/gl_variants?order=order.asc`).catch(() => [])
     ]);
-    const gl = guidelines.find(g => g.id === id);
+    const gl = glRows[0];
     if (!gl) throw new Error('가이드라인을 찾을 수 없습니다.');
+    const p = gl.gl_products || {};
+    const variants = variantRows.filter(v => v.product_id === p.id);
     currentGl = gl;
     currentCuts = cuts;
-    renderDetail(gl, cuts);
+    renderDetail(gl, p, cuts, variants);
   } catch (e) {
     wrap.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div>${e.message}</div></div>`;
   }
 }
 
-function renderDetail(gl, cuts) {
+function renderDetail(gl, p, cuts, variants) {
   const wrap = document.getElementById('gl-iframe-wrap');
   const toolbar = document.getElementById('toolbar-right');
 
@@ -1134,17 +1169,6 @@ function renderDetail(gl, cuts) {
     ${gl.github_url ? `<a href="${gl.github_url}" target="_blank" class="btn-secondary">🔗 새 탭에서 보기</a>` : ''}
     <button class="btn-deploy" id="btn-deploy">🚀 배포</button>
   `;
-
-  // 컷 리스트 렌더
-  if (!cuts || cuts.length === 0) {
-    wrap.innerHTML = `<div class="empty-state"><div class="icon">📋</div><div>컷 데이터가 없습니다.</div></div>`;
-  } else {
-    wrap.innerHTML = `<div class="cuts-list" id="cuts-list"></div>`;
-    const list = document.getElementById('cuts-list');
-    cuts.forEach(cut => list.appendChild(buildCutItem(cut)));
-  }
-
-  // 배포 버튼
   document.getElementById('btn-deploy').addEventListener('click', async () => {
     const deployBtn = document.getElementById('btn-deploy');
     deployBtn.disabled = true;
@@ -1162,118 +1186,239 @@ function renderDetail(gl, cuts) {
       deployBtn.style.background = '';
     }
   });
+
+  // ── 원본 디자인 렌더 ──
+  const container = document.createElement('div');
+  container.className = 'gl-detail';
+
+  // Header
+  const brand = p.brand || '';
+  const badge = (brand + ' · USP GUIDELINE').toUpperCase();
+  container.innerHTML = `
+    <header class="gl-site-header">
+      <div class="gl-header-badge">${badge}</div>
+      <h1>${gl.angle_name || ''}</h1>
+      <p class="gl-header-concept">${gl.concept || ''}</p>
+    </header>
+
+    <section class="gl-product-section">
+      <div class="gl-product-brief">
+        <div class="gl-pb-img">
+          ${p.product_img_url ? `<img src="${p.product_img_url}" alt="${p.name || ''}">` : '<div style="width:100%;aspect-ratio:1/1;background:#f0f0f0;max-height:340px"></div>'}
+        </div>
+        <div class="gl-pb-info">
+          <div class="gl-pb-name">${p.name || ''}</div>
+          ${Array.isArray(p.usp_pills) && p.usp_pills.length ? `
+            <div>
+              <div class="gl-pb-section-label">Key USP</div>
+              <div class="gl-pills">${p.usp_pills.map(x => `<span class="gl-pill">${x}</span>`).join('')}</div>
+            </div>` : ''}
+          <hr class="gl-pb-divider">
+          ${Array.isArray(p.ingredient_pills) && p.ingredient_pills.length ? `
+            <div>
+              <div class="gl-pb-section-label">Key Ingredients</div>
+              <div class="gl-pills">${p.ingredient_pills.map(x => `<span class="gl-pill gl-pill-blue">${x}</span>`).join('')}</div>
+            </div>
+            <hr class="gl-pb-divider">` : ''}
+          ${p.usage_method ? `
+            <div>
+              <div class="gl-pb-section-label">Usage Method</div>
+              <ol class="gl-pb-section-body">${p.usage_method.split('\n').map(l => `<li>${l.replace(/^\d+\.\s*/,'')}</li>`).join('')}</ol>
+            </div>
+            <hr class="gl-pb-divider">` : ''}
+          ${p.precautions ? `
+            <div>
+              <div class="gl-pb-section-label">⚠️ Usage Precautions</div>
+              <ul class="gl-pb-section-body">${p.precautions.split('\n').map(l => `<li>${l.replace(/^•\s*/,'')}</li>`).join('')}</ul>
+            </div>
+            <hr class="gl-pb-divider">` : ''}
+          ${p.texture_notes ? `
+            <div>
+              <div class="gl-pb-section-label">💧 Texture Notes</div>
+              <div class="gl-pb-section-body">${p.texture_notes}</div>
+            </div>` : ''}
+        </div>
+      </div>
+    </section>
+
+    ${variants.length ? `
+    <div class="gl-variant-strip">
+      <div class="gl-variant-label">${variants.length} Variants Available</div>
+      <div class="gl-variant-thumbs">${variants.map(v => `
+        <div class="gl-variant-item${v.is_active ? ' active' : ''}">
+          ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : '<div style="width:60px;height:60px;background:#eee;border-radius:10px"></div>'}
+          <span>${v.name}</span>
+        </div>`).join('')}
+      </div>
+    </div>` : ''}
+
+    <div class="gl-angle-header">
+      <div class="ah-sub">Angle #1 · ${cuts.length} Cuts</div>
+      <h2>${gl.angle_name || ''}</h2>
+    </div>
+
+    <div class="gl-cuts-wrap" id="gl-cuts-wrap"></div>
+
+    ${(Array.isArray(gl.hashtags) && gl.hashtags.length) || (Array.isArray(gl.mentions) && gl.mentions.length) ? `
+    <div class="gl-hm-section">
+      ${Array.isArray(gl.hashtags) && gl.hashtags.length ? `
+      <div class="gl-hm-card">
+        <div class="gl-hm-title"># Hashtags</div>
+        <div class="gl-hashtag-wrap">${gl.hashtags.map(h => `<span class="gl-hashtag">${h}</span>`).join('')}</div>
+      </div>` : ''}
+      ${Array.isArray(gl.mentions) && gl.mentions.length ? `
+      <div class="gl-hm-card">
+        <div class="gl-hm-title">@ Mention Accounts</div>
+        <div>${gl.mentions.map(m => `<div class="gl-mention-item"><span class="gl-mention-at">${m}</span><span style="color:#888;font-size:11px;margin-left:auto">Brand</span></div>`).join('')}</div>
+      </div>` : ''}
+    </div>` : ''}
+
+    ${Array.isArray(gl.ref_videos) && gl.ref_videos.length ? `
+    <div class="gl-refs-section">
+      <h3>📎 Reference Videos</h3>
+      <div>${gl.ref_videos.map(r => {
+        const domain = r.url.replace(/https?:\/\//,'').split('/')[0];
+        return `<a href="${r.url}" target="_blank" class="gl-ref-card">
+          <div class="gl-ref-icon">▶</div>
+          <div class="gl-ref-info">
+            <div class="gl-ref-title">${r.title || domain}</div>
+            <div class="gl-ref-url">${r.url}</div>
+          </div>
+          <span style="color:#888;font-size:18px">›</span>
+        </a>`;
+      }).join('')}</div>
+    </div>` : ''}
+
+    <div class="gl-site-footer">AI-generated guideline · For influencer reference only</div>
+  `;
+
+  wrap.innerHTML = '';
+  wrap.appendChild(container);
+
+  // 컷 카드 렌더
+  const cutsWrap = document.getElementById('gl-cuts-wrap');
+  cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
 }
 
-// ── Cut Item Builder (인라인 편집 포함) ──
-function buildCutItem(cut) {
-  const item = document.createElement('div');
-  item.className = 'cut-item';
-  item.dataset.id = cut.id;
+// ── Cut Card Builder (원본 디자인 + 편집 오버레이) ──
+function buildCutCard(cut) {
+  const card = document.createElement('div');
+  card.className = 'gl-cut-card';
+  card.dataset.id = cut.id;
 
-  const labelClass = cut.label.startsWith('HOOK') ? 'label-hook'
-    : cut.label === 'RESULT' ? 'label-result' : 'label-cut';
+  const lblClass = cut.label === 'HOOK' || cut.label.startsWith('HOOK') ? 'gl-label-hook'
+    : cut.label === 'RESULT' ? 'gl-label-result' : 'gl-label-cut';
 
-  const captionsText = Array.isArray(cut.captions) ? cut.captions.join('\n') : (cut.captions || '');
+  const imgHtml = cut.img_url
+    ? `<img src="${cut.img_url}" alt="${cut.label}">`
+    : `<div class="gl-cut-no-img">이미지 없음</div>`;
 
-  item.innerHTML = `
-    <div class="cut-item-inner">
-      <div class="cut-thumb${cut.img_url ? ' uploadable' : ''}" data-cut-id="${cut.id}">
-        ${cut.img_url
-          ? `<img src="${cut.img_url}" alt="${cut.label}">`
-          : `<div class="no-img">📷</div>`}
-        <div class="img-overlay"><span class="upload-icon">📤</span>이미지 변경</div>
-        <input type="file" class="img-upload-input" accept="image/*">
+  let body = '';
+  if (cut.main_usp) body += `<div><div class="gl-field-label">Main USP</div><div class="gl-field-usp">${cut.main_usp}</div></div>`;
+  if (cut.production_method) {
+    const steps = cut.production_method.split('\n').filter(s => s.trim());
+    body += `<div><div class="gl-field-label">Production Method</div><div class="gl-field-pm"><ol>${steps.map(s => `<li>${s.replace(/^\d+\.\s*/,'')}</li>`).join('')}</ol></div></div>`;
+  }
+  if (cut.main_usp || cut.production_method) body += '<hr class="gl-cut-sep">';
+  body += `<div><div class="gl-field-label">Scene</div><div class="gl-field-scene js-scene">${cut.scene || ''}</div></div>`;
+  body += '<hr class="gl-cut-sep">';
+  body += `<div><div class="gl-field-label">Direction</div><div class="gl-field-direction js-direction">${cut.direction || ''}</div></div>`;
+  const captions = Array.isArray(cut.captions) ? cut.captions : [];
+  if (captions.length) {
+    body += '<hr class="gl-cut-sep">';
+    body += `<div><div class="gl-field-label">Caption Options</div><div class="gl-caption-options">${captions.map(c => `<div class="gl-caption-opt">${c}</div>`).join('')}</div></div>`;
+  }
+
+  const captionsText = captions.join('\n');
+
+  card.innerHTML = `
+    <div class="gl-cut-inner">
+      <div class="gl-cut-img-wrap">
+        ${imgHtml}
+        <div class="gl-cut-badge-row">
+          <span class="gl-cut-label ${lblClass}">${cut.label}</span>
+          ${cut.pacing ? `<span class="gl-cut-ts">${cut.pacing}</span>` : ''}
+        </div>
+        <div class="gl-img-overlay">📤<span style="font-size:10px">이미지 변경</span></div>
+        <input type="file" class="gl-img-upload-input" accept="image/*">
       </div>
-      <div class="cut-body">
-        <div class="cut-top">
-          <span class="cut-label-badge ${labelClass}">${cut.label}</span>
-          ${cut.pacing === 'fast' ? '<span class="cut-fast-badge">⚡ Quick Cut</span>' : ''}
-          <span class="cut-order">#${cut.order ?? ''}</span>
-          <button class="edit-pencil-btn" title="편집">✏️</button>
-        </div>
-        <div class="cut-view-fields">
-          <div class="cut-scene">${cut.scene || ''}</div>
-          <div class="cut-direction">${cut.direction || ''}</div>
-        </div>
-        <div class="cut-edit-fields">
-          <div>
-            <div class="edit-label">Scene</div>
-            <input class="edit-input" name="scene" value="${(cut.scene || '').replace(/"/g, '&quot;')}">
-          </div>
-          <div>
-            <div class="edit-label">Direction</div>
-            <textarea class="edit-textarea" name="direction">${cut.direction || ''}</textarea>
-          </div>
-          <div>
-            <div class="edit-label">Captions (줄바꿈으로 구분)</div>
-            <textarea class="edit-textarea" name="captions">${captionsText}</textarea>
-          </div>
-          ${cut.label.startsWith('HOOK') ? `
-          <div>
-            <div class="edit-label">Main USP</div>
-            <input class="edit-input" name="main_usp" value="${(cut.main_usp || '').replace(/"/g, '&quot;')}">
-          </div>
-          <div>
-            <div class="edit-label">Production Method (줄바꿈으로 구분)</div>
-            <textarea class="edit-textarea" name="production_method">${cut.production_method || ''}</textarea>
-          </div>` : ''}
-          <div class="cut-edit-actions">
-            <button class="btn-cancel-cut">취소</button>
-            <button class="btn-save-cut">💾 저장</button>
-          </div>
-        </div>
+      <div class="gl-cut-body">
+        <button class="gl-edit-btn js-edit-btn">✏️ 편집</button>
+        ${body}
+      </div>
+    </div>
+    <div class="gl-edit-fields">
+      <div>
+        <div class="edit-label">Scene</div>
+        <input class="edit-input" name="scene" value="${(cut.scene || '').replace(/"/g, '&quot;')}">
+      </div>
+      <div>
+        <div class="edit-label">Direction</div>
+        <textarea class="edit-textarea" name="direction">${cut.direction || ''}</textarea>
+      </div>
+      <div>
+        <div class="edit-label">Captions (줄바꿈으로 구분)</div>
+        <textarea class="edit-textarea" name="captions">${captionsText}</textarea>
+      </div>
+      ${cut.label.startsWith('HOOK') ? `
+      <div>
+        <div class="edit-label">Main USP</div>
+        <input class="edit-input" name="main_usp" value="${(cut.main_usp || '').replace(/"/g, '&quot;')}">
+      </div>
+      <div>
+        <div class="edit-label">Production Method (줄바꿈으로 구분)</div>
+        <textarea class="edit-textarea" name="production_method">${cut.production_method || ''}</textarea>
+      </div>` : ''}
+      <div class="cut-edit-actions">
+        <button class="btn-cancel-cut">취소</button>
+        <button class="btn-save-cut">💾 저장</button>
       </div>
     </div>
   `;
 
   // 편집 토글
-  const pencilBtn = item.querySelector('.edit-pencil-btn');
-  const viewFields = item.querySelector('.cut-view-fields');
-  const editFields = item.querySelector('.cut-edit-fields');
-
-  pencilBtn.addEventListener('click', () => {
+  const editBtn = card.querySelector('.js-edit-btn');
+  const editFields = card.querySelector('.gl-edit-fields');
+  editBtn.addEventListener('click', () => {
     const isEditing = editFields.classList.contains('visible');
     editFields.classList.toggle('visible', !isEditing);
-    viewFields.style.display = isEditing ? '' : 'none';
-    item.classList.toggle('editing', !isEditing);
-    pencilBtn.textContent = isEditing ? '✏️' : '✖️';
+    card.classList.toggle('editing', !isEditing);
+    editBtn.textContent = isEditing ? '✏️ 편집' : '✖️ 닫기';
   });
 
   // 취소
-  item.querySelector('.btn-cancel-cut').addEventListener('click', () => {
+  card.querySelector('.btn-cancel-cut').addEventListener('click', () => {
     editFields.classList.remove('visible');
-    viewFields.style.display = '';
-    item.classList.remove('editing');
-    pencilBtn.textContent = '✏️';
+    card.classList.remove('editing');
+    editBtn.textContent = '✏️ 편집';
   });
 
   // 저장
-  item.querySelector('.btn-save-cut').addEventListener('click', async () => {
-    const saveBtn = item.querySelector('.btn-save-cut');
+  card.querySelector('.btn-save-cut').addEventListener('click', async () => {
+    const saveBtn = card.querySelector('.btn-save-cut');
     saveBtn.disabled = true;
     saveBtn.textContent = '저장 중…';
 
     const fields = {
-      scene: item.querySelector('[name="scene"]').value.trim(),
-      direction: item.querySelector('[name="direction"]').value.trim(),
-      captions: item.querySelector('[name="captions"]').value
-        .split('\n').map(s => s.trim()).filter(Boolean),
+      scene: card.querySelector('[name="scene"]').value.trim(),
+      direction: card.querySelector('[name="direction"]').value.trim(),
+      captions: card.querySelector('[name="captions"]').value.split('\n').map(s => s.trim()).filter(Boolean),
     };
-    const mainUspEl = item.querySelector('[name="main_usp"]');
-    const pmEl = item.querySelector('[name="production_method"]');
+    const mainUspEl = card.querySelector('[name="main_usp"]');
+    const pmEl = card.querySelector('[name="production_method"]');
     if (mainUspEl) fields.main_usp = mainUspEl.value.trim();
     if (pmEl) fields.production_method = pmEl.value.trim();
 
     try {
       await updateCut(cut.id, fields);
       // 뷰 업데이트
-      item.querySelector('.cut-scene').textContent = fields.scene;
-      item.querySelector('.cut-direction').textContent = fields.direction;
-      // 상태 닫기
+      const sceneEl = card.querySelector('.js-scene');
+      const dirEl = card.querySelector('.js-direction');
+      if (sceneEl) sceneEl.textContent = fields.scene;
+      if (dirEl) dirEl.textContent = fields.direction;
       editFields.classList.remove('visible');
-      viewFields.style.display = '';
-      item.classList.remove('editing');
-      pencilBtn.textContent = '✏️';
+      card.classList.remove('editing');
+      editBtn.textContent = '✏️ 편집';
       showToast('✅ 저장됨', 'success', 1800);
     } catch(e) {
       showToast('❌ 저장 실패: ' + e.message, 'error');
@@ -1284,32 +1429,34 @@ function buildCutItem(cut) {
   });
 
   // 이미지 업로드
-  const thumb = item.querySelector('.cut-thumb');
-  const fileInput = item.querySelector('.img-upload-input');
-  if (thumb.classList.contains('uploadable') || !cut.img_url) {
-    thumb.classList.add('uploadable');
-    thumb.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', async () => {
-      const file = fileInput.files[0];
-      if (!file) return;
-      thumb.style.opacity = '0.5';
-      try {
-        const slug = currentGl.id;
-        const storageUrl = await sbUpload(`cut-images/${slug}/cut_${String(cut.order || 0).padStart(2,'0')}.jpg`, file);
-        await updateCut(cut.id, { img_url: storageUrl });
-        const img = thumb.querySelector('img') || document.createElement('img');
-        img.src = storageUrl + '?t=' + Date.now();
-        if (!thumb.querySelector('img')) { thumb.querySelector('.no-img')?.remove(); thumb.insertBefore(img, thumb.firstChild); }
-        showToast('🖼️ 이미지 업로드 완료', 'success');
-      } catch(e) {
-        showToast('❌ 업로드 실패: ' + e.message, 'error');
-      } finally {
-        thumb.style.opacity = '';
+  const imgOverlay = card.querySelector('.gl-img-overlay');
+  const fileInput = card.querySelector('.gl-img-upload-input');
+  const imgWrap = card.querySelector('.gl-cut-img-wrap');
+  imgOverlay.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    imgWrap.style.opacity = '0.5';
+    try {
+      const slug = currentGl.id;
+      const storageUrl = await sbUpload(`cut-images/${slug}/cut_${String(cut.order || 0).padStart(2,'0')}.jpg`, file);
+      await updateCut(cut.id, { img_url: storageUrl });
+      let img = imgWrap.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        imgWrap.querySelector('.gl-cut-no-img')?.remove();
+        imgWrap.insertBefore(img, imgWrap.firstChild);
       }
-    });
-  }
+      img.src = storageUrl + '?t=' + Date.now();
+      showToast('🖼️ 이미지 업로드 완료', 'success');
+    } catch(e) {
+      showToast('❌ 업로드 실패: ' + e.message, 'error');
+    } finally {
+      imgWrap.style.opacity = '';
+    }
+  });
 
-  return item;
+  return card;
 }
 
 // ── Back button ──
