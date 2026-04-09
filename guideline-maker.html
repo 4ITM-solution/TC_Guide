@@ -1099,9 +1099,9 @@ function renderDashboard(guidelines) {
   });
 }
 
-// ── Detail (iframe 방식) ──
+// ── Detail (DB 직접 렌더링 + 인라인 편집) ──
 let currentGl = null;
-let isEditMode = false;
+let currentCuts = [];
 
 async function loadDetail(id) {
   showView('detail');
@@ -1109,42 +1109,42 @@ async function loadDetail(id) {
   const toolbar = document.getElementById('toolbar-right');
   wrap.innerHTML = '<div class="loading-overlay"><div class="spinner"></div></div>';
   toolbar.innerHTML = '';
-  isEditMode = false;
 
   try {
-    const guidelines = await fetchGuidelines();
+    const [guidelines, cuts] = await Promise.all([
+      fetchGuidelines(),
+      fetchCuts(id)
+    ]);
     const gl = guidelines.find(g => g.id === id);
     if (!gl) throw new Error('가이드라인을 찾을 수 없습니다.');
     currentGl = gl;
-    renderDetailIframe(gl);
+    currentCuts = cuts;
+    renderDetail(gl, cuts);
   } catch (e) {
     wrap.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div>${e.message}</div></div>`;
   }
 }
 
-function renderDetailIframe(gl) {
+function renderDetail(gl, cuts) {
   const wrap = document.getElementById('gl-iframe-wrap');
   const toolbar = document.getElementById('toolbar-right');
 
-  if (!gl.github_url) {
-    wrap.innerHTML = `<div class="empty-state"><div class="icon">🔗</div><div>배포된 URL이 없습니다.<br><small>Claude에서 배포 후 github_url을 등록해주세요.</small></div></div>`;
-    return;
-  }
-
-  // iframe 렌더 (view mode)
-  wrap.innerHTML = `<iframe id="gl-iframe" src="${gl.github_url}" loading="lazy"
-    onload="autoResizeIframe(this)"></iframe>`;
-
-  // iframe 높이 자동 조정
-  const iframe = document.getElementById('gl-iframe');
-  iframe.addEventListener('load', () => autoResizeIframe(iframe));
-
-  // 툴바 버튼
+  // 툴바
   toolbar.innerHTML = `
-    <a href="${gl.github_url}" target="_blank" class="btn-secondary">🔗 새 탭에서 보기</a>
+    ${gl.github_url ? `<a href="${gl.github_url}" target="_blank" class="btn-secondary">🔗 새 탭에서 보기</a>` : ''}
     <button class="btn-deploy" id="btn-deploy">🚀 배포</button>
   `;
 
+  // 컷 리스트 렌더
+  if (!cuts || cuts.length === 0) {
+    wrap.innerHTML = `<div class="empty-state"><div class="icon">📋</div><div>컷 데이터가 없습니다.</div></div>`;
+  } else {
+    wrap.innerHTML = `<div class="cuts-list" id="cuts-list"></div>`;
+    const list = document.getElementById('cuts-list');
+    cuts.forEach(cut => list.appendChild(buildCutItem(cut)));
+  }
+
+  // 배포 버튼
   document.getElementById('btn-deploy').addEventListener('click', async () => {
     const deployBtn = document.getElementById('btn-deploy');
     deployBtn.disabled = true;
@@ -1164,23 +1164,158 @@ function renderDetailIframe(gl) {
   });
 }
 
-function autoResizeIframe(iframe) {
-  try {
-    const h = iframe.contentDocument?.body?.scrollHeight;
-    if (h && h > 200) iframe.style.height = h + 'px';
-  } catch(e) {
-    // cross-origin: fallback to fixed height
-    iframe.style.height = '90vh';
+// ── Cut Item Builder (인라인 편집 포함) ──
+function buildCutItem(cut) {
+  const item = document.createElement('div');
+  item.className = 'cut-item';
+  item.dataset.id = cut.id;
+
+  const labelClass = cut.label.startsWith('HOOK') ? 'label-hook'
+    : cut.label === 'RESULT' ? 'label-result' : 'label-cut';
+
+  const captionsText = Array.isArray(cut.captions) ? cut.captions.join('\n') : (cut.captions || '');
+
+  item.innerHTML = `
+    <div class="cut-item-inner">
+      <div class="cut-thumb${cut.img_url ? ' uploadable' : ''}" data-cut-id="${cut.id}">
+        ${cut.img_url
+          ? `<img src="${cut.img_url}" alt="${cut.label}">`
+          : `<div class="no-img">📷</div>`}
+        <div class="img-overlay"><span class="upload-icon">📤</span>이미지 변경</div>
+        <input type="file" class="img-upload-input" accept="image/*">
+      </div>
+      <div class="cut-body">
+        <div class="cut-top">
+          <span class="cut-label-badge ${labelClass}">${cut.label}</span>
+          ${cut.pacing === 'fast' ? '<span class="cut-fast-badge">⚡ Quick Cut</span>' : ''}
+          <span class="cut-order">#${cut.order ?? ''}</span>
+          <button class="edit-pencil-btn" title="편집">✏️</button>
+        </div>
+        <div class="cut-view-fields">
+          <div class="cut-scene">${cut.scene || ''}</div>
+          <div class="cut-direction">${cut.direction || ''}</div>
+        </div>
+        <div class="cut-edit-fields">
+          <div>
+            <div class="edit-label">Scene</div>
+            <input class="edit-input" name="scene" value="${(cut.scene || '').replace(/"/g, '&quot;')}">
+          </div>
+          <div>
+            <div class="edit-label">Direction</div>
+            <textarea class="edit-textarea" name="direction">${cut.direction || ''}</textarea>
+          </div>
+          <div>
+            <div class="edit-label">Captions (줄바꿈으로 구분)</div>
+            <textarea class="edit-textarea" name="captions">${captionsText}</textarea>
+          </div>
+          ${cut.label.startsWith('HOOK') ? `
+          <div>
+            <div class="edit-label">Main USP</div>
+            <input class="edit-input" name="main_usp" value="${(cut.main_usp || '').replace(/"/g, '&quot;')}">
+          </div>
+          <div>
+            <div class="edit-label">Production Method (줄바꿈으로 구분)</div>
+            <textarea class="edit-textarea" name="production_method">${cut.production_method || ''}</textarea>
+          </div>` : ''}
+          <div class="cut-edit-actions">
+            <button class="btn-cancel-cut">취소</button>
+            <button class="btn-save-cut">💾 저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // 편집 토글
+  const pencilBtn = item.querySelector('.edit-pencil-btn');
+  const viewFields = item.querySelector('.cut-view-fields');
+  const editFields = item.querySelector('.cut-edit-fields');
+
+  pencilBtn.addEventListener('click', () => {
+    const isEditing = editFields.classList.contains('visible');
+    editFields.classList.toggle('visible', !isEditing);
+    viewFields.style.display = isEditing ? '' : 'none';
+    item.classList.toggle('editing', !isEditing);
+    pencilBtn.textContent = isEditing ? '✏️' : '✖️';
+  });
+
+  // 취소
+  item.querySelector('.btn-cancel-cut').addEventListener('click', () => {
+    editFields.classList.remove('visible');
+    viewFields.style.display = '';
+    item.classList.remove('editing');
+    pencilBtn.textContent = '✏️';
+  });
+
+  // 저장
+  item.querySelector('.btn-save-cut').addEventListener('click', async () => {
+    const saveBtn = item.querySelector('.btn-save-cut');
+    saveBtn.disabled = true;
+    saveBtn.textContent = '저장 중…';
+
+    const fields = {
+      scene: item.querySelector('[name="scene"]').value.trim(),
+      direction: item.querySelector('[name="direction"]').value.trim(),
+      captions: item.querySelector('[name="captions"]').value
+        .split('\n').map(s => s.trim()).filter(Boolean),
+    };
+    const mainUspEl = item.querySelector('[name="main_usp"]');
+    const pmEl = item.querySelector('[name="production_method"]');
+    if (mainUspEl) fields.main_usp = mainUspEl.value.trim();
+    if (pmEl) fields.production_method = pmEl.value.trim();
+
+    try {
+      await updateCut(cut.id, fields);
+      // 뷰 업데이트
+      item.querySelector('.cut-scene').textContent = fields.scene;
+      item.querySelector('.cut-direction').textContent = fields.direction;
+      // 상태 닫기
+      editFields.classList.remove('visible');
+      viewFields.style.display = '';
+      item.classList.remove('editing');
+      pencilBtn.textContent = '✏️';
+      showToast('✅ 저장됨', 'success', 1800);
+    } catch(e) {
+      showToast('❌ 저장 실패: ' + e.message, 'error');
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = '💾 저장';
+    }
+  });
+
+  // 이미지 업로드
+  const thumb = item.querySelector('.cut-thumb');
+  const fileInput = item.querySelector('.img-upload-input');
+  if (thumb.classList.contains('uploadable') || !cut.img_url) {
+    thumb.classList.add('uploadable');
+    thumb.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      thumb.style.opacity = '0.5';
+      try {
+        const slug = currentGl.id;
+        const storageUrl = await sbUpload(`cut-images/${slug}/cut_${String(cut.order || 0).padStart(2,'0')}.jpg`, file);
+        await updateCut(cut.id, { img_url: storageUrl });
+        const img = thumb.querySelector('img') || document.createElement('img');
+        img.src = storageUrl + '?t=' + Date.now();
+        if (!thumb.querySelector('img')) { thumb.querySelector('.no-img')?.remove(); thumb.insertBefore(img, thumb.firstChild); }
+        showToast('🖼️ 이미지 업로드 완료', 'success');
+      } catch(e) {
+        showToast('❌ 업로드 실패: ' + e.message, 'error');
+      } finally {
+        thumb.style.opacity = '';
+      }
+    });
   }
+
+  return item;
 }
 
 // ── Back button ──
 document.getElementById('btn-back').addEventListener('click', () => {
-  // iframe src 초기화해서 로딩 취소
-  const iframe = document.getElementById('gl-iframe');
-  if (iframe) iframe.src = 'about:blank';
-  isEditMode = false;
   currentGl = null;
+  currentCuts = [];
   showView('dashboard');
   loadDashboard();
 });
