@@ -204,8 +204,6 @@ async function render() {
   const p = product[0];
   const g = guideline[0];
 
-  const uspPills = (p.usp_pills || []).map(u => `<span class="pill">${u}</span>`).join('');
-  const ingPills = (p.ingredient_pills || []).map(i => `<span class="pill pill-blue">${i}</span>`).join('');
   const hashtags = (g.hashtags || []).map(h => `<span class="hashtag">${h}</span>`).join('');
   const mentions = (g.mentions || []).map(m =>
     `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
@@ -223,18 +221,37 @@ async function render() {
     </a>`;
   }).join('');
 
-  const textureBlock = p.texture_notes ? `
+  // 초기 제품 (Milky Cleansing Oil) 데이터
+  const initData = VARIANT_DATA['Rice Pure Milky Cleansing Oil'];
+  const uspPills = initData.usp.map(u => `<span class="pill">${u}</span>`).join('');
+  const ingPills = initData.ingredients.map(i => `<span class="pill pill-blue">${i}</span>`).join('');
+  const textureBlock = `
     <hr class="pb-divider">
     <div>
-      <div class="pb-section-label">TEXTURE</div>
-      <div class="pb-section-body">${p.texture_notes}</div>
-    </div>` : '';
+      <div class="pb-section-label">ABOUT</div>
+      <div class="pb-section-body" id="pb-texture">${initData.texture}</div>
+    </div>`;
 
-  // Variant thumbs — amazon links per variant (hardcoded per name)
-  const amazonLinks = {
-    'Rice Pure Milky Cleansing Oil': 'https://www.amazon.com/THANKYOU-FARMER-Milky-Cleansing-200ml/dp/B0FL7F3V3X/ref=ast_sto_dp_puis',
-    'Rice Pure Essential Toner':     'https://www.amazon.com/THANKYOU-FARMER-Essential-Korean-Extracts/dp/B0852SV27T/ref=ast_sto_dp_puis?th=1',
-    'Rice Pure Watery Mist':         'https://www.amazon.com/THANKYOU-FARMER-Rice-Pure-Watery/dp/B0F47T7MJ3/ref=ast_sto_dp_puis',
+  // 제품별 전체 데이터 (variant 스위치 시 교체)
+  const VARIANT_DATA = {
+    'Rice Pure Milky Cleansing Oil': {
+      link:        'https://www.amazon.com/THANKYOU-FARMER-Milky-Cleansing-200ml/dp/B0FL7F3V3X/ref=ast_sto_dp_puis',
+      usp:         ['Deep Cleansing', 'Blackhead & Sebum Care', 'Dewy Skin', 'Non-Irritating'],
+      ingredients: ['Rice Extract', 'Lipophilic Micelles', 'Hydrophilic Micelles'],
+      texture:     'Oil-to-milk texture that melts away makeup — massage a little longer for that cleansing + massaging effect. Clears sebum, blackheads, and whiteheads without drying or irritation.',
+    },
+    'Rice Pure Essential Toner': {
+      link:        'https://www.amazon.com/THANKYOU-FARMER-Essential-Korean-Extracts/dp/B0852SV27T/ref=ast_sto_dp_puis?th=1',
+      usp:         ['Hydration', 'Skin Barrier', 'Brightening', 'Moisturizing & Softening'],
+      ingredients: ['Rice Water', 'Lotus Flower', 'Fig Fruit Extracts', 'Ceramide', 'Centella'],
+      texture:     'Fights dryness and skin fatigue, strengthens the skin barrier, clarifies while moisturizing and softening. Glowing complexion — what K-Beauty is all about!',
+    },
+    'Rice Pure Watery Mist': {
+      link:        'https://www.amazon.com/THANKYOU-FARMER-Rice-Pure-Watery/dp/B0F47T7MJ3/ref=ast_sto_dp_puis',
+      usp:         ['On-the-Go Moisture', 'Instant Hydration', 'Dewy Skin', 'Travel-Friendly'],
+      ingredients: ['Niacinamide', 'Rice Water'],
+      texture:     'On the go, on the plane, in the car — keep it nearby! Perfect for heat, AC weather, or any moment your skin feels dry. Get ready for that dewy skin, because you deserve it!',
+    },
   };
 
   const variantThumbsHTML = variants.map((v, i) => `
@@ -242,7 +259,6 @@ async function render() {
          data-idx="${i}"
          data-img="${v.img_url || ''}"
          data-name="${v.name}"
-         data-link="${amazonLinks[v.name] || '#'}"
          onclick="switchVariant(this)">
       ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : `<div style="width:52px;height:52px;border-radius:10px;background:#e8f5ee;display:flex;align-items:center;justify-content:center;font-size:20px">🌾</div>`}
       <span>${v.name.replace('Rice Pure ', '')}</span>
@@ -264,14 +280,14 @@ async function render() {
           <div class="pb-name" id="pb-main-name">THANKYOUFARMER<br>${p.name}</div>
           <div>
             <div class="pb-section-label">Key USP</div>
-            <div class="pills">${uspPills}</div>
+            <div class="pills" id="pb-usp-pills">${uspPills}</div>
           </div>
           <div>
             <div class="pb-section-label">Key Ingredients</div>
-            <div class="pills">${ingPills}</div>
+            <div class="pills" id="pb-ing-pills">${ingPills}</div>
           </div>
           ${textureBlock}
-          <a id="pb-amazon-btn" href="${amazonLinks['Rice Pure Milky Cleansing Oil']}" target="_blank" class="amazon-btn">🛒 View on Amazon</a>
+          <a id="pb-amazon-btn" href="${initData.link}" target="_blank" class="amazon-btn">🛒 View on Amazon</a>
         </div>
       </div>
     </section>
@@ -329,28 +345,43 @@ async function render() {
 }
 
 function switchVariant(el) {
-  // 모든 variant 비활성화
   document.querySelectorAll('.variant-item').forEach(v => v.classList.remove('active'));
   el.classList.add('active');
 
   const img  = el.dataset.img;
   const name = el.dataset.name;
-  const link = el.dataset.link;
+  const data = VARIANT_DATA[name] || {};
 
-  // 제품 이미지 교체
+  // 제품 이미지 fade 교체
   const mainImg = document.getElementById('pb-main-img');
   if (mainImg && img) {
     mainImg.style.opacity = '0';
     setTimeout(() => { mainImg.src = img; mainImg.style.opacity = '1'; }, 200);
   }
 
-  // 제품명 교체
+  // 제품명
   const mainName = document.getElementById('pb-main-name');
   if (mainName) mainName.innerHTML = 'THANKYOUFARMER<br>' + name;
 
-  // 아마존 버튼 링크 교체
+  // Key USP pills
+  const uspEl = document.getElementById('pb-usp-pills');
+  if (uspEl && data.usp) {
+    uspEl.innerHTML = data.usp.map(u => `<span class="pill">${u}</span>`).join('');
+  }
+
+  // Key Ingredients pills
+  const ingEl = document.getElementById('pb-ing-pills');
+  if (ingEl && data.ingredients) {
+    ingEl.innerHTML = data.ingredients.map(i => `<span class="pill pill-blue">${i}</span>`).join('');
+  }
+
+  // About / Texture
+  const texEl = document.getElementById('pb-texture');
+  if (texEl && data.texture) texEl.textContent = data.texture;
+
+  // Amazon 버튼
   const btn = document.getElementById('pb-amazon-btn');
-  if (btn) btn.href = link;
+  if (btn && data.link) btn.href = data.link;
 }
 
 render().catch(err => {
