@@ -243,8 +243,8 @@ async function render() {
     </a>`;
   }).join('');
 
-  // 초기 제품 (Milky Cleansing Oil) 데이터
-  const initData = VARIANT_DATA['Rice Pure Milky Cleansing Oil'];
+  // 초기 제품 (Essential Toner) 데이터
+  const initData = VARIANT_DATA['Rice Pure Essential Toner'];
   const uspPills = initData.usp.map(u => `<span class="pill">${u}</span>`).join('');
   const ingPills = initData.ingredients.map(i => `<span class="pill pill-blue">${i}</span>`).join('');
   const textureBlock = `
@@ -275,9 +275,9 @@ async function render() {
 
     <section class="product-section">
       <div class="product-brief">
-        <div class="pb-img"><img id="pb-main-img" src="${p.product_img_url || ''}" alt="${p.name}"></div>
+        <div class="pb-img"><img id="pb-main-img" src="${variants[0]?.img_url || p.product_img_url || ''}" alt="${variants[0]?.name || p.name}"></div>
         <div class="pb-info">
-          <div class="pb-name" id="pb-main-name">THANKYOUFARMER<br>${p.name}</div>
+          <div class="pb-name" id="pb-main-name">THANKYOUFARMER<br>${variants[0]?.name || p.name}</div>
           <div>
             <div class="pb-section-label">Key USP</div>
             <div class="pills" id="pb-usp-pills">${uspPills}</div>
