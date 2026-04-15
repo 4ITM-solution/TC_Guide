@@ -137,6 +137,28 @@ const PRODUCT_ID   = '51d1bdae-7952-4f2b-bd78-616f300b1df5'; // Milky Cleansing 
 
 const headers = { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY };
 
+// 전역 선언 — switchVariant()에서 접근 가능
+const VARIANT_DATA = {
+  'Rice Pure Milky Cleansing Oil': {
+    link:        'https://www.amazon.com/THANKYOU-FARMER-Milky-Cleansing-200ml/dp/B0FL7F3V3X/ref=ast_sto_dp_puis',
+    usp:         ['Deep Cleansing', 'Blackhead & Sebum Care', 'Dewy Skin', 'Non-Irritating'],
+    ingredients: ['Rice Extract', 'Lipophilic Micelles', 'Hydrophilic Micelles'],
+    texture:     'Oil-to-milk texture that melts away makeup — massage a little longer for that cleansing + massaging effect. Clears sebum, blackheads, and whiteheads without drying or irritation.',
+  },
+  'Rice Pure Essential Toner': {
+    link:        'https://www.amazon.com/THANKYOU-FARMER-Essential-Korean-Extracts/dp/B0852SV27T/ref=ast_sto_dp_puis?th=1',
+    usp:         ['Hydration', 'Skin Barrier', 'Brightening', 'Moisturizing & Softening'],
+    ingredients: ['Rice Water', 'Lotus Flower', 'Fig Fruit Extracts', 'Ceramide', 'Centella'],
+    texture:     'Fights dryness and skin fatigue, strengthens the skin barrier, clarifies while moisturizing and softening. Glowing complexion — what K-Beauty is all about!',
+  },
+  'Rice Pure Watery Mist': {
+    link:        'https://www.amazon.com/THANKYOU-FARMER-Rice-Pure-Watery/dp/B0F47T7MJ3/ref=ast_sto_dp_puis',
+    usp:         ['On-the-Go Moisture', 'Instant Hydration', 'Dewy Skin', 'Travel-Friendly'],
+    ingredients: ['Niacinamide', 'Rice Water'],
+    texture:     'On the go, on the plane, in the car — keep it nearby! Perfect for heat, AC weather, or any moment your skin feels dry. Get ready for that dewy skin, because you deserve it!',
+  },
+};
+
 async function fetchJSON(url) {
   const r = await fetch(url, { headers });
   if (!r.ok) throw new Error('Fetch failed: ' + url);
@@ -231,28 +253,6 @@ async function render() {
       <div class="pb-section-label">ABOUT</div>
       <div class="pb-section-body" id="pb-texture">${initData.texture}</div>
     </div>`;
-
-  // 제품별 전체 데이터 (variant 스위치 시 교체)
-  const VARIANT_DATA = {
-    'Rice Pure Milky Cleansing Oil': {
-      link:        'https://www.amazon.com/THANKYOU-FARMER-Milky-Cleansing-200ml/dp/B0FL7F3V3X/ref=ast_sto_dp_puis',
-      usp:         ['Deep Cleansing', 'Blackhead & Sebum Care', 'Dewy Skin', 'Non-Irritating'],
-      ingredients: ['Rice Extract', 'Lipophilic Micelles', 'Hydrophilic Micelles'],
-      texture:     'Oil-to-milk texture that melts away makeup — massage a little longer for that cleansing + massaging effect. Clears sebum, blackheads, and whiteheads without drying or irritation.',
-    },
-    'Rice Pure Essential Toner': {
-      link:        'https://www.amazon.com/THANKYOU-FARMER-Essential-Korean-Extracts/dp/B0852SV27T/ref=ast_sto_dp_puis?th=1',
-      usp:         ['Hydration', 'Skin Barrier', 'Brightening', 'Moisturizing & Softening'],
-      ingredients: ['Rice Water', 'Lotus Flower', 'Fig Fruit Extracts', 'Ceramide', 'Centella'],
-      texture:     'Fights dryness and skin fatigue, strengthens the skin barrier, clarifies while moisturizing and softening. Glowing complexion — what K-Beauty is all about!',
-    },
-    'Rice Pure Watery Mist': {
-      link:        'https://www.amazon.com/THANKYOU-FARMER-Rice-Pure-Watery/dp/B0F47T7MJ3/ref=ast_sto_dp_puis',
-      usp:         ['On-the-Go Moisture', 'Instant Hydration', 'Dewy Skin', 'Travel-Friendly'],
-      ingredients: ['Niacinamide', 'Rice Water'],
-      texture:     'On the go, on the plane, in the car — keep it nearby! Perfect for heat, AC weather, or any moment your skin feels dry. Get ready for that dewy skin, because you deserve it!',
-    },
-  };
 
   const variantThumbsHTML = variants.map((v, i) => `
     <div class="variant-item${i === 0 ? ' active' : ''}"
