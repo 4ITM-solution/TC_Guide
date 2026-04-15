@@ -59,10 +59,18 @@
   /* NOTICE SECTION */
   .notice-section{margin:16px 16px 0}
   .notice-card{background:#fff8e1;border:1.5px solid #ffe082;border-radius:var(--radius);padding:16px 18px}
-  .notice-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#b8860b;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-  .notice-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #ffe082;font-size:13px;color:#5a4000;line-height:1.5}
-  .notice-item:last-child{border-bottom:none;padding-bottom:0}
-  .notice-icon{flex-shrink:0;font-size:15px;margin-top:1px}
+  .notice-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#b8860b;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .notice-hero{font-size:13px;color:#5a4000;line-height:1.5;margin-bottom:14px;padding-bottom:12px;border-bottom:1.5px solid #ffe082}
+  .dos-donts{display:flex;gap:12px}
+  @media(max-width:480px){.dos-donts{flex-direction:column}}
+  .dos-col,.donts-col{flex:1;min-width:0}
+  .col-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .donts-col .col-title{color:#c0392b}
+  .dos-col .col-title{color:#27ae60}
+  .rule-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#5a4000;line-height:1.5;padding:5px 0;border-bottom:1px solid #ffe082}
+  .rule-item:last-child{border-bottom:none;padding-bottom:0}
+  .rule-icon{flex-shrink:0;font-size:13px;margin-top:1px}
+  .rule-sub{font-size:11px;color:#7a6000;margin-top:3px;padding-left:20px}
 
   /* ANGLE HEADER */
   .angle-header{margin:20px 16px 10px}
@@ -299,14 +307,25 @@ async function render() {
 
     <div class="notice-section">
       <div class="notice-card">
-        <div class="notice-title">⚠️ Shooting Notice</div>
-        <div class="notice-item">
-          <span class="notice-icon">🌾</span>
-          <span><strong>Rice Pure Essential Toner must appear in the video.</strong> This is the hero product — ensure it is clearly visible on screen.</span>
+        <div class="notice-title">⭐ Video DOs &amp; DON'Ts</div>
+        <div class="notice-hero">
+          <strong>Rice Pure Essential Toner must appear in the video.</strong> This is the hero product — ensure it is clearly visible on screen.
         </div>
-        <div class="notice-item">
-          <span class="notice-icon">🚫</span>
-          <span><strong>No other brands allowed.</strong> Logos, packaging, or containers of brands other than the 3 products in this set must not appear in the video.</span>
+        <div class="dos-donts">
+          <div class="donts-col">
+            <div class="col-title">❌ DON'Ts</div>
+            <div class="rule-item"><span class="rule-icon">❌</span><span>Other brand's products</span></div>
+            <div class="rule-item"><span class="rule-icon">❌</span><span>An unboxing video</span></div>
+            <div class="rule-item"><span class="rule-icon">❌</span><span>Only hands featured</span></div>
+            <div class="rule-item"><span class="rule-icon">❌</span><span>Use prohibited words or phrases on TikTok<br><span style="font-size:11px;color:#7a6000">(e.g. cheapest price, violent language, medical-related terms…)</span></span></div>
+          </div>
+          <div class="dos-col">
+            <div class="col-title">✅ DOs</div>
+            <div class="rule-item"><span class="rule-icon">⭕</span><span>Try-on on your face<br><span style="font-size:11px;color:#7a6000">Highlight texture · Voice-over preferred!</span></span></div>
+            <div class="rule-item"><span class="rule-icon">⭕</span><span>High definition</span></div>
+            <div class="rule-item"><span class="rule-icon">⭕</span><span>2-second hook</span></div>
+            <div class="rule-item"><span class="rule-icon">⭕</span><span>When adding sound on TikTok, use it as a commercial sound!</span></div>
+          </div>
         </div>
       </div>
     </div>
