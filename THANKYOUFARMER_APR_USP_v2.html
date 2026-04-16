@@ -263,14 +263,16 @@ async function render() {
     </div>`;
 
   const variantThumbsHTML = variants.map((v, i) => `
-    <div class="variant-item${i === 0 ? ' active' : ''}"
+    <button class="variant-item${i === 0 ? ' active' : ''}"
          data-idx="${i}"
          data-img="${v.img_url || ''}"
          data-name="${v.name}"
-         onclick="switchVariant(this)">
+         onclick="switchVariant(this)"
+         type="button"
+         style="background:none;border:none;padding:0;cursor:pointer">
       ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : `<div style="width:52px;height:52px;border-radius:10px;background:#e8f5ee;display:flex;align-items:center;justify-content:center;font-size:20px">🌾</div>`}
       <span>${v.name.replace('Rice Pure ', '')}</span>
-    </div>`).join('');
+    </button>`).join('');
 
   const cutsHTML = cuts.map(buildCard).join('');
 
