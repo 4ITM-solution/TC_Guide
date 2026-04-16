@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Summer Glow-Boost Makeup 🌸Troubless Centella Sun Cream SPF50+</title>
-<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--brand:#FF6B9D;--brand-dark:#E8447A;--brand-light:#FFE8F2;--brand-mid:#FFB3D0;--blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;--text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-  #loading{text-align:center;padding:60px 20px;color:var(--muted)}
-  #main{display:none}
-  .spinner{display:inline-block;width:28px;height:28px;border:3px solid #ffd6e8;border-top-color:var(--brand);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:12px}
-  @keyframes spin{to{transform:rotate(360deg)}}
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --brand:#FF6B9D;--brand-dark:#E8447A;--brand-light:#FFE8F2;--brand-mid:#FFB3D0;
+    --blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;
+    --text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .site-header{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
   .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
   .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
@@ -16,162 +19,225 @@
   .product-section{padding:16px 16px 0}
   .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);display:flex;flex-direction:column}
   @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover}}
-  .pb-img{background:#f0f0f0;overflow:hidden}.pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:340px}
+  .pb-img{background:#f0f0f0;overflow:hidden}
+  .pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:340px;object-position:center}
   .pb-info{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
-  .pb-name{font-size:14px;font-weight:900;line-height:1.35}
+  .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
   .pills{display:flex;flex-wrap:wrap;gap:5px}
   .pill{background:var(--brand-light);color:var(--brand-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
   .pill-blue{background:#e8f0fe;color:var(--blue)}
   .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
-  .pb-section-body{font-size:12px;line-height:1.6}.pb-section-body li{margin-left:14px;margin-bottom:2px}
+  .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
+  .pb-section-body li{margin-left:14px;margin-bottom:2px}
   .pb-divider{border:none;border-top:1px solid #f0f0f0;margin:0}
-  .amazon-btn{display:inline-block;margin-top:4px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;padding:8px 18px;border-radius:100px;text-decoration:none;align-self:flex-start}
-  .amazon-btn:hover{background:var(--brand-dark)}
-  .variant-strip{margin:0 16px;background:var(--card);border-radius:0 0 var(--radius) var(--radius);box-shadow:0 4px 14px rgba(0,0,0,0.07);padding:14px 16px;display:flex;align-items:center;gap:12px;overflow-x:auto;border-top:1px solid #f0f0f0}
-  .variant-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);flex-shrink:0}
-  .variant-thumbs{display:flex;gap:10px;flex:1}
-  .variant-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;opacity:.55;transition:opacity .2s}
-  .variant-item.active{opacity:1}
-  .variant-item img{width:52px;height:52px;border-radius:10px;object-fit:cover;border:2px solid transparent;transition:border-color .2s}
+  .amazon-btn{display:inline-block;margin-top:4px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
+  .amazon-btn:hover{opacity:0.88}
+  .variant-strip{padding:14px 16px 0}
+  .variant-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .variant-thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+  .variant-thumbs::-webkit-scrollbar{height:3px}
+  .variant-thumbs::-webkit-scrollbar-thumb{background:var(--brand-mid);border-radius:2px}
+  .variant-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;width:68px;cursor:pointer}
+  .variant-item img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:2px solid transparent;transition:border-color .2s}
   .variant-item.active img{border-color:var(--brand)}
-  .variant-item span{font-size:10px;font-weight:700;color:var(--text);text-align:center;max-width:60px;line-height:1.2}
-  .notice-section{margin:16px 16px 0}
-  .notice-card{background:#fff8e1;border:1.5px solid #ffe082;border-radius:var(--radius);padding:16px 18px}
-  .notice-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#b8860b;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-  .notice-hero{font-size:13px;color:#5a4000;line-height:1.5;margin-bottom:14px;padding-bottom:12px;border-bottom:1.5px solid #ffe082}
-  .dos-donts{display:flex;gap:12px}
-  @media(max-width:480px){.dos-donts{flex-direction:column}}
-  .dos-col,.donts-col{flex:1;min-width:0}
-  .col-title{font-size:11px;font-weight:800;margin-bottom:8px}
-  .donts-col .col-title{color:#c0392b}.dos-col .col-title{color:#27ae60}
-  .rule-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#5a4000;line-height:1.5;padding:5px 0;border-bottom:1px solid #ffe082}
-  .rule-item:last-child{border-bottom:none;padding-bottom:0}
-  .angle-header{margin:20px 16px 10px}.angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}.angle-header h2{font-size:22px;font-weight:900}
+  .variant-item span{font-size:10px;font-weight:700;color:var(--muted);text-align:center;line-height:1.2}
+  .variant-item.active span{color:var(--brand-dark)}
+  .angle-header{margin:20px 16px 10px}
+  .angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}
+  .angle-header h2{font-size:22px;font-weight:900;color:var(--text)}
   .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
   .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
-  .cut-inner{display:flex;flex-direction:column}@media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
-  .cut-img-wrap{position:relative;background:#111}.cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}@media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
+  .cut-inner{display:flex;flex-direction:column}
+  @media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
+  .cut-img-wrap{position:relative;background:#111}
+  .cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
+  @media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
+  .cut-no-img{width:100%;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;background:#f5f5f8}
+  @media(min-width:520px){.cut-no-img{height:100%;max-height:88vh;aspect-ratio:auto}}
   .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
-  .cut-badge{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
-  .badge-hook{background:var(--red)}.badge-cut{background:var(--blue)}.badge-result{background:var(--green);color:#1a1a1a}
+  .cut-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
+  .label-hook{background:var(--red)}.label-cut{background:var(--blue)}.label-result{background:var(--green);color:#1a1a1a}
+  .cut-ts{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.45);padding:3px 8px;border-radius:100px}
   .cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:11px}
-  .cb-section-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
-  .cut-scene{font-size:14px;font-weight:700;line-height:1.45}
-  .cb-divider{border:none;border-top:1px solid #f0f0f0}
-  .cb-direction{font-size:13px;line-height:1.65}
-  .cb-meta-row{display:flex;align-items:center;gap:8px}.cb-meta-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.cb-meta-val{display:inline-block;background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:800;padding:4px 12px;border-radius:100px}
-  .cb-prod-method{background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}.cb-prod-steps{font-size:12px;line-height:1.7}.cb-prod-steps ol{margin-left:16px}.cb-prod-steps li{margin-bottom:3px}
-  .captions-list{display:flex;flex-direction:column;gap:6px}
-  .caption-item{font-size:13px;line-height:1.5;display:flex;align-items:flex-start;gap:6px}.caption-item::before{content:'•';color:var(--brand);font-size:16px;line-height:1.2;flex-shrink:0}
-  .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}@media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
+  .field-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
+  .field-scene{font-size:14px;font-weight:700;line-height:1.45}
+  .cut-sep{border:none;border-top:1px solid #f0f0f0}
+  .field-direction{font-size:13px;line-height:1.65;color:var(--text)}
+  .field-usp{display:inline-block;background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:800;padding:5px 14px;border-radius:100px;border:1px solid var(--brand-mid)}
+  .field-pm{font-size:12px;line-height:1.7;color:var(--text);background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}
+  .field-pm ol{margin-left:16px}.field-pm li{margin-bottom:3px}
+  .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}
+  .caption-opt::before{content:'•';color:var(--brand);font-size:16px;line-height:1.2;flex-shrink:0}
+  .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
+  @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
   .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
   .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
-  .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px}.hashtag{background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
-  .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}.mention-item:last-child{border-bottom:none}.mention-at{color:var(--brand-dark);font-weight:700}
-  .refs-section{margin:20px 16px 0}.refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}
+  .hashtag{background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
+  .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+  .mention-item:last-child{border-bottom:none}
+  .mention-at{color:var(--brand-dark);font-weight:700}
+  .refs-section{margin:20px 16px 0}
+  .refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
   .ref-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
   .ref-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
-  .ref-info{flex:1;min-width:0}.ref-title{font-size:13px;font-weight:700;margin-bottom:2px}.ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ref-arrow{color:var(--muted);font-size:18px}
-  .footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}</style>
+  .ref-info{flex:1;min-width:0}.ref-title{font-size:13px;font-weight:700;margin-bottom:2px}
+  .ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ref-arrow{color:var(--muted);font-size:18px}
+  .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
+  .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
+  .spinner{display:inline-block;width:24px;height:24px;border:3px solid #FFB3D0;border-top-color:var(--brand);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
+</style>
 </head>
 <body>
-<div id="loading"><div class="spinner"></div><div>Loading…</div></div>
-<div id="main">
+<div id="loading-overlay" class="loading-state">
+  <div><div class="spinner"></div></div>
+  <div>Loading…</div>
+</div>
+<div id="main-content" style="display:none">
   <header class="site-header">
-    <div class="header-badge">TROUBLESS · PR GUIDE</div>
-    <h1>Summer Glow-Boost Makeup 🌸Troubless Centella Sun Cream SPF50+</h1>
-    <div class="header-concept">Natural Glow-Boost — The Summer Makeup Base</div>
+    <div class="header-badge">Contents Guideline Brief</div>
+    <h1 id="gl-title"></h1>
+    <p class="header-concept" id="gl-concept"></p>
   </header>
-
   <section class="product-section">
     <div class="product-brief">
-      <div class="pb-img"><img id="pb-main-img" src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Troubless_MAR_USP_v1/product_img.jpg" alt="Glass Glow Collagen Sunscreen SPF50+ PA++++" style="transition:opacity .2s"></div>
+      <div class="pb-img"><img id="pb-img" src="" alt="Product"></div>
       <div class="pb-info">
-        <div class="pb-name" id="pb-main-name">THANKYOUFARMER<br>Glass Glow Collagen Sunscreen SPF50+ PA++++</div>
-        <div>
-          <div class="pb-section-label">Key USP</div>
-          <div class="pills" id="pb-usp-pills"><span class="pill">Feather-Light</span><span class="pill">Invisible Finish</span><span class="pill">Glow-Boosting</span><span class="pill">No White Cast</span></div>
-        </div>
-        <div>
-          <div class="pb-section-label">Key Ingredients</div>
-          <div class="pills" id="pb-ing-pills"><span class="pill pill-blue">PDRN</span><span class="pill pill-blue">Collagen Complex</span></div>
-        </div>
-        <hr class="pb-divider"><div><div class="pb-section-label">ABOUT</div><div class="pb-section-body" id="pb-texture">Smooth, silky formula — glides on effortlessly with no drag or tackiness.</div></div>
-        
+        <div class="pb-name" id="pb-name"></div>
+        <div><div class="pb-section-label">Key USP</div><div class="pills" id="pb-pills"></div></div>
+        <hr class="pb-divider">
+        <div><div class="pb-section-label">Key Ingredients</div><div class="pills" id="pb-ingredient-pills"></div></div>
+        <div id="pb-usage-section"><hr class="pb-divider"><div class="pb-section-label">Usage Method</div><ol class="pb-section-body" id="pb-usage"></ol></div>
+        <hr class="pb-divider">
+        <div><div class="pb-section-label">⚠️ Usage Precautions</div><ul class="pb-section-body" id="pb-precautions"></ul></div>
+        <hr class="pb-divider">
+        <div><div class="pb-section-label">💧 Texture Notes</div><div class="pb-section-body" id="pb-texture"></div></div>
+        <a id="pb-amazon-btn" href="#" target="_blank" class="amazon-btn" style="display:none">🛒 View on Amazon</a>
       </div>
     </div>
   </section>
-
-  
-
-  <div class="notice-section">
-    <div class="notice-card">
-      <div class="notice-title">⭐ Video DOs &amp; DON'Ts</div>
-      <div class="notice-hero"><strong>Rice Pure Essential Toner must appear in the video.</strong> This is the hero product — ensure it is clearly visible on screen.</div>
-      <div class="dos-donts">
-        <div class="donts-col">
-          <div class="col-title">❌ DON'Ts</div>
-          <div class="rule-item"><span>❌</span><span>Other brand's products</span></div>
-          <div class="rule-item"><span>❌</span><span>An unboxing video</span></div>
-          <div class="rule-item"><span>❌</span><span>Only hands featured</span></div>
-          <div class="rule-item"><span>❌</span><span>Use prohibited words or phrases on TikTok<br><span style="font-size:11px;color:#7a6000">(e.g. cheapest price, violent language, medical-related terms…)</span></span></div>
-        </div>
-        <div class="dos-col">
-          <div class="col-title">✅ DOs</div>
-          <div class="rule-item"><span>⭕</span><span>Try-on on your face<br><span style="font-size:11px;color:#7a6000">Highlight texture</span></span></div>
-          <div class="rule-item"><span>⭕</span><span>High definition</span></div>
-          <div class="rule-item"><span>⭕</span><span>2-second hook</span></div>
-          <div class="rule-item"><span>⭕</span><span>When adding sound on TikTok, use it as a commercial sound!</span></div>
-        </div>
-      </div>
-    </div>
+  <div id="variant-strip" class="variant-strip" style="display:none">
+    <div class="variant-label" id="variant-count"></div>
+    <div class="variant-thumbs" id="variant-wrap"></div>
   </div>
-
   <div class="angle-header">
-    <div class="ah-sub">Shooting Angle</div>
-    <h2>Summer Glow-Boost Makeup 🌸Troubless Centella Sun Cream SPF50+</h2>
+    <div class="ah-sub" id="angle-sub"></div>
+    <h2 id="angle-name"></h2>
   </div>
-
-  <div class="cuts-wrap"><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Troubless_MAR_USP_v2/cut_00.jpg" alt="HOOK" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-hook">HOOK</span></div></div><div class="cut-body"><div class="cb-meta-row"><span class="cb-meta-label">MAIN USP</span><span class="cb-meta-val">Natural Glow-Boost · Makeup Grip</span></div><div class="cb-prod-method"><div class="cb-meta-label" style="margin-bottom:6px">PRODUCTION METHOD</div><div class="cb-prod-steps"><ol><li>Start with clean, moisturized skin</li><li>Dot onto forehead, both cheeks, nose and chin</li><li>Blend outward with slow, luxurious circular motions until fully absorbed</li><li>You're looking for a natural, luminous glow — not greasy</li><li>Apply makeup on top — notice how it grips and stays</li></ol></div></div><hr class="cb-divider"><div class="cb-section-label">SCENE</div><div class="cut-scene">Summer Makeup Start</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Open with a bare face — eyes and hair are done, but no base makeup on. Look directly into camera with a calm, confident expression. This is your 'before' moment. Let the viewer feel the freshness before anything goes on your skin.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">summer makeup 🌸</div><div class="caption-item">bare skin → glow base → full look — let's go ☀️</div><div class="caption-item">POV: you finally found a sunscreen that doubles as a makeup primer ✨</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Troubless_MAR_USP_v2/cut_01.jpg" alt="CUT 01" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-cut">CUT 01</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">The Dot Method</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Squeeze Troubless directly from the tube onto your cheeks, forehead, nose and chin — small dots, not one big blob. Show each dot clearly. Smile or look playful — this is a satisfying, intentional step.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">콕콕 찍어서 — dot it, don't smear 🫧</div><div class="caption-item">the dot method is the move for even coverage ✅</div><div class="caption-item">step 1 of my summer glow routine 🌞</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Troubless_MAR_USP_v2/cut_02.jpg" alt="CUT 02" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-cut">CUT 02</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">Full Face Coverage</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Show all the sunscreen dots across your full face — forehead to chin. Hold still for a moment so the viewer can see the coverage. The texture should look creamy here — before blending.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">wait for it… 👀</div><div class="caption-item">yes it looks like this before blending — trust the process 🤍</div><div class="caption-item">SPF50+ all over = summer-proof skin 🛡️</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Troubless_MAR_USP_v2/cut_03.jpg" alt="CUT 03" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-cut">CUT 03</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">Absorbed — Glow Appears</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">After blending, show the skin fully absorbed — no white cast, just a subtle natural luminosity. Look slightly upward or tilt your face for the light to catch the glow. This is the 'glow-boost' proof moment.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">absorbed and glowing 🤩 zero white cast</div><div class="caption-item">my skin looks lit from within rn 🌟</div><div class="caption-item">the glow-boost is real — and this is just the sunscreen 👁️</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Troubless_MAR_USP_v2/cut_04.jpg" alt="CUT 04" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-cut">CUT 04</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">Lip Color Application</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Apply a lip tint or lipstick directly from the wand. Get close to the camera for this one — show the colour going on. Slow, deliberate strokes. This is the moment where the look starts to come together on top of that glowing base.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">lip tint over a glowing base — this is summer 💋</div><div class="caption-item">the colour pops so differently on prepped skin ✨</div><div class="caption-item">Sunscreen on = base done💄</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Troubless_MAR_USP_v2/cut_05.jpg" alt="CUT 05" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-cut">CUT 05</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">Blush & Nose Colour</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Add colour to the cheeks and nose bridge — blush, bronzer, or a rosy tint. Blend it in softly. Show how naturally the colour settles on the skin — no patchiness, no sliding. The sunscreen base is doing its job.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">blush on the nose = the whole summer vibe 🍑</div><div class="caption-item">when your base is this smooth, blush just melts in 🫧</div><div class="caption-item">cheeks and nose colour — my favourite step ☀️</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Troubless_MAR_USP_v2/cut_06.jpg" alt="RESULT" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-result">RESULT</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">Natural Glow Check</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Face the camera straight on — pout, smize, or give a soft smile. Let the final look speak for itself. Glowing skin, colour that stays, no white cast. This is the sunscreen working as a real makeup base. Hold the moment.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">natural glow check ✅ summer makeup done 🌸</div><div class="caption-item">sunscreen that gives you a glow AND holds your makeup — that's Troubless 💖</div><div class="caption-item">SPF50+ · zero white cast · makeup grip · natural glow — all in one ✨ @troubless_official</div></div></div></div></div></div>
-
+  <div class="cuts-wrap" id="cuts-wrap"></div>
   <div class="hm-section">
-    <div class="hm-card"><div class="hm-title"># Hashtags</div><div class="hashtag-wrap"><span class="hashtag">#Sunscreenmakeup</span><span class="hashtag">#GlowSkin</span><span class="hashtag">#PDRN</span><span class="hashtag">#KoreanSunscreen</span><span class="hashtag">#Troubless</span></div></div>
-    <div class="hm-card"><div class="hm-title">@ Mention Accounts</div><div class="mention-item"><span class="mention-at">@troubless_official</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div></div>
+    <div class="hm-card"><div class="hm-title"># Hashtags</div><div class="hashtag-wrap" id="hashtags-wrap"></div></div>
+    <div class="hm-card"><div class="hm-title">@ Mention Accounts</div><div id="mentions-wrap"></div></div>
   </div>
-
-  <div class="refs-section"><h3>📎 Reference Videos</h3><a href="https://www.tiktok.com/@avaalfaro/video/7518251666244668702" target="_blank" class="ref-card"><div class="ref-icon">🎵</div><div class="ref-info"><div class="ref-title">@avaalfaro — Main Reference (Frame Source)</div><div class="ref-url">https://www.tiktok.com/@avaalfaro/video/7518251666244668702</div></div><span class="ref-arrow">›</span></a><a href="https://www.tiktok.com/@alyssaaamichelle/video/7518806136775036190" target="_blank" class="ref-card"><div class="ref-icon">🎵</div><div class="ref-info"><div class="ref-title">@alyssaaamichelle — Glow Base Reference</div><div class="ref-url">https://www.tiktok.com/@alyssaaamichelle/video/7518806136775036190</div></div><span class="ref-arrow">›</span></a></div>
-
-  <div class="footer">Troubless · Summer Glow-Boost Makeup 🌸Troubless Centella Sun Cream SPF50+ · PR Guide v2<br>Generated by 4AM Cowork</div>
+  <div class="refs-section" id="refs-section" style="display:none">
+    <h3>📎 Additional Reference Videos</h3>
+    <div id="refs-wrap"></div>
+  </div>
+  <div class="site-footer">
+    AI-generated guideline · For influencer reference only<br>
+    <a id="footer-link" href="#" target="_blank" style="color:var(--brand)">View Product</a>
+  </div>
 </div>
-
 <script>
-const VARIANT_DATA = {
-  
-};
-document.getElementById('loading').style.display = 'none';
-document.getElementById('main').style.display = 'block';
-
-function switchVariant(el) {
-  document.querySelectorAll('.variant-item').forEach(v => v.classList.remove('active'));
-  el.classList.add('active');
-  const img = el.dataset.img;
-  const name = el.dataset.name;
-  const link = el.dataset.link || '';
-  const data = VARIANT_DATA[name] || {};
-  const mainImg = document.getElementById('pb-main-img');
-  if (mainImg && img) { mainImg.style.opacity='0'; setTimeout(()=>{ mainImg.src=img; mainImg.style.opacity='1'; }, 200); }
-  const nameEl = document.getElementById('pb-main-name');
-  if (nameEl) nameEl.innerHTML = 'THANKYOUFARMER<br>' + name;
-  const uspEl = document.getElementById('pb-usp-pills');
-  if (uspEl && data.usp) uspEl.innerHTML = data.usp.map(u=>'<span class="pill">'+u+'</span>').join('');
-  const ingEl = document.getElementById('pb-ing-pills');
-  if (ingEl && data.ingredients) ingEl.innerHTML = data.ingredients.map(i=>'<span class="pill pill-blue">'+i+'</span>').join('');
-  const texEl = document.getElementById('pb-texture');
-  if (texEl && data.texture) texEl.textContent = data.texture;
-  const btn = document.getElementById('pb-amazon-btn');
-  const resolvedLink = link || data.link;
-  if (btn) { if (resolvedLink) { btn.href = resolvedLink; btn.style.display='inline-block'; } else { btn.style.display='none'; } }
+const SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
+const GUIDELINE_ID = '87465f9f-a941-435c-ad66-05bc09579468';
+async function sbGet(path) {
+  const res = await fetch(SUPABASE_URL + path, { headers: {'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY} });
+  if (!res.ok) throw new Error('DB error ' + res.status);
+  return res.json();
 }
+function labelClass(label) {
+  if (!label) return 'label-cut';
+  if (label.startsWith('HOOK')) return 'label-hook';
+  if (label === 'RESULT') return 'label-result';
+  return 'label-cut';
+}
+function buildCutCard(cut) {
+  const imgHtml = cut.img_url ? `<img src="${cut.img_url}" alt="${cut.label}" loading="lazy">` : '<div class="cut-no-img">No image</div>';
+  const tsHtml = cut.timestamp ? `<span class="cut-ts">${cut.timestamp}</span>` : '';
+  let body = '';
+  if (cut.main_usp) body += `<div class="field-usp">${cut.main_usp}</div>`;
+  if (cut.production_method) {
+    const steps = cut.production_method.split('\n').filter(s => s.trim());
+    body += `<div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px">${steps.map(s => `<li>${s.replace(/^\d+\.\s*/, '')}</li>`).join('')}</ol></div>`;
+  }
+  if (cut.main_usp || cut.production_method) body += '<hr class="cut-sep">';
+  body += `<div><div class="field-label">Scene</div><div class="field-scene">${cut.scene ?? ''}</div></div><hr class="cut-sep">`;
+  body += `<div><div class="field-label">Direction</div><div class="field-direction">${cut.direction ?? ''}</div></div>`;
+  const caps = Array.isArray(cut.captions) ? cut.captions : [];
+  if (caps.length) body += `<hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options">${caps.map(c => `<div class="caption-opt">${c}</div>`).join('')}</div></div>`;
+  return `<div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap">${imgHtml}<div class="cut-badge-row"><span class="cut-label ${labelClass(cut.label)}">${cut.label ?? ''}</span>${tsHtml}</div></div><div class="cut-body">${body}</div></div></div>`;
+}
+async function init() {
+  try {
+    const [glRows, cuts, variantRows] = await Promise.all([
+      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*)`),
+      sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`),
+      sbGet(`/rest/v1/gl_variants?order=order.asc`),
+    ]);
+    const gl = glRows[0];
+    const p = gl?.gl_products ?? {};
+    const variants = variantRows.filter(v => v.product_id === p.id);
+    document.getElementById('gl-title').textContent = gl.angle_name ?? '';
+    document.getElementById('gl-concept').textContent = gl.concept ?? '';
+    document.getElementById('pb-img').src = p.product_img_url ?? '';
+    document.getElementById('pb-name').textContent = (p.brand ?? '') + ' ' + (p.name ?? '');
+    const pillsEl = document.getElementById('pb-pills');
+    (p.usp_pills ?? []).forEach(u => { const s = document.createElement('span'); s.className='pill'; s.textContent=u; pillsEl.appendChild(s); });
+    const ingEl = document.getElementById('pb-ingredient-pills');
+    (p.ingredient_pills ?? []).forEach(i => { const s = document.createElement('span'); s.className='pill pill-blue'; s.textContent=i; ingEl.appendChild(s); });
+    const usageEl = document.getElementById('pb-usage');
+    if (Array.isArray(p.usage_steps) && p.usage_steps.length) {
+      p.usage_steps.forEach(step => { const li = document.createElement('li'); li.textContent = step; usageEl.appendChild(li); });
+    } else { document.getElementById('pb-usage-section').style.display='none'; }
+    const precEl = document.getElementById('pb-precautions');
+    (p.precautions ?? []).forEach(pr => { const li = document.createElement('li'); li.textContent = pr; precEl.appendChild(li); });
+    document.getElementById('pb-texture').textContent = p.texture_notes ?? '';
+    const amazonBtn = document.getElementById('pb-amazon-btn');
+    const footerLink = document.getElementById('footer-link');
+    if (p.footer_link) { amazonBtn.href = p.footer_link; amazonBtn.style.display = 'inline-block'; footerLink.href = p.footer_link; }
+    if (variants.length > 0) {
+      const strip = document.getElementById('variant-strip');
+      strip.style.display = 'block';
+      document.getElementById('variant-count').textContent = variants.length + ' Products in Set';
+      const wrap = document.getElementById('variant-wrap');
+      variants.forEach((v, i) => {
+        const el = document.createElement('div');
+        el.className = 'variant-item' + (i === 0 ? ' active' : '');
+        el.innerHTML = `<img src="${v.img_url ?? ''}" alt="${v.name}"><span>${v.name}</span>`;
+        el.onclick = () => {
+          document.querySelectorAll('.variant-item').forEach(x => x.classList.remove('active'));
+          el.classList.add('active');
+          document.getElementById('pb-img').src = v.img_url ?? '';
+          document.getElementById('pb-name').textContent = (p.brand ?? '') + ' ' + (v.name ?? '');
+          if (v.footer_link) { amazonBtn.href = v.footer_link; amazonBtn.style.display='inline-block'; } else { amazonBtn.style.display='none'; }
+        };
+        wrap.appendChild(el);
+      });
+    }
+    document.getElementById('angle-sub').textContent = 'Shooting Angle';
+    document.getElementById('angle-name').textContent = gl.angle_name ?? '';
+    document.getElementById('cuts-wrap').innerHTML = cuts.map(buildCutCard).join('');
+    const hashWrap = document.getElementById('hashtags-wrap');
+    (gl.hashtags ?? []).forEach(h => { const s = document.createElement('span'); s.className='hashtag'; s.textContent=h; hashWrap.appendChild(s); });
+    const mentWrap = document.getElementById('mentions-wrap');
+    (gl.mentions ?? []).forEach(m => { mentWrap.innerHTML += `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`; });
+    if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
+      document.getElementById('refs-section').style.display = 'block';
+      document.getElementById('refs-wrap').innerHTML = gl.ref_videos.map(r => `<a href="${r.url}" target="_blank" class="ref-card"><div class="ref-icon">🎵</div><div class="ref-info"><div class="ref-title">${r.title ?? r.url}</div><div class="ref-url">${r.url}</div></div><span class="ref-arrow">›</span></a>`).join('');
+    }
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+  } catch(e) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">Error: ${e.message}</div>`;
+  }
+}
+init();
 </script>
 </body>
 </html>
