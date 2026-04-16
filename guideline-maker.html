@@ -157,11 +157,15 @@
   .gl-variant-strip { padding: 14px 16px 0; }
   .gl-variant-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
   .gl-variant-thumbs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
-  .gl-variant-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; width: 68px; }
-  .gl-variant-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; border: 2px solid transparent; }
+  .gl-variant-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; width: 68px; background: none; border: none; padding: 0; cursor: pointer; }
+  .gl-variant-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; border: 2px solid transparent; transition: border-color .2s; }
   .gl-variant-item.active img { border-color: #FF6B9D; }
   .gl-variant-item span { font-size: 10px; font-weight: 700; color: #888; text-align: center; line-height: 1.2; }
   .gl-variant-item.active span { color: #E8447A; }
+  .gl-hm-edit-btn { background: none; border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 3px 10px; font-size: 11px; cursor: pointer; color: #888; margin-left: auto; display: block; transition: all .2s; }
+  .gl-hm-edit-btn:hover { border-color: #FF6B9D; color: #FF6B9D; }
+  .gl-hm-edit-fields { display: none; margin-top: 10px; }
+  .gl-hm-edit-fields.visible { display: block; }
   .gl-angle-header { margin: 20px 16px 10px; }
   .gl-angle-header .ah-sub { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #888; margin-bottom: 4px; }
   .gl-angle-header h2 { font-size: 22px; font-weight: 900; }
@@ -1036,11 +1040,15 @@ function renderDetail(gl, p, cuts, variants) {
     ${variants.length ? `
     <div class="gl-variant-strip">
       <div class="gl-variant-label">${variants.length} Variants Available</div>
-      <div class="gl-variant-thumbs">${variants.map(v => `
-        <div class="gl-variant-item${v.is_active ? ' active' : ''}">
+      <div class="gl-variant-thumbs">${variants.map((v, i) => `
+        <button type="button" class="gl-variant-item${i === 0 ? ' active' : ''}"
+          data-name="${v.name}"
+          data-img="${v.img_url || ''}"
+          data-usp="${(v.usp_pills || []).join('|')}"
+          data-ing="${(v.ingredient_pills || []).join('|')}">
           ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : '<div style="width:60px;height:60px;background:#eee;border-radius:10px"></div>'}
-          <span>${v.name}</span>
-        </div>`).join('')}
+          <span>${v.name.replace('Rice Pure ','')}</span>
+        </button>`).join('')}
       </div>
     </div>` : ''}
 
@@ -1051,19 +1059,30 @@ function renderDetail(gl, p, cuts, variants) {
 
     <div class="gl-cuts-wrap" id="gl-cuts-wrap"></div>
 
-    ${(Array.isArray(gl.hashtags) && gl.hashtags.length) || (Array.isArray(gl.mentions) && gl.mentions.length) ? `
     <div class="gl-hm-section">
-      ${Array.isArray(gl.hashtags) && gl.hashtags.length ? `
       <div class="gl-hm-card">
-        <div class="gl-hm-title"># Hashtags</div>
-        <div class="gl-hashtag-wrap">${gl.hashtags.map(h => `<span class="gl-hashtag">${h}</span>`).join('')}</div>
-      </div>` : ''}
+        <div style="display:flex;align-items:center;margin-bottom:10px">
+          <div class="gl-hm-title" style="margin-bottom:0"># Hashtags</div>
+          <button type="button" class="gl-hm-edit-btn js-hm-edit-btn">✏️ 편집</button>
+        </div>
+        <div class="gl-hashtag-wrap js-hashtag-display">${(gl.hashtags||[]).map(h=>`<span class="gl-hashtag">${h}</span>`).join('')}</div>
+        <div class="gl-hm-edit-fields js-hm-edit-fields">
+          <div class="edit-label">Hashtags (줄바꿈으로 구분, # 포함)</div>
+          <textarea class="edit-textarea js-hashtag-input" style="min-height:90px">${(gl.hashtags||[]).join('\n')}</textarea>
+          <div class="edit-label" style="margin-top:8px">Mention Accounts (줄바꿈으로 구분, @ 포함)</div>
+          <textarea class="edit-textarea js-mention-input" style="min-height:60px">${(gl.mentions||[]).join('\n')}</textarea>
+          <div class="cut-edit-actions">
+            <button type="button" class="btn-cancel-cut js-hm-cancel">취소</button>
+            <button type="button" class="btn-save-cut js-hm-save">💾 저장</button>
+          </div>
+        </div>
+      </div>
       ${Array.isArray(gl.mentions) && gl.mentions.length ? `
       <div class="gl-hm-card">
         <div class="gl-hm-title">@ Mention Accounts</div>
-        <div>${gl.mentions.map(m => `<div class="gl-mention-item"><span class="gl-mention-at">${m}</span><span style="color:#888;font-size:11px;margin-left:auto">Brand</span></div>`).join('')}</div>
+        <div class="js-mention-display">${gl.mentions.map(m=>`<div class="gl-mention-item"><span class="gl-mention-at">${m}</span><span style="color:#888;font-size:11px;margin-left:auto">Brand</span></div>`).join('')}</div>
       </div>` : ''}
-    </div>` : ''}
+    </div>
 
     ${Array.isArray(gl.ref_videos) && gl.ref_videos.length ? `
     <div class="gl-refs-section">
@@ -1144,6 +1163,70 @@ function renderDetail(gl, p, cuts, variants) {
       saveBtn.textContent = '💾 저장';
     }
   });
+
+  // ── Variant 전환 ──
+  const VARIANT_MAP = {};
+  variants.forEach(v => { VARIANT_MAP[v.name] = v; });
+
+  container.querySelectorAll('.gl-variant-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.gl-variant-item').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const v = VARIANT_MAP[btn.dataset.name];
+      if (!v) return;
+      // 이미지
+      const pbImg = container.querySelector('#pb-product-img');
+      if (pbImg && v.img_url) { pbImg.style.opacity='0'; setTimeout(()=>{ pbImg.src=v.img_url; pbImg.style.opacity='1'; }, 180); }
+      // 제품명
+      const nameEl = container.querySelector('.js-pb-name');
+      if (nameEl) nameEl.textContent = v.name;
+      // USP pills
+      const uspEl = container.querySelector('.js-usp-pills');
+      if (uspEl && v.usp_pills) uspEl.innerHTML = v.usp_pills.map(x=>`<span class="gl-pill">${x}</span>`).join('');
+      // Ingredient pills
+      const ingEl = container.querySelector('.js-ingredient-pills');
+      if (ingEl && v.ingredient_pills) ingEl.innerHTML = v.ingredient_pills.map(x=>`<span class="gl-pill gl-pill-blue">${x}</span>`).join('');
+    });
+  });
+
+  // ── 해시태그 / 멘션 편집 ──
+  const hmEditBtn = container.querySelector('.js-hm-edit-btn');
+  const hmEditFields = container.querySelector('.js-hm-edit-fields');
+  if (hmEditBtn && hmEditFields) {
+    hmEditBtn.addEventListener('click', () => {
+      const isOpen = hmEditFields.classList.contains('visible');
+      hmEditFields.classList.toggle('visible', !isOpen);
+      hmEditBtn.textContent = isOpen ? '✏️ 편집' : '✖️ 닫기';
+    });
+    container.querySelector('.js-hm-cancel').addEventListener('click', () => {
+      hmEditFields.classList.remove('visible');
+      hmEditBtn.textContent = '✏️ 편집';
+    });
+    container.querySelector('.js-hm-save').addEventListener('click', async () => {
+      const saveBtn = container.querySelector('.js-hm-save');
+      saveBtn.disabled = true; saveBtn.textContent = '저장 중…';
+      const newHashtags = container.querySelector('.js-hashtag-input').value.split('\n').map(s=>s.trim()).filter(Boolean);
+      const newMentions = container.querySelector('.js-mention-input').value.split('\n').map(s=>s.trim()).filter(Boolean);
+      try {
+        await sbFetch(`/rest/v1/gl_guidelines?id=eq.${gl.id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ hashtags: newHashtags, mentions: newMentions })
+        });
+        // 뷰 업데이트
+        const displayEl = container.querySelector('.js-hashtag-display');
+        if (displayEl) displayEl.innerHTML = newHashtags.map(h=>`<span class="gl-hashtag">${h}</span>`).join('');
+        const mentionDisplay = container.querySelector('.js-mention-display');
+        if (mentionDisplay) mentionDisplay.innerHTML = newMentions.map(m=>`<div class="gl-mention-item"><span class="gl-mention-at">${m}</span><span style="color:#888;font-size:11px;margin-left:auto">Brand</span></div>`).join('');
+        hmEditFields.classList.remove('visible');
+        hmEditBtn.textContent = '✏️ 편집';
+        showToast('✅ 해시태그/멘션 저장됨', 'success', 1800);
+      } catch(e) {
+        showToast('❌ 저장 실패: ' + e.message, 'error');
+      } finally {
+        saveBtn.disabled = false; saveBtn.textContent = '💾 저장';
+      }
+    });
+  }
 
   // 제품 이미지 업로드
   const pbImgWrap = container.querySelector('#pb-img-wrap');
