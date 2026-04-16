@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- v20260416-3 -->
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -898,15 +899,17 @@ async function loadDetail(id) {
   toolbar.innerHTML = '';
 
   try {
-    const [glRows, cuts, variantRows] = await Promise.all([
+    const [glRows, cuts] = await Promise.all([
       sbFetch(`/rest/v1/gl_guidelines?id=eq.${id}&select=*,gl_products(*),gl_types(name)`),
       fetchCuts(id),
-      sbFetch(`/rest/v1/gl_variants?order=order.asc`).catch(() => [])
     ]);
     const gl = glRows[0];
     if (!gl) throw new Error('가이드라인을 찾을 수 없습니다.');
     const p = gl.gl_products || {};
-    const variants = variantRows.filter(v => v.product_id === p.id);
+    // product_id 필터로 정확히 조회 (전체 조회 후 JS 필터 방식 제거)
+    const variants = p.id
+      ? await sbFetch(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(() => [])
+      : [];
     currentGl = gl;
     currentCuts = cuts;
     renderDetail(gl, p, cuts, variants);
