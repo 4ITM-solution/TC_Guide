@@ -154,6 +154,8 @@
   .gl-pb-section-body { font-size: 12px; line-height: 1.6; }
   .gl-pb-section-body li { margin-left: 14px; margin-bottom: 2px; }
   .gl-pb-divider { border: none; border-top: 1px solid #f0f0f0; margin: 0; }
+  .gl-amazon-btn { display: inline-block; margin-top: 10px; background: #E8447A; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; }
+  .gl-amazon-btn:hover { background: #c9355f; }
   .gl-variant-strip { padding: 14px 16px 0; }
   .gl-variant-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
   .gl-variant-thumbs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
@@ -166,6 +168,12 @@
   .gl-hm-edit-btn:hover { border-color: #FF6B9D; color: #FF6B9D; }
   .gl-hm-edit-fields { display: none; margin-top: 10px; }
   .gl-hm-edit-fields.visible { display: block; }
+  .gl-notice-section { margin: 14px 16px 0; }
+  .gl-notice-card { background: #fff8e1; border: 1.5px solid #ffe082; border-radius: 14px; padding: 16px 18px; }
+  .gl-notice-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #b8860b; margin-bottom: 8px; }
+  .gl-notice-hero { font-size: 13px; color: #5a4000; line-height: 1.5; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1.5px solid #ffe082; }
+  .gl-rule-item { font-size: 12px; color: #5a4000; line-height: 1.5; padding: 4px 0; border-bottom: 1px solid #ffe082; }
+  .gl-rule-item:last-child { border-bottom: none; }
   .gl-angle-header { margin: 20px 16px 10px; }
   .gl-angle-header .ah-sub { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #888; margin-bottom: 4px; }
   .gl-angle-header h2 { font-size: 22px; font-weight: 900; }
@@ -1002,6 +1010,7 @@ function renderDetail(gl, p, cuts, variants) {
               <div class="gl-pb-section-label">💧 Texture Notes</div>
               <div class="gl-pb-section-body js-texture-notes">${p.texture_notes}</div>
             </div>` : ''}
+          ${p.footer_link ? `<a id="gl-amazon-btn" href="${p.footer_link}" target="_blank" class="gl-amazon-btn">🛒 View on Amazon</a>` : ''}
         </div>
       </div>
       <!-- 제품 편집 필드 -->
@@ -1044,6 +1053,7 @@ function renderDetail(gl, p, cuts, variants) {
         <button type="button" class="gl-variant-item${i === 0 ? ' active' : ''}"
           data-name="${v.name}"
           data-img="${v.img_url || ''}"
+          data-link="${v.footer_link || ''}"
           data-usp="${(v.usp_pills || []).join('|')}"
           data-ing="${(v.ingredient_pills || []).join('|')}">
           ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : '<div style="width:60px;height:60px;background:#eee;border-radius:10px"></div>'}
@@ -1051,6 +1061,31 @@ function renderDetail(gl, p, cuts, variants) {
         </button>`).join('')}
       </div>
     </div>` : ''}
+
+    <div class="gl-notice-section">
+      <div class="gl-notice-card">
+        <div class="gl-notice-title">⭐ Video DOs &amp; DON'Ts</div>
+        <div class="gl-notice-hero">
+          <strong>Rice Pure Essential Toner must appear in the video.</strong> This is the hero product — ensure it is clearly visible on screen.
+        </div>
+        <div class="dos-donts" style="display:flex;gap:12px">
+          <div style="flex:1">
+            <div style="font-size:11px;font-weight:800;color:#c0392b;margin-bottom:6px">❌ DON'Ts</div>
+            <div class="gl-rule-item">❌ Other brand's products</div>
+            <div class="gl-rule-item">❌ An unboxing video</div>
+            <div class="gl-rule-item">❌ Only hands featured</div>
+            <div class="gl-rule-item">❌ Prohibited words on TikTok</div>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:11px;font-weight:800;color:#27ae60;margin-bottom:6px">✅ DOs</div>
+            <div class="gl-rule-item">⭕ Try-on on your face</div>
+            <div class="gl-rule-item">⭕ High definition</div>
+            <div class="gl-rule-item">⭕ 2-second hook</div>
+            <div class="gl-rule-item">⭕ Commercial sound on TikTok</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="gl-angle-header">
       <div class="ah-sub">Angle #1 · ${cuts.length} Cuts</div>
@@ -1186,6 +1221,10 @@ function renderDetail(gl, p, cuts, variants) {
       // Ingredient pills
       const ingEl = container.querySelector('.js-ingredient-pills');
       if (ingEl && v.ingredient_pills) ingEl.innerHTML = v.ingredient_pills.map(x=>`<span class="gl-pill gl-pill-blue">${x}</span>`).join('');
+      // Amazon 버튼
+      const amazonBtn = container.querySelector('#gl-amazon-btn');
+      const varLink = btn.dataset.link || v.footer_link || '';
+      if (amazonBtn) { if (varLink) { amazonBtn.href = varLink; amazonBtn.style.display = 'inline-block'; } else { amazonBtn.style.display = 'none'; } }
     });
   });
 
