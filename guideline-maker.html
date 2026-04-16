@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v20260416-3 -->
+<!-- v20260416-4 -->
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -1220,10 +1220,13 @@ function renderDetail(gl, p, cuts, variants) {
       if (nameEl) nameEl.textContent = v.name;
       // USP pills
       const uspEl = container.querySelector('.js-usp-pills');
-      if (uspEl && v.usp_pills) uspEl.innerHTML = v.usp_pills.map(x=>`<span class="gl-pill">${x}</span>`).join('');
+      if (uspEl && v.usp_pills?.length) uspEl.innerHTML = v.usp_pills.map(x=>`<span class="gl-pill">${x}</span>`).join('');
       // Ingredient pills
       const ingEl = container.querySelector('.js-ingredient-pills');
-      if (ingEl && v.ingredient_pills) ingEl.innerHTML = v.ingredient_pills.map(x=>`<span class="gl-pill gl-pill-blue">${x}</span>`).join('');
+      if (ingEl && v.ingredient_pills?.length) ingEl.innerHTML = v.ingredient_pills.map(x=>`<span class="gl-pill gl-pill-blue">${x}</span>`).join('');
+      // Texture notes
+      const texEl = container.querySelector('.js-texture-notes');
+      if (texEl && v.texture_notes) texEl.textContent = v.texture_notes;
       // Amazon 버튼
       const amazonBtn = container.querySelector('#gl-amazon-btn');
       const varLink = btn.dataset.link || v.footer_link || '';
