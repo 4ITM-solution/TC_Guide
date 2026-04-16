@@ -1,52 +1,32 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="ko">
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THANKYOUFARMER · Rice Pure Routine · PR Guide v2</title>
-<style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --brand:#2C7A4B;--brand-dark:#1a5c36;--brand-light:#e8f5ee;--brand-mid:#9dcfb3;
-    --blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;--pink:#FF6B9D;
-    --text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;
-    --radius:14px;
-  }
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-
-  /* LOADING */
-  #loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:14px;color:var(--muted)}
-  .spinner{width:36px;height:36px;border:3px solid var(--brand-light);border-top-color:var(--brand);border-radius:50%;animation:spin .7s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rice Pure Skincare Routine</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--brand:#FF6B9D;--brand-dark:#E8447A;--pink-light:#FFE8F2;--pink-mid:#FFB3D0;--blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;--text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  #loading{text-align:center;padding:60px 20px;color:var(--muted)}
   #main{display:none}
-
-  /* HEADER */
+  .spinner{display:inline-block;width:28px;height:28px;border:3px solid #ffd6e8;border-top-color:var(--brand);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:12px}
+  @keyframes spin{to{transform:rotate(360deg)}}
   .site-header{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
   .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
-  .site-header h1{font-size:clamp(16px,5vw,24px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
+  .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
   .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
-
-  /* PRODUCT BRIEF */
   .product-section{padding:16px 16px 0}
   .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);display:flex;flex-direction:column}
-  @media(min-width:600px){
-    .product-brief{flex-direction:row;align-items:stretch}
-    .pb-img{width:220px;flex-shrink:0}
-    .pb-img img{aspect-ratio:auto;width:100%;height:100%;object-fit:cover}
-  }
-  .pb-img{background:#f0f0f0;overflow:hidden}
-  .pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:280px;object-position:center;transition:opacity .3s}
+  @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover}}
+  .pb-img{background:#f0f0f0;overflow:hidden}.pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:340px}
   .pb-info{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
-  .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
+  .pb-name{font-size:14px;font-weight:900;line-height:1.35}
   .pills{display:flex;flex-wrap:wrap;gap:5px}
-  .pill{background:var(--brand-light);color:var(--brand-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+  .pill{background:var(--pink-light);color:var(--brand-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
   .pill-blue{background:#e8f0fe;color:var(--blue)}
   .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
-  .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
+  .pb-section-body{font-size:12px;line-height:1.6}.pb-section-body li{margin-left:14px;margin-bottom:2px}
   .pb-divider{border:none;border-top:1px solid #f0f0f0;margin:0}
   .amazon-btn{display:inline-block;margin-top:4px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;padding:8px 18px;border-radius:100px;text-decoration:none;align-self:flex-start}
   .amazon-btn:hover{background:var(--brand-dark)}
-
-  /* VARIANT STRIP */
   .variant-strip{margin:0 16px;background:var(--card);border-radius:0 0 var(--radius) var(--radius);box-shadow:0 4px 14px rgba(0,0,0,0.07);padding:14px 16px;display:flex;align-items:center;gap:12px;overflow-x:auto;border-top:1px solid #f0f0f0}
   .variant-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);flex-shrink:0}
   .variant-thumbs{display:flex;gap:10px;flex:1}
@@ -55,8 +35,6 @@
   .variant-item img{width:52px;height:52px;border-radius:10px;object-fit:cover;border:2px solid transparent;transition:border-color .2s}
   .variant-item.active img{border-color:var(--brand)}
   .variant-item span{font-size:10px;font-weight:700;color:var(--text);text-align:center;max-width:60px;line-height:1.2}
-
-  /* NOTICE SECTION */
   .notice-section{margin:16px 16px 0}
   .notice-card{background:#fff8e1;border:1.5px solid #ffe082;border-radius:var(--radius);padding:16px 18px}
   .notice-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#b8860b;margin-bottom:4px;display:flex;align-items:center;gap:6px}
@@ -64,354 +42,142 @@
   .dos-donts{display:flex;gap:12px}
   @media(max-width:480px){.dos-donts{flex-direction:column}}
   .dos-col,.donts-col{flex:1;min-width:0}
-  .col-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
-  .donts-col .col-title{color:#c0392b}
-  .dos-col .col-title{color:#27ae60}
+  .col-title{font-size:11px;font-weight:800;margin-bottom:8px}
+  .donts-col .col-title{color:#c0392b}.dos-col .col-title{color:#27ae60}
   .rule-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#5a4000;line-height:1.5;padding:5px 0;border-bottom:1px solid #ffe082}
   .rule-item:last-child{border-bottom:none;padding-bottom:0}
-  .rule-icon{flex-shrink:0;font-size:13px;margin-top:1px}
-  .rule-sub{font-size:11px;color:#7a6000;margin-top:3px;padding-left:20px}
-
-  /* ANGLE HEADER */
-  .angle-header{margin:20px 16px 10px}
-  .angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}
-  .angle-header h2{font-size:22px;font-weight:900;color:var(--text)}
-
-  /* CUTS */
+  .angle-header{margin:20px 16px 10px}.angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}.angle-header h2{font-size:22px;font-weight:900}
   .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
   .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
-  .cut-inner{display:flex;flex-direction:column}
-  @media(min-width:520px){
-    .cut-inner{flex-direction:row}
-    .cut-img-wrap{width:30%;flex-shrink:0}
-  }
-  .cut-img-wrap{position:relative;background:#111}
-  .cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
-  .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center;gap:6px}
-  .cut-badge{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:100px;color:#fff}
-  .badge-quick{background:rgba(255,165,0,0.9);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:100px}
-  .cut-body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
-  .cut-scene{font-size:16px;font-weight:900;line-height:1.3;color:var(--text)}
-  .cb-meta-row{display:flex;align-items:baseline;gap:8px}
-  .cb-meta-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);flex-shrink:0}
-  .cb-meta-val{font-size:12px;font-weight:700;color:var(--brand-dark)}
+  .cut-inner{display:flex;flex-direction:column}@media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
+  .cut-img-wrap{position:relative;background:#111}.cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}@media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
+  .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
+  .cut-badge{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
+  .badge-hook{background:var(--red)}.badge-cut{background:var(--blue)}.badge-result{background:var(--green);color:#1a1a1a}
+  .cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:11px}
+  .cb-section-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
+  .cut-scene{font-size:14px;font-weight:700;line-height:1.45}
   .cb-divider{border:none;border-top:1px solid #f0f0f0}
-  .cb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px}
-  .cb-direction{font-size:13px;line-height:1.65;color:var(--text)}
-  .cb-prod-method{background:var(--brand-light);border-radius:10px;padding:12px 14px}
-  .cb-prod-steps{font-size:12px;line-height:1.8;color:var(--brand-dark);white-space:pre-line}
-  .captions-list{display:flex;flex-direction:column;gap:7px}
-  .caption-item{background:#f7f7fa;border-radius:10px;padding:9px 12px;font-size:12px;line-height:1.5;color:var(--text)}
-
-  /* HASHTAGS & MENTIONS */
-  .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
-  @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
+  .cb-direction{font-size:13px;line-height:1.65}
+  .cb-meta-row{display:flex;align-items:center;gap:8px}.cb-meta-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.cb-meta-val{display:inline-block;background:var(--pink-light);color:var(--brand-dark);font-size:12px;font-weight:800;padding:4px 12px;border-radius:100px}
+  .cb-prod-method{background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}.cb-prod-steps{font-size:12px;line-height:1.7}.cb-prod-steps ol{margin-left:16px}.cb-prod-steps li{margin-bottom:3px}
+  .captions-list{display:flex;flex-direction:column;gap:6px}
+  .caption-item{font-size:13px;line-height:1.5;display:flex;align-items:flex-start;gap:6px}.caption-item::before{content:'•';color:var(--brand);font-size:16px;line-height:1.2;flex-shrink:0}
+  .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}@media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
   .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
   .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
-  .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}
-  .hashtag{background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
-  .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
-  .mention-item:last-child{border-bottom:none}
-  .mention-at{color:var(--brand-dark);font-weight:700}
-
-  /* REF VIDEOS */
-  .refs-section{margin:20px 16px 0}
-  .refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px}.hashtag{background:var(--pink-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
+  .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}.mention-item:last-child{border-bottom:none}.mention-at{color:var(--brand-dark);font-weight:700}
+  .refs-section{margin:20px 16px 0}.refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
   .ref-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
   .ref-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
-  .ref-info{flex:1;min-width:0}
-  .ref-title{font-size:13px;font-weight:700;margin-bottom:2px}
-  .ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .ref-arrow{color:var(--muted);font-size:18px}
-
-  /* FOOTER */
-  .footer{padding:24px 16px;text-align:center;color:var(--muted);font-size:12px;margin-top:16px}
-</style>
+  .ref-info{flex:1;min-width:0}.ref-title{font-size:13px;font-weight:700;margin-bottom:2px}.ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ref-arrow{color:var(--muted);font-size:18px}
+  .footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}</style>
 </head>
 <body>
+<div id="loading"><div class="spinner"></div><div>Loading…</div></div>
+<div id="main">
+  <header class="site-header">
+    <div class="header-badge">THANKYOUFARMER · PR GUIDE</div>
+    <h1>Rice Pure Skincare Routine</h1>
+    <div class="header-concept">Cleanse → Hydrate → Mist. A 3-step routine using the full Rice Pure set — show each product in action for a dewy, glass-skin finish.</div>
+  </header>
 
-<div id="loading">
-  <div class="spinner"></div>
-  <div>Loading guideline...</div>
+  <section class="product-section">
+    <div class="product-brief">
+      <div class="pb-img"><img id="pb-main-img" src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-toner-apr/product.jpg" alt="Rice Pure Essential Toner" style="transition:opacity .2s"></div>
+      <div class="pb-info">
+        <div class="pb-name" id="pb-main-name">THANKYOUFARMER<br>Rice Pure Essential Toner</div>
+        <div>
+          <div class="pb-section-label">Key USP</div>
+          <div class="pills" id="pb-usp-pills"><span class="pill">Hydration</span><span class="pill">Skin Barrier</span><span class="pill">Brightening</span><span class="pill">Moisturizing & Softening</span></div>
+        </div>
+        <div>
+          <div class="pb-section-label">Key Ingredients</div>
+          <div class="pills" id="pb-ing-pills"><span class="pill pill-blue">Rice Water</span><span class="pill pill-blue">Lotus Flower</span><span class="pill pill-blue">Fig Fruit Extracts</span><span class="pill pill-blue">Ceramide</span><span class="pill pill-blue">Centella</span></div>
+        </div>
+        <hr class="pb-divider"><div><div class="pb-section-label">ABOUT</div><div class="pb-section-body" id="pb-texture">Fights dryness and skin fatigue, strengthens the skin barrier, clarifies while moisturizing and softening. Glowing complexion — what K-Beauty is all about!</div></div>
+        <a id="pb-amazon-btn" href="https://www.amazon.com/THANKYOU-FARMER-Essential-Korean-Extracts/dp/B0852SV27T/ref=ast_sto_dp_puis?th=1" target="_blank" class="amazon-btn">🛒 View on Amazon</a>
+      </div>
+    </div>
+  </section>
+
+  
+  <div class="variant-strip">
+    <div class="variant-label">3 Products in Set</div>
+    <div class="variant-thumbs"><button type="button" class="variant-item active" data-name="Rice Pure Essential Toner" data-img="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-toner-apr/product.jpg" data-link="https://www.amazon.com/THANKYOU-FARMER-Essential-Korean-Extracts/dp/B0852SV27T/ref=ast_sto_dp_puis?th=1" onclick="switchVariant(this)" style="background:none;border:none;padding:0;cursor:pointer"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-toner-apr/product.jpg" alt="Rice Pure Essential Toner"><span>Essential Toner</span></button><button type="button" class="variant-item" data-name="Rice Pure Milky Cleansing Oil" data-img="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-toner-apr/variant_milky_oil.jpg" data-link="https://www.amazon.com/THANKYOU-FARMER-Milky-Cleansing-200ml/dp/B0FL7F3V3X/ref=ast_sto_dp_puis" onclick="switchVariant(this)" style="background:none;border:none;padding:0;cursor:pointer"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-toner-apr/variant_milky_oil.jpg" alt="Rice Pure Milky Cleansing Oil"><span>Milky Cleansing Oil</span></button><button type="button" class="variant-item" data-name="Rice Pure Watery Mist" data-img="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-toner-apr/variant_watery_mist.jpg" data-link="https://www.amazon.com/THANKYOU-FARMER-Rice-Pure-Watery/dp/B0F47T7MJ3" onclick="switchVariant(this)" style="background:none;border:none;padding:0;cursor:pointer"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-toner-apr/variant_watery_mist.jpg" alt="Rice Pure Watery Mist"><span>Watery Mist</span></button></div>
+  </div>
+
+  <div class="notice-section">
+    <div class="notice-card">
+      <div class="notice-title">⭐ Video DO&amp;s &amp; DON'Ts</div>
+      <div class="notice-hero"><strong>Rice Pure Essential Toner must appear in the video.</strong> This is the hero product — ensure it is clearly visible on screen.</div>
+      <div class="dos-donts">
+        <div class="donts-col">
+          <div class="col-title">❌ DON'Ts</div>
+          <div class="rule-item"><span>❌</span><span>Other brand's products</span></div>
+          <div class="rule-item"><span>❌</span><span>An unboxing video</span></div>
+          <div class="rule-item"><span>❌</span><span>Only hands featured</span></div>
+          <div class="rule-item"><span>❌</span><span>Use prohibited words or phrases on TikTok<br><span style="font-size:11px;color:#7a6000">(e.g. cheapest price, violent language, medical-related terms…)</span></span></div>
+        </div>
+        <div class="dos-col">
+          <div class="col-title">✅ DOs</div>
+          <div class="rule-item"><span>⭕</span><span>Try-on on your face<br><span style="font-size:11px;color:#7a6000">Highlight texture</span></span></div>
+          <div class="rule-item"><span>⭕</span><span>High definition</span></div>
+          <div class="rule-item"><span>⭕</span><span>2-second hook</span></div>
+          <div class="rule-item"><span>⭕</span><span>When adding sound on TikTok, use it as a commercial sound!</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="angle-header">
+    <div class="ah-sub">Shooting Angle</div>
+    <h2>Rice Pure Skincare Routine</h2>
+  </div>
+
+  <div class="cuts-wrap"><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-routine-apr/cut_01.jpg" alt="HOOK 1" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-hook">HOOK 1</span></div></div><div class="cut-body"><div class="cb-meta-row"><span class="cb-meta-label">MAIN USP</span><span class="cb-meta-val">Deep Cleansing · Hydration · On-the-Go Moisture</span></div><div class="cb-prod-method"><div class="cb-meta-label" style="margin-bottom:6px">PRODUCTION METHOD</div><div class="cb-prod-steps"><ol><li>Hold all 3 products in both hands, labels facing camera</li><li>Film straight-on, face fully visible above the products</li><li><b>Keep expression excited and natural</b></li><li><b>Natural or soft ring light</b> — avoid harsh shadows</li><li>Cut to cleansing routine immediately<b> after the 2-second hook</b></li></ol></div></div><hr class="cb-divider"><div class="cb-section-label">SCENE</div><div class="cut-scene">The Full Rice Pure Set</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Hold <b>all 3 Rice Pure products</b> together in both hands — Cleansing Oil, Essential Toner, and Watery Mist. Face the camera straight-on with a confident, excited expression. <b>Make sure all 3 product labels are clearly visible.</b> This is the hook that tells the viewer: this is <b>a full routine reveal.</b></div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">this rice skincare set is about to change your skin 🌾</div><div class="caption-item">3 products. one routine. glass skin incoming ✨</div><div class="caption-item">pov: you finally found your whole routine in one set 🫶</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-routine-apr/cut_02.jpg" alt="CUT 01" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-cut">CUT 01</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">Cleansing Oil Meltdown</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Apply the Rice Pure Milky Cleansing Oil onto a dry face and massage in circular motions. <b>Show the oil texture transforming into a milky emulsion</b> as it contacts skin. Film close-up on the cheek and nose area. Then doule-cleanse with any other foam cleanser.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">step 1: rice cleansing oil — watch the texture change 🥛</div><div class="caption-item">the way it melts EVERYTHING off 😮 oil to milk is so satisfying</div><div class="caption-item">this cleansing oil turns milky on your skin and i'm obsessed</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-toner-apr/cut_02.jpg" alt="CUT 02" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-cut">CUT 02</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">Milky Toner Pour</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Tilt the bottle and pour the toner directly onto the face — let it run down the cheek <b>in a thick, milky stream.</b> The texture should be <b>visible and satisfying.</b> Film from a slightly elevated angle so the pour and skin are both in frame.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">step 2: rice toner poured straight on the face 🌾💧</div><div class="caption-item">this milky toner pour is the most satisfying thing you'll see today</div><div class="caption-item">rice water going directly on your face = instant glow 🤍</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-routine-apr/cut_04.jpg" alt="CUT 03" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-cut">CUT 03</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">On-the-Go Mist Moment</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Change into a casual outfit — this signals a time skip and a new setting (out and about, after getting ready). Hold up the Rice Pure Watery Mist and spritz it onto your face from arm's length. <b>React naturally to the refreshing mist.</b> The key message: even after your full routine, <b>this mist is the perfect top-up hydration anytime, anywhere.</b></div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">step 3: mist on the go because hydration doesn't stop 💦</div><div class="caption-item">outfit change = mist moment ✨ this watery mist is my everyday essential</div><div class="caption-item">on the plane, in the car, at your desk — this mist goes everywhere with me</div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tyf-rice-routine-apr/cut_05.jpg" alt="RESULT" loading="lazy"><div class="cut-badge-row"><span class="cut-badge badge-result">RESULT</span></div></div><div class="cut-body"><div class="cb-section-label">SCENE</div><div class="cut-scene">Radiant Glow Reveal</div><hr class="cb-divider"><div class="cb-section-label">DIRECTION</div><div class="cb-direction">Close-up on <b>glowing, dewy skin</b> after the full 3-step routine. Gently press one finger into the cheek to show plumpness and bounce. Catch natural light on the cheekbones for maximum glow. Hold the shot for 3–4 seconds and let the skin speak for itself. Smile naturally — you earned that glow.</div><hr class="cb-divider"><div class="cb-section-label">CAPTION OPTIONS</div><div class="captions-list"><div class="caption-item">this is what the rice pure routine does to your skin 🌾✨</div><div class="caption-item">cleanse → tone → mist = glass skin every single time</div><div class="caption-item">3 steps. radiant glow. that's it. that's the routine 💧</div></div></div></div></div></div>
+
+  <div class="hm-section">
+    <div class="hm-card"><div class="hm-title"># Hashtags</div><div class="hashtag-wrap"><span class="hashtag">#thankyoufarmer</span><span class="hashtag">#milkytoner</span><span class="hashtag">#koreanskincare</span><span class="hashtag">#skincareroutine</span><span class="hashtag">#glasskin</span></div></div>
+    <div class="hm-card"><div class="hm-title">@ Mention Accounts</div><div class="mention-item"><span class="mention-at">@thankyoufarmer_usa</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div><div class="mention-item"><span class="mention-at">@thankyoufarmer_official</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div></div>
+  </div>
+
+  <div class="refs-section"><h3>📎 Reference Videos</h3><a href="https://www.tiktok.com/@shirleyfied" target="_blank" class="ref-card"><div class="ref-icon">🎵</div><div class="ref-info"><div class="ref-title">shirleyfied — Rice skincare routine</div><div class="ref-url">https://www.tiktok.com/@shirleyfied</div></div><span class="ref-arrow">›</span></a><a href="https://www.tiktok.com/@blueyoobin" target="_blank" class="ref-card"><div class="ref-icon">🎵</div><div class="ref-info"><div class="ref-title">blueyoobin — Barrier reset routine</div><div class="ref-url">https://www.tiktok.com/@blueyoobin</div></div><span class="ref-arrow">›</span></a><a href="https://www.tiktok.com/@chxrry.glowy" target="_blank" class="ref-card"><div class="ref-icon">🎵</div><div class="ref-info"><div class="ref-title">chxrry.glowy — Dehydrated to glowy</div><div class="ref-url">https://www.tiktok.com/@chxrry.glowy</div></div><span class="ref-arrow">›</span></a></div>
+
+  <div class="footer">THANKYOUFARMER · Rice Pure Skincare Routine · PR Guide v2<br>Generated by 4AM Cowork</div>
 </div>
 
-<div id="main"></div>
-
 <script>
-const SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
-const ANON_KEY     = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
-const GUIDELINE_ID = 'fac08b1f-6658-46af-85e6-1a49be686323';
-const PRODUCT_ID   = '51d1bdae-7952-4f2b-bd78-616f300b1df5'; // Milky Cleansing Oil (main)
-
-const headers = { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY };
-
-// 전역 선언 — switchVariant()에서 접근 가능
 const VARIANT_DATA = {
-  'Rice Pure Milky Cleansing Oil': {
-    link:        'https://www.amazon.com/THANKYOU-FARMER-Milky-Cleansing-200ml/dp/B0FL7F3V3X/ref=ast_sto_dp_puis',
-    usp:         ['Deep Cleansing', 'Blackhead & Sebum Care', 'Dewy Skin', 'Non-Irritating'],
-    ingredients: ['Rice Extract', 'Lipophilic Micelles', 'Hydrophilic Micelles'],
-    texture:     'Oil-to-milk texture that melts away makeup — massage a little longer for that cleansing + massaging effect. Clears sebum, blackheads, and whiteheads without drying or irritation.',
-  },
-  'Rice Pure Essential Toner': {
-    link:        'https://www.amazon.com/THANKYOU-FARMER-Essential-Korean-Extracts/dp/B0852SV27T/ref=ast_sto_dp_puis?th=1',
-    usp:         ['Hydration', 'Skin Barrier', 'Brightening', 'Moisturizing & Softening'],
-    ingredients: ['Rice Water', 'Lotus Flower', 'Fig Fruit Extracts', 'Ceramide', 'Centella'],
-    texture:     'Fights dryness and skin fatigue, strengthens the skin barrier, clarifies while moisturizing and softening. Glowing complexion — what K-Beauty is all about!',
-  },
-  'Rice Pure Watery Mist': {
-    link:        'https://www.amazon.com/THANKYOU-FARMER-Rice-Pure-Watery/dp/B0F47T7MJ3/ref=ast_sto_dp_puis',
-    usp:         ['On-the-Go Moisture', 'Instant Hydration', 'Dewy Skin', 'Travel-Friendly'],
-    ingredients: ['Niacinamide', 'Rice Water'],
-    texture:     'On the go, on the plane, in the car — keep it nearby! Perfect for heat, AC weather, or any moment your skin feels dry. Get ready for that dewy skin, because you deserve it!',
-  },
+  "Rice Pure Essential Toner":{ usp:["Hydration","Skin Barrier","Brightening","Moisturizing & Softening"], ingredients:["Rice Water","Lotus Flower","Fig Fruit Extracts","Ceramide","Centella"], texture:"Fights dryness and skin fatigue, strengthens the skin barrier, clarifies while moisturizing and softening. Glowing complexion — what K-Beauty is all about!", link:"https://www.amazon.com/THANKYOU-FARMER-Essential-Korean-Extracts/dp/B0852SV27T/ref=ast_sto_dp_puis?th=1" },
+  "Rice Pure Milky Cleansing Oil":{ usp:["Deep Cleansing","Blackhead & Sebum Care","Dewy Skin","Non-Irritating"], ingredients:["Rice Extract","Lipophilic Micelles","Hydrophilic Micelles"], texture:"Oil-to-milk texture that melts away makeup — massage a little longer for that cleansing + massaging effect. Clears sebum, blackheads, and whiteheads without drying or irritation.", link:"https://www.amazon.com/THANKYOU-FARMER-Milky-Cleansing-200ml/dp/B0FL7F3V3X/ref=ast_sto_dp_puis" },
+  "Rice Pure Watery Mist":{ usp:["On-the-Go Moisture","Instant Hydration","Dewy Skin","Travel-Friendly"], ingredients:["Niacinamide","Rice Water"], texture:"On the go, on the plane, in the car — keep it nearby! Perfect for heat, AC weather, or any moment your skin feels dry. Get ready for that dewy skin, because you deserve it!", link:"https://www.amazon.com/THANKYOU-FARMER-Rice-Pure-Watery/dp/B0F47T7MJ3" }
 };
-
-async function fetchJSON(url) {
-  const r = await fetch(url, { headers });
-  if (!r.ok) throw new Error('Fetch failed: ' + url);
-  return r.json();
-}
-
-function labelColor(label) {
-  if (label.startsWith('HOOK'))  return '#2C7A4B';
-  if (label === 'RESULT')        return '#2ED573';
-  return '#1A73E8';
-}
-
-function buildCard(cut) {
-  const pacingBadge = cut.pacing === 'fast'
-    ? '<span class="badge-quick">⚡ Quick Cut</span>' : '';
-
-  const uspBlock = cut.main_usp ? `
-    <div class="cb-meta-row">
-      <span class="cb-meta-label">MAIN USP</span>
-      <span class="cb-meta-val">${cut.main_usp}</span>
-    </div>` : '';
-
-  const prodBlock = cut.production_method ? `
-    <div class="cb-prod-method">
-      <div class="cb-meta-label" style="margin-bottom:6px">PRODUCTION METHOD</div>
-      <div class="cb-prod-steps">${cut.production_method}</div>
-    </div>` : '';
-
-  const captions = (cut.captions || [])
-    .map(c => `<div class="caption-item">💬 ${c}</div>`).join('');
-
-  return `
-  <div class="cut-card">
-    <div class="cut-inner">
-      <div class="cut-img-wrap">
-        <img src="${cut.img_url}" alt="${cut.label}" loading="lazy">
-        <div class="cut-badge-row">
-          <span class="cut-badge" style="background:${labelColor(cut.label)}">${cut.label}</span>
-          ${pacingBadge}
-        </div>
-      </div>
-      <div class="cut-body">
-        <div class="cut-scene">${cut.scene}</div>
-        ${uspBlock}
-        <hr class="cb-divider">
-        <div class="cb-section-label">DIRECTION</div>
-        <div class="cb-direction">${cut.direction}</div>
-        ${prodBlock}
-        <hr class="cb-divider">
-        <div class="cb-section-label">CAPTION OPTIONS</div>
-        <div class="captions-list">${captions}</div>
-      </div>
-    </div>
-  </div>`;
-}
-
-async function render() {
-  const [product, guideline, cuts, variants] = await Promise.all([
-    fetchJSON(`${SUPABASE_URL}/rest/v1/gl_products?id=eq.${PRODUCT_ID}&select=*`),
-    fetchJSON(`${SUPABASE_URL}/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*`),
-    fetchJSON(`${SUPABASE_URL}/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&select=*&order=order.asc`),
-    fetchJSON(`${SUPABASE_URL}/rest/v1/gl_variants?product_id=eq.${PRODUCT_ID}&select=*&order=order.asc`)
-  ]);
-
-  const p = product[0];
-  const g = guideline[0];
-
-  const hashtags = (g.hashtags || []).map(h => `<span class="hashtag">${h}</span>`).join('');
-  const mentions = (g.mentions || []).map(m =>
-    `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
-  ).join('');
-  const refVideos = (g.ref_videos || []).map(v => {
-    const domain = v.url.replace(/https?:\/\//, '').split('/')[0];
-    const path   = v.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40);
-    return `<a class="ref-card" href="${v.url}" target="_blank">
-      <div class="ref-icon">🎵</div>
-      <div class="ref-info">
-        <div class="ref-title">${v.title}</div>
-        <div class="ref-url">${domain + path}</div>
-      </div>
-      <div class="ref-arrow">›</div>
-    </a>`;
-  }).join('');
-
-  // 초기 제품 (Essential Toner) 데이터
-  const initData = VARIANT_DATA['Rice Pure Essential Toner'];
-  const uspPills = initData.usp.map(u => `<span class="pill">${u}</span>`).join('');
-  const ingPills = initData.ingredients.map(i => `<span class="pill pill-blue">${i}</span>`).join('');
-  const textureBlock = `
-    <hr class="pb-divider">
-    <div>
-      <div class="pb-section-label">ABOUT</div>
-      <div class="pb-section-body" id="pb-texture">${initData.texture}</div>
-    </div>`;
-
-  const variantThumbsHTML = variants.map((v, i) => `
-    <button class="variant-item${i === 0 ? ' active' : ''}"
-         data-idx="${i}"
-         data-img="${v.img_url || ''}"
-         data-name="${v.name}"
-         data-link="${v.footer_link || ''}"
-         onclick="switchVariant(this)"
-         type="button"
-         style="background:none;border:none;padding:0;cursor:pointer">
-      ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : `<div style="width:52px;height:52px;border-radius:10px;background:#e8f5ee;display:flex;align-items:center;justify-content:center;font-size:20px">🌾</div>`}
-      <span>${v.name.replace('Rice Pure ', '')}</span>
-    </button>`).join('');
-
-  const cutsHTML = cuts.map(buildCard).join('');
-
-  document.getElementById('main').innerHTML = `
-    <header class="site-header">
-      <div class="header-badge">THANKYOUFARMER · PR Guide</div>
-      <h1>${g.angle_name}</h1>
-      <div class="header-concept">${g.concept}</div>
-    </header>
-
-    <section class="product-section">
-      <div class="product-brief">
-        <div class="pb-img"><img id="pb-main-img" src="${variants[0]?.img_url || p.product_img_url || ''}" alt="${variants[0]?.name || p.name}"></div>
-        <div class="pb-info">
-          <div class="pb-name" id="pb-main-name">THANKYOUFARMER<br>${variants[0]?.name || p.name}</div>
-          <div>
-            <div class="pb-section-label">Key USP</div>
-            <div class="pills" id="pb-usp-pills">${uspPills}</div>
-          </div>
-          <div>
-            <div class="pb-section-label">Key Ingredients</div>
-            <div class="pills" id="pb-ing-pills">${ingPills}</div>
-          </div>
-          ${textureBlock}
-          <a id="pb-amazon-btn" href="${variants[0]?.footer_link || initData.link}" target="_blank" class="amazon-btn">🛒 View on Amazon</a>
-        </div>
-      </div>
-    </section>
-
-    <div class="variant-strip">
-      <div class="variant-label">3 Products in Set</div>
-      <div class="variant-thumbs">${variantThumbsHTML}</div>
-    </div>
-
-    <div class="notice-section">
-      <div class="notice-card">
-        <div class="notice-title">⭐ Video DOs &amp; DON'Ts</div>
-        <div class="notice-hero">
-          <strong>Rice Pure Essential Toner must appear in the video.</strong> This is the hero product — ensure it is clearly visible on screen.
-        </div>
-        <div class="dos-donts">
-          <div class="donts-col">
-            <div class="col-title">❌ DON'Ts</div>
-            <div class="rule-item"><span class="rule-icon">❌</span><span>Other brand's products</span></div>
-            <div class="rule-item"><span class="rule-icon">❌</span><span>An unboxing video</span></div>
-            <div class="rule-item"><span class="rule-icon">❌</span><span>Only hands featured</span></div>
-            <div class="rule-item"><span class="rule-icon">❌</span><span>Use prohibited words or phrases on TikTok<br><span style="font-size:11px;color:#7a6000">(e.g. cheapest price, violent language, medical-related terms…)</span></span></div>
-          </div>
-          <div class="dos-col">
-            <div class="col-title">✅ DOs</div>
-            <div class="rule-item"><span class="rule-icon">⭕</span><span>Try-on on your face<br><span style="font-size:11px;color:#7a6000">Highlight texture</span></span></div>
-            <div class="rule-item"><span class="rule-icon">⭕</span><span>High definition</span></div>
-            <div class="rule-item"><span class="rule-icon">⭕</span><span>2-second hook</span></div>
-            <div class="rule-item"><span class="rule-icon">⭕</span><span>When adding sound on TikTok, use it as a commercial sound!</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="angle-header">
-      <div class="ah-sub">Shooting Angle</div>
-      <h2>${g.angle_name}</h2>
-    </div>
-
-    <div class="cuts-wrap">${cutsHTML}</div>
-
-    <div class="hm-section">
-      <div class="hm-card">
-        <div class="hm-title"># Hashtags</div>
-        <div class="hashtag-wrap">${hashtags}</div>
-      </div>
-      <div class="hm-card">
-        <div class="hm-title">@ Mention Accounts</div>
-        ${mentions}
-      </div>
-    </div>
-
-    <div class="refs-section">
-      <h3>📎 Additional Reference Videos</h3>
-      ${refVideos}
-    </div>
-
-    <footer class="footer">
-      THANKYOUFARMER · Rice Pure Routine · PR Guide ${g.version || 'v2'}<br>
-      Generated by 4AM Cowork
-    </footer>
-  `;
-
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('main').style.display    = 'block';
-}
+document.getElementById('loading').style.display = 'none';
+document.getElementById('main').style.display = 'block';
 
 function switchVariant(el) {
   document.querySelectorAll('.variant-item').forEach(v => v.classList.remove('active'));
   el.classList.add('active');
-
-  const img  = el.dataset.img;
+  const img = el.dataset.img;
   const name = el.dataset.name;
   const link = el.dataset.link || '';
   const data = VARIANT_DATA[name] || {};
-
-  // 제품 이미지 fade 교체
   const mainImg = document.getElementById('pb-main-img');
-  if (mainImg && img) {
-    mainImg.style.opacity = '0';
-    setTimeout(() => { mainImg.src = img; mainImg.style.opacity = '1'; }, 200);
-  }
-
-  // 제품명
-  const mainName = document.getElementById('pb-main-name');
-  if (mainName) mainName.innerHTML = 'THANKYOUFARMER<br>' + name;
-
-  // Key USP pills
+  if (mainImg && img) { mainImg.style.opacity='0'; setTimeout(()=>{ mainImg.src=img; mainImg.style.opacity='1'; }, 200); }
+  const nameEl = document.getElementById('pb-main-name');
+  if (nameEl) nameEl.innerHTML = 'THANKYOUFARMER<br>' + name;
   const uspEl = document.getElementById('pb-usp-pills');
-  if (uspEl && data.usp) {
-    uspEl.innerHTML = data.usp.map(u => `<span class="pill">${u}</span>`).join('');
-  }
-
-  // Key Ingredients pills
+  if (uspEl && data.usp) uspEl.innerHTML = data.usp.map(u=>'<span class="pill">'+u+'</span>').join('');
   const ingEl = document.getElementById('pb-ing-pills');
-  if (ingEl && data.ingredients) {
-    ingEl.innerHTML = data.ingredients.map(i => `<span class="pill pill-blue">${i}</span>`).join('');
-  }
-
-  // About / Texture
+  if (ingEl && data.ingredients) ingEl.innerHTML = data.ingredients.map(i=>'<span class="pill pill-blue">'+i+'</span>').join('');
   const texEl = document.getElementById('pb-texture');
   if (texEl && data.texture) texEl.textContent = data.texture;
-
-  // Amazon 버튼 — DB footer_link 우선, fallback VARIANT_DATA
   const btn = document.getElementById('pb-amazon-btn');
   const resolvedLink = link || data.link;
-  if (btn && resolvedLink) { btn.href = resolvedLink; btn.style.display = 'inline-block'; }
-  else if (btn) { btn.style.display = 'none'; }
+  if (btn) { if (resolvedLink) { btn.href = resolvedLink; btn.style.display='inline-block'; } else { btn.style.display='none'; } }
 }
-
-render().catch(err => {
-  document.getElementById('loading').innerHTML =
-    `<div style="color:#FF4757;font-weight:700;text-align:center;padding:40px">⚠️ Error loading data<br><small>${err.message}</small></div>`;
-});
 </script>
-</body></html>
+</body>
+</html>
