@@ -36,7 +36,7 @@
   .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
   .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
   .cut-inner{display:flex;flex-direction:column}@media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
-  .cut-img-wrap{position:relative;background:#111}.cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}@media(min-width:520px){}
+  .cut-img-wrap{position:relative;background:#111}.cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}@media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
   .cut-no-img{width:100%;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;background:#f5f5f8}@media(min-width:520px){.cut-no-img{height:100%;max-height:88vh;aspect-ratio:auto}}
   .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
   .cut-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
