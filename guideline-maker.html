@@ -134,7 +134,104 @@
     background: var(--bg);
   }
 
-  /* ── ORIGINAL GUIDELINE DESIGN (DB에서 로드됨) ── */
+  /* ── ORIGINAL GUIDELINE DESIGN ── */
+  .gl-detail { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f7f7fa; color: #1e1e2e; }
+  .gl-detail :root { --pink:#FF6B9D;--pink-dark:#E8447A;--pink-light:#FFE8F2;--pink-mid:#FFB3D0;--blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;--text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px; }
+  .gl-site-header { background: linear-gradient(135deg, #FF6B9D 0%, #E8447A 100%); color: #fff; padding: 22px 18px 20px; text-align: center; }
+  .gl-header-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.45); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; margin-bottom: 12px; }
+  .gl-site-header h1 { font-size: clamp(18px,5vw,26px); font-weight: 900; line-height: 1.25; letter-spacing: -0.3px; }
+  .gl-header-concept { font-size: 13px; color: rgba(255,255,255,0.82); margin-top: 6px; font-weight: 500; }
+  .gl-product-section { padding: 16px 16px 0; }
+  .gl-product-brief { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 14px rgba(0,0,0,0.07); display: flex; flex-direction: column; }
+  @media(min-width:600px) { .gl-product-brief { flex-direction: row; align-items: stretch; } .gl-pb-img { width: 280px; flex-shrink: 0; } .gl-pb-img img { aspect-ratio: auto; width: 100%; height: 100%; max-height: none; object-fit: cover; } }
+  .gl-pb-img { background: #f0f0f0; overflow: hidden; }
+  .gl-pb-img img { width: 100%; display: block; aspect-ratio: 1/1; object-fit: cover; max-height: 340px; object-position: center; }
+  .gl-pb-info { padding: 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .gl-pb-name { font-size: 14px; font-weight: 900; line-height: 1.35; }
+  .gl-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+  .gl-pill { background: #FFE8F2; color: #E8447A; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+  .gl-pill-blue { background: #e8f0fe; color: #1A73E8; }
+  .gl-pb-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 5px; }
+  .gl-pb-section-body { font-size: 12px; line-height: 1.6; }
+  .gl-pb-section-body li { margin-left: 14px; margin-bottom: 2px; }
+  .gl-pb-divider { border: none; border-top: 1px solid #f0f0f0; margin: 0; }
+  .gl-amazon-btn { display: inline-block; margin-top: 10px; background: #E8447A; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; }
+  .gl-amazon-btn:hover { background: #c9355f; }
+  .gl-variant-strip { padding: 14px 16px 0; }
+  .gl-variant-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
+  .gl-variant-thumbs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .gl-variant-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; width: 68px; background: none; border: none; padding: 0; cursor: pointer; }
+  .gl-variant-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; border: 2px solid transparent; transition: border-color .2s; }
+  .gl-variant-item.active img { border-color: #FF6B9D; }
+  .gl-variant-item span { font-size: 10px; font-weight: 700; color: #888; text-align: center; line-height: 1.2; }
+  .gl-variant-item.active span { color: #E8447A; }
+  .gl-hm-edit-btn { background: none; border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 3px 10px; font-size: 11px; cursor: pointer; color: #888; margin-left: auto; display: block; transition: all .2s; }
+  .gl-hm-edit-btn:hover { border-color: #FF6B9D; color: #FF6B9D; }
+  .gl-hm-edit-fields { display: none; margin-top: 10px; }
+  .gl-hm-edit-fields.visible { display: block; }
+  .gl-notice-section { margin: 14px 16px 0; }
+  .gl-notice-card { background: #fff8e1; border: 1.5px solid #ffe082; border-radius: 14px; padding: 16px 18px; }
+  .gl-notice-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #b8860b; margin-bottom: 8px; }
+  .gl-notice-hero { font-size: 13px; color: #5a4000; line-height: 1.5; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1.5px solid #ffe082; }
+  .gl-rule-item { font-size: 12px; color: #5a4000; line-height: 1.5; padding: 4px 0; border-bottom: 1px solid #ffe082; }
+  .gl-rule-item:last-child { border-bottom: none; }
+  .gl-angle-header { margin: 20px 16px 10px; }
+  .gl-angle-header .ah-sub { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #888; margin-bottom: 4px; }
+  .gl-angle-header h2 { font-size: 22px; font-weight: 900; }
+  .gl-cuts-wrap { padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
+  .gl-cut-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); position: relative; }
+  .gl-cut-card.editing { outline: 2px solid #FF6B9D; }
+  .gl-cut-inner { display: flex; flex-direction: column; }
+  @media(min-width:520px) { .gl-cut-inner { flex-direction: row; } .gl-cut-img-wrap { width: 30%; flex-shrink: 0; max-height: 88vh; } }
+  .gl-cut-img-wrap { position: relative; background: #111; }
+  .gl-cut-img-wrap img { width: 100%; display: block; aspect-ratio: 9/16; object-fit: cover; }
+  @media(min-width:520px) { .gl-cut-img-wrap img { aspect-ratio: auto; width: 100%; height: 100%; max-height: 88vh; object-fit: cover; } }
+  .gl-cut-no-img { width: 100%; aspect-ratio: 9/16; display: flex; align-items: center; justify-content: center; color: #888; font-size: 13px; background: #f5f5f8; }
+  @media(min-width:520px) { .gl-cut-no-img { height: 100%; max-height: 88vh; aspect-ratio: auto; } }
+  .gl-cut-badge-row { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .gl-cut-label { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; color: #fff; }
+  .gl-label-hook { background: #FF4757; }
+  .gl-label-cut { background: #1A73E8; }
+  .gl-label-result { background: #2ED573; color: #1a1a1a; }
+  .gl-cut-ts { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.45); padding: 3px 8px; border-radius: 100px; }
+  .gl-cut-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 11px; position: relative; }
+  .gl-edit-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); border: 1.5px solid #ebebef; border-radius: 8px; padding: 4px 8px; font-size: 12px; cursor: pointer; color: #888; transition: all 0.2s; z-index: 2; }
+  .gl-edit-btn:hover { border-color: #FF6B9D; color: #FF6B9D; background: #fff; }
+  .gl-field-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px; color: #888; margin-bottom: 3px; }
+  .gl-field-scene { font-size: 14px; font-weight: 700; line-height: 1.45; }
+  .gl-cut-sep { border: none; border-top: 1px solid #f0f0f0; }
+  .gl-field-direction { font-size: 13px; line-height: 1.65; }
+  .gl-field-usp { display: inline-block; background: #FFE8F2; color: #E8447A; font-size: 12px; font-weight: 800; padding: 5px 14px; border-radius: 100px; border: 1px solid #FFB3D0; }
+  .gl-field-pm { font-size: 12px; line-height: 1.7; background: #fffbf0; border-left: 3px solid #FFA502; padding: 8px 12px; border-radius: 0 8px 8px 0; }
+  .gl-field-pm ol { margin-left: 16px; }
+  .gl-field-pm li { margin-bottom: 3px; }
+  .gl-caption-options { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .gl-caption-opt { display: flex; align-items: flex-start; gap: 7px; font-size: 13px; line-height: 1.5; }
+  .gl-caption-opt::before { content: '•'; color: #FF6B9D; font-size: 16px; line-height: 1.2; flex-shrink: 0; }
+  .gl-cut-tip { display: flex; align-items: flex-start; gap: 8px; background: #fff8e6; border: 1.5px solid #f5c842; border-radius: 8px; padding: 9px 12px; font-size: 12px; color: #7a5200; line-height: 1.6; margin-top: 12px; }
+  .gl-cut-tip-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .gl-cut-tip-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #c47f00; margin-bottom: 3px; }
+  .gl-hm-section { margin: 24px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+  @media(min-width:520px) { .gl-hm-section { flex-direction: row; gap: 16px; } }
+  .gl-hm-card { background: #fff; border-radius: 14px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); flex: 1; }
+  .gl-hm-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: #888; margin-bottom: 12px; }
+  .gl-hashtag-wrap { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 2px; }
+  .gl-hashtag { background: #FFE8F2; color: #E8447A; font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 100px; }
+  .gl-mention-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .gl-mention-item:last-child { border-bottom: none; }
+  .gl-mention-at { color: #E8447A; font-weight: 700; }
+  .gl-refs-section { margin: 20px 16px 0; }
+  .gl-refs-section h3 { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
+  .gl-ref-card { background: #fff; border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); display: flex; align-items: center; gap: 12px; text-decoration: none; color: #1e1e2e; margin-bottom: 10px; }
+  .gl-ref-icon { width: 40px; height: 40px; background: #000; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
+  .gl-ref-info { flex: 1; min-width: 0; }
+  .gl-ref-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .gl-ref-url { font-size: 11px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gl-site-footer { text-align: center; padding: 24px 16px 32px; color: #888; font-size: 12px; }
+  .gl-img-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; color: #fff; font-size: 11px; font-weight: 700; gap: 4px; cursor: pointer; }
+  .gl-cut-img-wrap:hover .gl-img-overlay { opacity: 1; }
+  .gl-img-upload-input { display: none; }
+
   /* Edit overlay fields */
   .gl-edit-fields { display: none; flex-direction: column; gap: 8px; padding: 12px 16px 16px; background: #fff8fc; border-top: 1.5px solid #FFE8F2; }
   .gl-edit-fields.visible { display: flex; }
@@ -324,9 +421,6 @@
   }
   .token-status.ok { background: #4caf50; }
 </style>
-<style id="gl-preview-css">
-  /* DB에서 로드됩니다 */
-</style>
 </head>
 <body>
 
@@ -451,25 +545,6 @@ async function sbUpload(filePath, file) {
     throw new Error(err.message || err.error || 'Upload failed');
   }
   return `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
-}
-
-async function sbUploadVideo(glId, file) {
-  const ext = file.name.split('.').pop() || 'mp4';
-  const path = `ref-videos/${glId}/ref.${ext}`;
-  await fetch(`${SUPABASE_URL}/storage/v1/object/ref-videos/${path}`, {
-    method: 'DELETE',
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
-  });
-  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/ref-videos/${path}`, {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY, 'Content-Type': file.type },
-    body: file
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || err.error || 'Video upload failed');
-  }
-  return `${SUPABASE_URL}/storage/v1/object/public/ref-videos/${path}`;
 }
 
 // ── GitHub Token ──
@@ -639,6 +714,7 @@ function buildCard(cut){
     body+='<div><div class="field-label">Caption Options</div><div class="caption-options">'
       +captions.map(c=>'<div class="caption-opt"><span>'+c+'</span></div>').join('')+'</div></div>';
   }
+  if(cut.tip) body+='<div class="cut-tip"><div class="cut-tip-icon">🎬</div><div><div class="cut-tip-label">Filming Tip</div>'+cut.tip+'</div></div>';
   card.innerHTML='<div class="cut-inner"><div class="cut-img-wrap">'+imgHtml
     +'<div class="cut-badge-row"><span class="'+labelClass(cut.label)+'">'+cut.label+'</span></div>'
     +'</div><div class="cut-body">'+body+'</div></div>';
@@ -819,109 +895,6 @@ function renderDashboard(guidelines) {
 let currentGl = null;
 let currentCuts = [];
 
-async function loadGlPreviewCSS(brand) {
-  try {
-    const rows = await sbFetch('/rest/v1/gl_templates?id=eq.usp_v1&select=css');
-    if (!rows || !rows[0]) return;
-    const rawCss = rows[0].css;
-    const isTYF = (brand || '').toUpperCase().includes('THANKYOUFARMER');
-    const brandColor = isTYF ? '#2ECC71' : '#FF6B9D';
-    const brandDark  = isTYF ? '#27AE60' : '#E8447A';
-    const brandLight = isTYF ? '#D5F5E3' : '#FFE8F2';
-    const brandMid   = isTYF ? '#A9DFBF' : '#FFB3D0';
-    // 브랜드 컬러 플레이스홀더 치환
-    let css = rawCss
-      .replace(/\{\{brand_color\}\}/g, brandColor)
-      .replace(/\{\{brand_dark\}\}/g, brandDark)
-      .replace(/\{\{brand_light\}\}/g, brandLight)
-      .replace(/\{\{brand_mid\}\}/g, brandMid);
-    // CSS 클래스명에 .gl- prefix 추가 (배포 CSS의 클래스명 → 웹앱 프리뷰 클래스명으로 매핑)
-    const classMap = {
-      '.site-header': '.gl-site-header',
-      '.header-badge': '.gl-header-badge',
-      '.header-concept': '.gl-header-concept',
-      '.product-section': '.gl-product-section',
-      '.product-brief': '.gl-product-brief',
-      '.pb-img': '.gl-pb-img',
-      '.pb-info': '.gl-pb-info',
-      '.pb-name': '.gl-pb-name',
-      '.pb-section-label': '.gl-pb-section-label',
-      '.pb-section-body': '.gl-pb-section-body',
-      '.pb-divider': '.gl-pb-divider',
-      '.amazon-btn': '.gl-amazon-btn',
-      '.variant-strip': '.gl-variant-strip',
-      '.variant-label': '.gl-variant-label',
-      '.variant-thumbs': '.gl-variant-thumbs',
-      '.variant-item': '.gl-variant-item',
-      '.angle-header': '.gl-angle-header',
-      '.ah-sub': '.gl-ah-sub',
-      '.cuts-wrap': '.gl-cuts-wrap',
-      '.cut-card': '.gl-cut-card',
-      '.cut-inner': '.gl-cut-inner',
-      '.cut-img-wrap': '.gl-cut-img-wrap',
-      '.cut-no-img': '.gl-cut-no-img',
-      '.cut-badge-row': '.gl-cut-badge-row',
-      '.cut-label': '.gl-cut-label',
-      '.label-hook': '.gl-label-hook',
-      '.label-cut': '.gl-label-cut',
-      '.label-result': '.gl-label-result',
-      '.cut-ts': '.gl-cut-ts',
-      '.cut-body': '.gl-cut-body',
-      '.cut-sep': '.gl-cut-sep',
-      '.field-label': '.gl-field-label',
-      '.field-scene': '.gl-field-scene',
-      '.field-direction': '.gl-field-direction',
-      '.field-usp': '.gl-field-usp',
-      '.field-pm': '.gl-field-pm',
-      '.caption-options': '.gl-caption-options',
-      '.caption-opt': '.gl-caption-opt',
-      '.hm-section': '.gl-hm-section',
-      '.hm-card': '.gl-hm-card',
-      '.hm-title': '.gl-hm-title',
-      '.hashtag-wrap': '.gl-hashtag-wrap',
-      '.hashtag': '.gl-hashtag',
-      '.mention-item': '.gl-mention-item',
-      '.mention-at': '.gl-mention-at',
-      '.refs-section': '.gl-refs-section',
-      '.ref-card': '.gl-ref-card',
-      '.ref-icon': '.gl-ref-icon',
-      '.ref-info': '.gl-ref-info',
-      '.ref-title': '.gl-ref-title',
-      '.ref-url': '.gl-ref-url',
-      '.ref-arrow': '.gl-ref-arrow',
-      '.site-footer': '.gl-site-footer',
-      '.sg-section': '.gl-sg-section',
-      '.sg-card': '.gl-sg-card',
-      '.sg-title': '.gl-sg-title',
-      '.sg-list': '.gl-sg-list',
-      '.sg-item': '.gl-sg-item',
-      '.sg-num': '.gl-sg-num',
-      '.cut-tip': '.gl-cut-tip',
-      '.cut-tip-icon': '.gl-cut-tip-icon',
-      '.cut-tip-label': '.gl-cut-tip-label',
-      '.pills': '.gl-pills',
-      '.pill': '.gl-pill',
-      '.pill-blue': '.gl-pill-blue',
-    };
-    // 정규식으로 클래스명 치환 (단어 경계 기준)
-    for (const [from, to] of Object.entries(classMap)) {
-      const escaped = from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      css = css.replace(new RegExp(escaped + '(?=[\\s,{:>~+\\[)])', 'g'), to);
-    }
-    // :root를 .gl-detail 스코프로 교체 (변수 유지하면서 충돌 방지)
-    css = css.replace(/:root\s*\{/g, '.gl-detail {');
-    // \u2022 이스케이프 → 실제 문자로 복원 (CSS content 속성)
-    css = css.replace(/\\u2022/g, '\u2022');
-    // 편집 필드 기본 숨김 강제 적용
-    css += '\n  .gl-edit-fields { display: none !important; }';
-    css += '\n  .gl-edit-fields.visible { display: flex !important; }';
-    const styleEl = document.getElementById('gl-preview-css');
-    if (styleEl) styleEl.textContent = css;
-  } catch(e) {
-    console.warn('CSS 로드 실패, fallback 사용:', e.message);
-  }
-}
-
 async function loadDetail(id) {
   showView('detail');
   const wrap = document.getElementById('gl-iframe-wrap');
@@ -943,7 +916,6 @@ async function loadDetail(id) {
       : [];
     currentGl = gl;
     currentCuts = cuts;
-    await loadGlPreviewCSS(p.brand);
     renderDetail(gl, p, cuts, variants);
   } catch (e) {
     wrap.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div>${e.message}</div></div>`;
@@ -996,30 +968,13 @@ function renderDetail(gl, p, cuts, variants) {
 
   // Header
   const brand = p.brand || '';
-  const glType = (gl.type || 'USP').toUpperCase();
-  const badge = (brand + ' · ' + (glType === 'PR' ? 'PR GUIDE' : 'USP GUIDELINE')).toUpperCase();
+  const badge = (brand + ' · USP GUIDELINE').toUpperCase();
   container.innerHTML = `
     <header class="gl-site-header">
       <div class="gl-header-badge">${badge}</div>
       <h1>${gl.angle_name || ''}</h1>
       <p class="gl-header-concept">${gl.concept || ''}</p>
     </header>
-
-    <div id="ref-video-section" style="padding:12px 16px 0">
-      ${gl.ref_video_url ? `
-        <div style="background:#000;border-radius:12px;overflow:hidden;position:relative">
-          <video id="ref-video-player" src="${gl.ref_video_url}" controls playsinline
-            style="width:100%;max-height:480px;display:block;object-fit:contain">
-          </video>
-          <button id="btn-remove-video" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.6);border:none;border-radius:6px;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer">✕ 삭제</button>
-        </div>` : `
-        <label id="ref-video-upload-label" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#f5f5f8;border:2px dashed #ddd;border-radius:12px;padding:20px;cursor:pointer;font-size:13px;color:#888;transition:border-color .2s">
-          <span style="font-size:20px">&#x1F3AC;</span>
-          <span>레퍼런스 영상 업로드 (mp4, mov · 최대 100MB)</span>
-          <input type="file" id="ref-video-input" accept="video/*" style="display:none">
-        </label>`}
-      <div id="ref-video-progress" style="display:none;margin-top:8px;font-size:12px;color:#888;text-align:center">업로드 중…</div>
-    </div>
 
     <section class="gl-product-section">
       <div class="gl-product-brief" id="product-brief-card">
@@ -1114,14 +1069,13 @@ function renderDetail(gl, p, cuts, variants) {
       </div>
     </div>` : ''}
 
-    ${gl.type === 'PR' ? `
     <div class="gl-notice-section">
       <div class="gl-notice-card">
         <div class="gl-notice-title">⭐ Video DOs &amp; DON'Ts</div>
         <div class="gl-notice-hero">
           <strong>Rice Pure Essential Toner must appear in the video.</strong> This is the hero product — ensure it is clearly visible on screen.
         </div>
-        <div style="display:flex;gap:12px">
+        <div class="dos-donts" style="display:flex;gap:12px">
           <div style="flex:1">
             <div style="font-size:11px;font-weight:800;color:#c0392b;margin-bottom:6px">❌ DON'Ts</div>
             <div class="gl-rule-item">❌ Other brand's products</div>
@@ -1138,10 +1092,10 @@ function renderDetail(gl, p, cuts, variants) {
           </div>
         </div>
       </div>
-    </div>` : ''}
+    </div>
 
     <div class="gl-angle-header">
-      <div class="gl-ah-sub">Angle #1 · ${cuts.length} Cuts</div>
+      <div class="ah-sub">Angle #1 · ${cuts.length} Cuts</div>
       <h2>${gl.angle_name || ''}</h2>
     </div>
 
@@ -1193,62 +1147,6 @@ function renderDetail(gl, p, cuts, variants) {
 
   wrap.innerHTML = '';
   wrap.appendChild(container);
-
-  // ── 레퍼런스 영상 업로드/삭제 이벤트 ──
-  const videoInput = container.querySelector('#ref-video-input');
-  const videoLabel = container.querySelector('#ref-video-upload-label');
-  const videoProgress = container.querySelector('#ref-video-progress');
-  const removeVideoBtn = container.querySelector('#btn-remove-video');
-
-  if (videoInput) {
-    videoLabel.addEventListener('dragover', e => { e.preventDefault(); videoLabel.style.borderColor = 'var(--pink)'; });
-    videoLabel.addEventListener('dragleave', () => { videoLabel.style.borderColor = '#ddd'; });
-    videoLabel.addEventListener('drop', e => {
-      e.preventDefault();
-      videoLabel.style.borderColor = '#ddd';
-      const file = e.dataTransfer.files[0];
-      if (file) handleVideoUpload(file);
-    });
-    videoInput.addEventListener('change', () => {
-      if (videoInput.files[0]) handleVideoUpload(videoInput.files[0]);
-    });
-  }
-
-  if (removeVideoBtn) {
-    removeVideoBtn.addEventListener('click', async () => {
-      if (!confirm('레퍼런스 영상을 삭제할까요?')) return;
-      try {
-        await sbFetch(`/rest/v1/gl_guidelines?id=eq.${gl.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-          body: JSON.stringify({ ref_video_url: null })
-        });
-        currentGl.ref_video_url = null;
-        showToast('✅ 영상 삭제됨', 'success', 2000);
-        loadDetail(gl.id);
-      } catch(e) { showToast('❌ ' + e.message, 'error'); }
-    });
-  }
-
-  async function handleVideoUpload(file) {
-    if (file.size > 104857600) { showToast('❌ 100MB 이하 파일만 업로드 가능해요', 'error'); return; }
-    videoProgress.style.display = 'block';
-    videoProgress.textContent = '업로드 중… (파일 크기에 따라 시간이 걸릴 수 있어요)';
-    try {
-      const url = await sbUploadVideo(gl.id, file);
-      await sbFetch(`/rest/v1/gl_guidelines?id=eq.${gl.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ ref_video_url: url })
-      });
-      currentGl.ref_video_url = url;
-      showToast('✅ 영상 업로드 완료!', 'success', 3000);
-      loadDetail(gl.id);
-    } catch(e) {
-      videoProgress.style.display = 'none';
-      showToast('❌ 업로드 실패: ' + e.message, 'error');
-    }
-  }
 
   // 컷 카드 렌더
   const cutsWrap = document.getElementById('gl-cuts-wrap');
@@ -1436,11 +1334,8 @@ function buildCutCard(cut) {
     body += '<hr class="gl-cut-sep">';
     body += `<div><div class="gl-field-label">Caption Options</div><div class="gl-caption-options">${captions.map(c => `<div class="gl-caption-opt">${c}</div>`).join('')}</div></div>`;
   }
-  if (cut.tip) {
-    const tipItems = cut.tip.split('/').map(t => t.trim()).filter(Boolean);
-    body += '<hr class="gl-cut-sep">';
-    body += `<div><div class="gl-field-label" style="color:#c47f00">&#x1F4A1; Filming Tip</div><div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">${tipItems.map(t => `<div style="background:#fff8e6;border:1.5px solid #f5c842;border-radius:8px;padding:8px 12px;font-size:12px;color:#7a5200;line-height:1.6">${t}</div>`).join('')}</div></div>`;
-  }
+
+  if (cut.tip) body += `<div class="gl-cut-tip"><div class="gl-cut-tip-icon">🎬</div><div><div class="gl-cut-tip-label">Filming Tip</div><div class="js-tip">${cut.tip}</div></div></div>`;
 
   const captionsText = captions.join('\n');
 
@@ -1489,7 +1384,10 @@ function buildCutCard(cut) {
         <textarea class="edit-textarea" name="production_method">${cut.production_method || ''}</textarea>
       </div>` : ''}
       <div>
-        <div class="edit-label">&#x1F4A1; Filming Tip (여러 개는 / 로 구분)</div>
+        <div class="edit-label">🎬 Filming Tip</div>
+        <div class="bold-toolbar">
+          <button type="button" class="btn-bold" onclick="applyBold(this.closest('.gl-edit-fields').querySelector('[name=tip]'))"><b>B</b> Bold</button>
+        </div>
         <textarea class="edit-textarea" name="tip">${cut.tip || ''}</textarea>
       </div>
       <div class="cut-edit-actions">
@@ -1529,9 +1427,9 @@ function buildCutCard(cut) {
     };
     const mainUspEl = card.querySelector('[name="main_usp"]');
     const pmEl = card.querySelector('[name="production_method"]');
-    const tipEl = card.querySelector('[name="tip"]');
     if (mainUspEl) fields.main_usp = mainUspEl.value.trim();
     if (pmEl) fields.production_method = pmEl.value.trim();
+    const tipEl = card.querySelector('[name="tip"]');
     if (tipEl) fields.tip = tipEl.value.trim() || null;
 
     try {
@@ -1539,8 +1437,10 @@ function buildCutCard(cut) {
       // 뷰 업데이트
       const sceneEl = card.querySelector('.js-scene');
       const dirEl = card.querySelector('.js-direction');
+      const tipEl2 = card.querySelector('.js-tip');
       if (sceneEl) sceneEl.textContent = fields.scene;
       if (dirEl) dirEl.textContent = fields.direction;
+      if (tipEl2) tipEl2.textContent = fields.tip || '';
       editFields.classList.remove('visible');
       card.classList.remove('editing');
       editBtn.textContent = '✏️ 편집';
@@ -1555,51 +1455,4 @@ function buildCutCard(cut) {
 
   // 이미지 업로드
   const imgOverlay = card.querySelector('.gl-img-overlay');
-  const fileInput = card.querySelector('.gl-img-upload-input');
-  const imgWrap = card.querySelector('.gl-cut-img-wrap');
-  imgOverlay.addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', async () => {
-    const file = fileInput.files[0];
-    if (!file) return;
-    imgWrap.style.opacity = '0.5';
-    try {
-      const slug = currentGl.id;
-      const storageUrl = await sbUpload(`cut-images/${slug}/cut_${String(cut.order || 0).padStart(2,'0')}.jpg`, file);
-      await updateCut(cut.id, { img_url: storageUrl });
-      let img = imgWrap.querySelector('img');
-      if (!img) {
-        img = document.createElement('img');
-        imgWrap.querySelector('.gl-cut-no-img')?.remove();
-        imgWrap.insertBefore(img, imgWrap.firstChild);
-      }
-      img.src = storageUrl + '?t=' + Date.now();
-      showToast('🖼️ 이미지 업로드 완료', 'success');
-    } catch(e) {
-      showToast('❌ 업로드 실패: ' + e.message, 'error');
-    } finally {
-      imgWrap.style.opacity = '';
-    }
-  });
-
-  return card;
-}
-
-// ── Back button ──
-document.getElementById('btn-back').addEventListener('click', () => {
-  currentGl = null;
-  currentCuts = [];
-  showView('dashboard');
-  loadDashboard();
-});
-
-// ── Init ──
-(function init() {
-  updateTokenStatus();
-  if (getSession()) {
-    showApp();
-    loadDashboard();
-  }
-})();
-</script>
-</body>
-</html>
+  const fileInput = card.querySelector('
