@@ -3,395 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guideline</title>
-<style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --pink:#FF6B9D;--pink-dark:#E8447A;--pink-light:#FFE8F2;--pink-mid:#FFB3D0;
-      --blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;
-      --text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px;
-    }
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-    .site-header{background:linear-gradient(135deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
-    .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
-    .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
-    .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
-    .product-section{padding:16px 16px 0}
-    .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);display:flex;flex-direction:column}
-    @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover}}
-    .pb-img{background:#f0f0f0;overflow:hidden}
-    .pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:340px;object-position:center}
-    .pb-info{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
-    .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
-    .pills{display:flex;flex-wrap:wrap;gap:5px}
-    .pill{background:var(--pink-light);color:var(--pink-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
-    .pill-blue{background:#e8f0fe;color:var(--blue)}
-    .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
-    .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
-    .pb-section-body li{margin-left:14px;margin-bottom:2px}
-    .pb-divider{border:none;border-top:1px solid #f0f0f0;margin:0}
-    .variant-strip{padding:14px 16px 0}
-    .variant-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
-    .variant-thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-    .variant-thumbs::-webkit-scrollbar{height:3px}
-    .variant-thumbs::-webkit-scrollbar-thumb{background:var(--pink-mid);border-radius:2px}
-    .variant-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;width:68px}
-    .variant-item img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:2px solid transparent;transition:border-color .2s}
-    .variant-item.active img{border-color:var(--pink)}
-    .variant-item span{font-size:10px;font-weight:700;color:var(--muted);text-align:center;line-height:1.2}
-    .variant-item.active span{color:var(--pink-dark)}
-    .angle-header{margin:20px 16px 10px}
-    .angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}
-    .angle-header h2{font-size:22px;font-weight:900;color:var(--text)}
-    .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
-    .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
-    .cut-inner{display:flex;flex-direction:column}
-    @media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
-    .cut-img-wrap{position:relative;background:#111}
-    .cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
-    @media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
-    .cut-no-img{width:100%;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;background:#f5f5f8}
-    @media(min-width:520px){.cut-no-img{height:100%;max-height:88vh;aspect-ratio:auto}}
-    .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
-    .cut-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
-    .label-hook{background:var(--red)}
-    .label-cut{background:var(--blue)}
-    .label-result{background:var(--green);color:#1a1a1a}
-    .cut-ts{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.45);padding:3px 8px;border-radius:100px}
-    .cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:11px}
-    .field-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
-    .field-scene{font-size:14px;font-weight:700;line-height:1.45}
-    .cut-sep{border:none;border-top:1px solid #f0f0f0}
-    .field-direction{font-size:13px;line-height:1.65;color:var(--text)}
-    .field-usp{display:inline-block;background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:800;padding:5px 14px;border-radius:100px;border:1px solid var(--pink-mid)}
-    .field-pm{font-size:12px;line-height:1.7;color:var(--text);background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}
-    .field-pm ol{margin-left:16px}
-    .field-pm li{margin-bottom:3px}
-    .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
-    .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}
-    .caption-opt::before{content:'•';color:var(--pink);font-size:16px;line-height:1.2;flex-shrink:0}
-    .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
-    @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
-    .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
-    .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
-    .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}
-    .hashtag{background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
-    .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
-    .mention-item:last-child{border-bottom:none}
-    .mention-at{color:var(--pink-dark);font-weight:700}
-    .refs-section{margin:20px 16px 0}
-    .refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
-    .ref-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
-    .ref-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
-    .ref-info{flex:1;min-width:0}
-    .ref-title{font-size:13px;font-weight:700;margin-bottom:2px}
-    .ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .ref-arrow{color:var(--muted);font-size:18px}
-        .amazon-btn{display:inline-block;margin-top:4px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
-    .amazon-btn:hover{opacity:0.88}
-    .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
-    .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
-    .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
-</style>
+<title>Satisfying Detach 🖤Lindsay re:natural Modeling Pack</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--brand:#FF6B9D;--brand-dark:#E8447A;--brand-light:#FFE8F2;--brand-mid:#FFB3D0;--blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;--text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .site-header{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
+  .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
+  .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
+  .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
+  .product-section{padding:16px 16px 0}
+  .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);display:flex;flex-direction:column}
+  @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover}}
+  .pb-img{background:#f0f0f0;overflow:hidden}.pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:340px;object-position:center}
+  .pb-info{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
+  .pills{display:flex;flex-wrap:wrap;gap:5px}
+  .pill{background:var(--brand-light);color:var(--brand-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+  .pill-blue{background:#e8f0fe;color:var(--blue)}
+  .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
+  .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}.pb-section-body li{margin-left:14px;margin-bottom:2px}
+  .pb-divider{border:none;border-top:1px solid #f0f0f0;margin:0}
+  .amazon-btn{display:inline-block;margin-top:4px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
+  .amazon-btn:hover{opacity:0.88}
+  .variant-strip{padding:14px 16px 0}
+  .variant-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .variant-thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+  .variant-thumbs::-webkit-scrollbar{height:3px}.variant-thumbs::-webkit-scrollbar-thumb{background:var(--brand-mid);border-radius:2px}
+  .variant-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;width:68px;cursor:pointer}
+  .variant-item img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:2px solid transparent;transition:border-color .2s}
+  .variant-item.active img{border-color:var(--brand)}
+  .variant-item span{font-size:10px;font-weight:700;color:var(--muted);text-align:center;line-height:1.2}
+  .variant-item.active span{color:var(--brand-dark)}
+  .angle-header{margin:20px 16px 10px}.angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}.angle-header h2{font-size:22px;font-weight:900;color:var(--text)}
+  .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
+  .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
+  .cut-inner{display:flex;flex-direction:column}@media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
+  .cut-img-wrap{position:relative;background:#111}.cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}@media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
+  .cut-no-img{width:100%;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;background:#f5f5f8}@media(min-width:520px){.cut-no-img{height:100%;max-height:88vh;aspect-ratio:auto}}
+  .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
+  .cut-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
+  .label-hook{background:var(--red)}.label-cut{background:var(--blue)}.label-result{background:var(--green);color:#1a1a1a}
+  .cut-ts{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.45);padding:3px 8px;border-radius:100px}
+  .cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:11px}
+  .field-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
+  .field-scene{font-size:14px;font-weight:700;line-height:1.45}.cut-sep{border:none;border-top:1px solid #f0f0f0}
+  .field-direction{font-size:13px;line-height:1.65;color:var(--text)}
+  .field-usp{display:inline-block;background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:800;padding:5px 14px;border-radius:100px;border:1px solid var(--brand-mid)}
+  .field-pm{font-size:12px;line-height:1.7;color:var(--text);background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}.field-pm ol{margin-left:16px}.field-pm li{margin-bottom:3px}
+  .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}.caption-opt::before{content:'\u2022';color:var(--brand);font-size:16px;line-height:1.2;flex-shrink:0}
+  .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}@media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
+  .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
+  .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
+  .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}.hashtag{background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
+  .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}.mention-item:last-child{border-bottom:none}.mention-at{color:var(--brand-dark);font-weight:700}
+  .refs-section{margin:20px 16px 0}.refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .ref-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
+  .ref-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+  .ref-info{flex:1;min-width:0}.ref-title{font-size:13px;font-weight:700;margin-bottom:2px}.ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ref-arrow{color:var(--muted);font-size:18px}
+  .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
+  .sg-section{margin:20px 16px 0}
+  .sg-card{background:#f0f7ff;border:1.5px solid #b3d4f5;border-radius:var(--radius);padding:16px 18px}
+  .sg-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#1a5fa8;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+  .sg-list{display:flex;flex-direction:column;gap:8px}
+  .sg-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#1e3a5f;line-height:1.55}
+  .sg-num{min-width:22px;height:22px;background:#1a5fa8;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}
+  .cut-tip{display:flex;align-items:flex-start;gap:8px;background:#fff8e6;border:1.5px solid #f5c842;border-radius:8px;padding:9px 12px;font-size:12px;color:#7a5200;line-height:1.6;margin-top:2px}
+  .cut-tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+  .cut-tip-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#c47f00;margin-bottom:3px}</style>
 </head>
 <body>
-
-<div id="loading-overlay" class="loading-state">
-  <div><div class="spinner"></div></div>
-  <div>가이드라인 불러오는 중…</div>
+<header class="site-header">
+  <div class="header-badge">Contents Guideline Brief</div>
+  <p style="font-size:11px;color:rgba(255,255,255,0.75);font-weight:700;letter-spacing:0.5px;margin-bottom:6px">Lindsay re:natural Teatree Modeling Mask</p>
+  <h1>Satisfying Detach 🖤Lindsay re:natural Modeling Pack</h1>
+  <p class="header-concept">Satisfying Peel-Off · One-Piece Detach · Skin Reveal</p>
+</header>
+<section class="product-section"><div class="product-brief"><div class="pb-img"><img id="pb-main-img" src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_00.jpg" alt="" style="transition:opacity .2s"></div><div class="pb-info"><div class="pb-name" id="pb-main-name">Lindsay Blackmud</div><div><div class="pb-section-label">Key USP</div><div class="pills"><span class="pill">🤌 No Tools Needed</span><span class="pill">❄️ Cooling Effect</span><span class="pill">🎉 Fun to Make</span><span class="pill">🖤 Oil Control</span><span class="pill">🧼 Pore Refining</span></div></div><hr class="pb-divider"><div><div class="pb-section-label">Key Ingredients</div><div class="pills"></div></div><hr class="pb-divider"><div class="pb-section-label">&#x1F4A7; Texture Notes</div><div class="pb-section-body">Use the most visually striking color variant for filming — the teatree variant provides a fresh green tone with strong visual contrast on camera.</div><a id="pb-amazon-btn" href="https://www.amazon.com/dp/B0G2XYY3X2" target="_blank" class="amazon-btn">&#x1F6D2; View on Amazon</a></div></div></section>
+<div class="variant-strip"><div class="variant-label">5 Products in Set</div><div class="variant-thumbs"><button type="button" class="variant-item active" data-img="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_00.jpg" data-name="Blackmud" data-link="" onclick="switchVariant(this)" style="background:none;border:none;padding:0;cursor:pointer"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_00.jpg" alt="Blackmud"><span>Blackmud</span></button><button type="button" class="variant-item" data-img="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_01.jpg" data-name="Teatree" data-link="" onclick="switchVariant(this)" style="background:none;border:none;padding:0;cursor:pointer"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_01.jpg" alt="Teatree"><span>Teatree</span></button><button type="button" class="variant-item" data-img="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_02.jpg" data-name="Grain" data-link="" onclick="switchVariant(this)" style="background:none;border:none;padding:0;cursor:pointer"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_02.jpg" alt="Grain"><span>Grain</span></button><button type="button" class="variant-item" data-img="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_03.jpg" data-name="Vegetable" data-link="" onclick="switchVariant(this)" style="background:none;border:none;padding:0;cursor:pointer"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_03.jpg" alt="Vegetable"><span>Vegetable</span></button><button type="button" class="variant-item" data-img="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_04.jpg" data-name="Pink Salt" data-link="" onclick="switchVariant(this)" style="background:none;border:none;padding:0;cursor:pointer"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_04.jpg" alt="Pink Salt"><span>Pink Salt</span></button></div></div>
+<div class="sg-section"><div class="sg-card"><div class="sg-title">&#x1F4F8; Shooting Guide</div><div class="sg-list"><div class="sg-item"><span class="sg-num">1</span><span>The key is achieving a natural glow. Use appropriate studio lighting or natural window light to bring out the finish at its best.</span></div><div class="sg-item"><span class="sg-num">2</span><span>If there's excess sebum around the nose or forehead, lightly blot with a tissue or cotton pad before filming the After shot. (Use a transition cut)</span></div></div></div></div>
+<div class="angle-header">
+  <div class="ah-sub">Shooting Angle</div>
+  <h2>Satisfying Detach 🖤Lindsay re:natural Modeling Pack</h2>
 </div>
-
-<div id="main-content" style="display:none">
-
-  <header class="site-header">
-    <div class="header-badge">Contents Guideline Brief</div>
-    <h1 id="gl-title"></h1>
-    <p class="header-concept" id="gl-concept"></p>
-  </header>
-
-  <section class="product-section">
-    <div class="product-brief">
-      <div class="pb-img">
-        <img id="pb-img" src="" alt="Product">
-      </div>
-      <div class="pb-info">
-        <div class="pb-name" id="pb-name"></div>
-        <div>
-          <div class="pb-section-label">Key USP</div>
-          <div class="pills" id="pb-pills"></div>
-        </div>
-        <hr class="pb-divider">
-        <div class="pb-ingredient-section">
-          <div class="pb-section-label">Key Ingredients</div>
-          <div class="pills" id="pb-ingredient-pills"></div>
-        </div>
-        <div class="pb-usage-section">
-          <hr class="pb-divider">
-          <div class="pb-section-label">Usage Method</div>
-          <ol class="pb-section-body" id="pb-usage"></ol>
-        </div>
-        <hr class="pb-divider">
-        <div>
-          <div class="pb-section-label">⚠️ Usage Precautions</div>
-          <ul class="pb-section-body" id="pb-precautions"></ul>
-        </div>
-        <hr class="pb-divider">
-        <div>
-          <div class="pb-section-label">💧 Texture Notes</div>
-          <div class="pb-section-body" id="pb-texture"></div>
-        </div>
-        <a id="pb-amazon-btn" href="https://www.amazon.com/Troubless-Glass-Glow-Collagen-Sunscreen/dp/B0GL646LD7" target="_blank" class="amazon-btn">🛒 View on Amazon</a>
-      </div>
-    </div>
-  </section>
-
-  <div id="variant-strip" class="variant-strip">
-    <div class="variant-label" id="variant-count"></div>
-    <div class="variant-thumbs" id="variant-wrap"></div>
-  </div>
-
-  <div class="angle-header">
-    <div class="ah-sub" id="angle-sub"></div>
-    <h2 id="angle-name"></h2>
-  </div>
-
-  <div class="cuts-wrap" id="cuts-wrap"></div>
-
-  <div class="hm-section">
-    <div class="hm-card">
-      <div class="hm-title"># Hashtags</div>
-      <div class="hashtag-wrap" id="hashtags-wrap"></div>
-    </div>
-    <div class="hm-card">
-      <div class="hm-title">@ Mention Accounts</div>
-      <div id="mentions-wrap"></div>
-    </div>
-  </div>
-
-  <div class="refs-section" id="refs-section">
-    <h3>📎 Additional Reference Videos</h3>
-    <div id="refs-wrap"></div>
-  </div>
-
-  <div class="site-footer">
-    AI-generated guideline · For influencer reference only<br>
-    <a id="footer-link" href="#" target="_blank" style="color:var(--pink)">View Product</a>
-  </div>
-
-</div>
-
+<div class="cuts-wrap"><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_00.jpg" alt="HOOK 1" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-hook">HOOK 1</span></div></div><div class="cut-body"><div class="field-usp">Satisfying Detach</div><div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px"><li>Mix modeling pack powder with water until smooth and lump-free.</li><li>Apply evenly from center outward — cover cheeks, nose, forehead, chin.</li><li>   ⚡ Don't skip the lips! Apply all the way to (and over) the lip line. The mask should seal every detail — including lip wrinkles.</li><li>Wait until fully set (edges firm, surface matte, ~10 min).</li><li>Peel off in one satisfying motion — start from chin and pull upward slowly.</li><li>Hold up the peeled mask and show the inside — audience should see the full face + lip imprint stamped in.</li><li>EXPRESSION KEY: anticipation before → gasp/surprise during peel → 'wow' reaction at the lip imprint detail.</li><li>CUT 01–08: Quick Cut section — each step fast and tempo-driven. Under 3–8 sec per cut, no unnecessary pauses.</li></ol></div><hr class="cut-sep"><div><div class="field-label">Scene</div><div class="field-scene">Satisfying Peel — Start</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Face camera with Lindsay Modeling Mask fully set on skin. Begin peeling from the edge with fingers. Hold the peel for a beat so viewers can feel the satisfying detach moment.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">wait for it... 🤫</div><div class="caption-opt">POV: about to peel the most satisfying mask 🖤</div><div class="caption-opt">have you ever tried a modeling mask? 👀</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_01.jpg" alt="HOOK 2" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-hook">HOOK 2</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Skin Reveal Reaction</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Peel off the mask and hold it up — react with genuine surprise as you see the skin-perfect cast left behind. Open mouth, wide eyes. This reaction shot is the hook that makes viewers stop scrolling.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">The reaction says it all 😱</div><div class="caption-opt">When you see what it peeled off your skin 👁️</div><div class="caption-opt">This face every single time 🫠</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_02.jpg" alt="HOOK 3" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-hook">HOOK 3</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Lip Imprint Detail — Every Curve Captured</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Hold up the peeled mask toward camera — show the lip imprint side facing viewer. React with surprise or delight. Let the audience see how the mask captured every lip wrinkle and contour.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">It even copied my lips 😱 This is WILD</div><div class="caption-opt">Every lip wrinkle. Every curve. Stamped 💋</div><div class="caption-opt">The mask literally remembered my lips 🫠</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_03.jpg" alt="CUT 01" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 01</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Open the Pouch</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Hold the Lindsay Modeling Mask pouch up to camera. Open the zipper top. Take out the spatula. Clean, simple close-up.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">step 1: tear open the pouch 👆</div><div class="caption-opt">everything happens inside the bag — zero mess 🤌</div><div class="caption-opt">rip, add water, zip it back. that's literally it</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_04.jpg" alt="CUT 02" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 02</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Add Water to Pouch</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Pour exactly 8 spoons of cold distilled water directly into the pouch. Show the spoon clearly. Cold water = better cooling effect. Zip the pouch shut after adding.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">8 spoons of cold water — no more, no less 💦</div><div class="caption-opt">cold water makes it more cooling ❄️ trust</div><div class="caption-opt">add water, zip it shut, and shake 🤝</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_05.jpg" alt="CUT 03" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 03</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Shake & Knead</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Flip the pouch upside down and shake the sealed pouch vigorously — side to side, up and down. Then knead and massage it with both hands until smooth and even. This is the fun part!</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">shake it like a cocktail 🍹 then knead like dough 🫳</div><div class="caption-opt">the most satisfying step — watch the powder disappear</div><div class="caption-opt">30 seconds of shaking = spa-level texture ✨</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_06.jpg" alt="CUT 04" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 04</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Apply from Cheeks First</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Squeeze the mask directly from the pouch onto your cheeks. Use a spatula to spread outward and upward. Start from big surface areas (cheeks → forehead → nose → chin). Show the mixture applying smoothly.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">squeeze straight from the pouch onto your cheeks 🖤</div><div class="caption-opt">cheeks → chin → forehead → nose</div><div class="caption-opt">the blackmud color hits different on skin 🩶</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_07.jpg" alt="CUT 05" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 05</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Full Face — Thick Edges</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Cover the entire face evenly. Make the edges thicker — especially around the jawline and hairline — for easier peeling. Show full face mask straight to camera. The cooling sensation kicks in here — express it!</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">thick edges = satisfying peel-off later 🤤</div><div class="caption-opt">full face done. now feel the cooling kick in ❄️</div><div class="caption-opt">wait 15–20 min. enjoy the chill 🧊</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_08.jpg" alt="CUT 06" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 06</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Satisfying Peel-Off Reveal</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Start peeling from the edges — lift slowly, capturing the satisfying one-piece removal. Keep the mask intact as you peel. Show the clean, refreshed skin underneath coming through.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">the most satisfying peel of your life 🫠</div><div class="caption-opt">one pull, one piece — no crumbling 🫶</div><div class="caption-opt">the peel ASMR is unreal 🎧</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_09.jpg" alt="CUT 07" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 07</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Lip Imprint Close-Up</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Extreme close-up of the peeled mask — zoom into the lip imprint area. Show how every crease, wrinkle and lip shape is perfectly stamped onto the mask. Optional caption overlay: 'Even my lip lines 😱'. Slow zoom or hold steady for 3–4 sec.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">Every single lip line 😱 the seal was REAL</div><div class="caption-opt">Zero gaps. Even the lips. That's full coverage 💋</div><div class="caption-opt">This is what 100% skin contact looks like 🫧</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_10.jpg" alt="CUT 08" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 08</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Finish with Skincare</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">After peeling off the mask, gently wipe face with toner. Then layer your usual skincare — essence, serum, or moisturizer. Show the skin looking refreshed and glowing. This is the final pampering step.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">mask off → skincare on. this is the move 🌿</div><div class="caption-opt">finish with toner + serum and your skin is literally glowing 💧</div><div class="caption-opt">the after-mask glow hits different when you layer your skincare ✨</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/cut_11.jpg" alt="RESULT" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-result">RESULT</span></div></div><div class="cut-body"><div><div class="field-label">Scene</div><div class="field-scene">Glowing Skin Result</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Face camera with clean, refreshed, glowing skin. Smile naturally. Show the cooling-down vibe — pores tightened, skin clear. Product on desk or in hand optional.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">pores = clear. skin = glowing. chill = activated ✨</div><div class="caption-opt">blackmud modeling mask actually works?? 🫢</div><div class="caption-opt">20 minutes of your life → skin looking like THIS 🖤</div></div></div></div></div></div></div>
+<div class="hm-section"><div class="hm-card"><div class="hm-title"># Hashtags</div><div class="hashtag-wrap"><span class="hashtag">#lindsay</span><span class="hashtag">#rubbermask</span><span class="hashtag">#kbeauty</span><span class="hashtag">#koreanskincare</span><span class="hashtag">#peeloffmask</span></div></div><div class="hm-card"><div class="hm-title">@ Mention Accounts</div><div class="mention-item"><span class="mention-at">@lindsay__official</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div></div></div>
+<div class="refs-section"><h3>&#x1F4CE; Additional Reference Videos</h3><a href="https://www.tiktok.com/@thuytien_x/video/7364783010765491488" target="_blank" class="ref-card"><div class="ref-icon">&#x1F3B5;</div><div class="ref-info"><div class="ref-title">@thuytien_x — Hook Reference (Frame Source)</div><div class="ref-url">https://www.tiktok.com/@thuytien_x/video/7364783010765491488</div></div><span class="ref-arrow">&#x203A;</span></a><a href="https://www.tiktok.com/@minjuugc/video/7393528494912720159" target="_blank" class="ref-card"><div class="ref-icon">&#x1F3B5;</div><div class="ref-info"><div class="ref-title">@minjuugc — Main Reference (Frame Source)</div><div class="ref-url">https://www.tiktok.com/@minjuugc/video/7393528494912720159</div></div><span class="ref-arrow">&#x203A;</span></a></div>
+<div class="site-footer">AI-generated guideline · For influencer reference only<br><a href="https://www.amazon.com/dp/B0G2XYY3X2" target="_blank" style="color:var(--brand)">View Product</a></div>
 <script>
+const VARIANT_DATA = {
+  "Blackmud":{ img:"https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_00.jpg", link:"" },
+  "Teatree":{ img:"https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_01.jpg", link:"" },
+  "Grain":{ img:"https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_02.jpg", link:"" },
+  "Vegetable":{ img:"https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_03.jpg", link:"" },
+  "Pink Salt":{ img:"https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/Lindsay_MAR_USP_v3/variant_04.jpg", link:"" }
+};
 
-const SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
-const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
-const GUIDELINE_ID = '12a31c8c-04aa-4dbf-8a56-a94706097f08';
-
-async function sbGet(path) {
-  const res = await fetch(SUPABASE_URL + path, {
-    headers: {'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY}
-  });
-  if (!res.ok) throw new Error('DB 오류 ' + res.status);
-  return res.json();
+function switchVariant(el) {
+  document.querySelectorAll('.variant-item').forEach(v => v.classList.remove('active'));
+  el.classList.add('active');
+  const data = VARIANT_DATA[el.dataset.name] || {};
+  const mainImg = document.getElementById('pb-main-img');
+  if (mainImg && data.img) { mainImg.style.opacity='0'; setTimeout(()=>{ mainImg.src=data.img; mainImg.style.opacity='1'; }, 200); }
+  const nameEl = document.getElementById('pb-main-name');
+  if (nameEl) nameEl.textContent = 'Lindsay ' + el.dataset.name;
+  const btn = document.getElementById('pb-amazon-btn');
+  const link = el.dataset.link || data.link || '';
+  if (btn) { if (link) { btn.href=link; btn.style.display='inline-block'; } else { btn.style.display='none'; } }
 }
-
-function labelClass(label) {
-  if (label === 'HOOK' || label.startsWith('HOOK')) return 'cut-label label-hook';
-  if (label === 'RESULT') return 'cut-label label-result';
-  return 'cut-label label-cut';
-}
-
-function buildCutCard(cut) {
-  const imgHtml = cut.img_url
-    ? `<img src="${cut.img_url}" alt="${cut.label}" />`
-    : `<div class="cut-no-img">이미지 없음</div>`;
-
-  let body = '';
-  if (cut.main_usp) body += `<div><div class="field-label">Main USP</div><div class="field-usp">${cut.main_usp}</div></div>`;
-  if (cut.production_method) {
-    const steps = cut.production_method.split('\n').filter(s => s.trim());
-    body += `<div><div class="field-label">Production Method</div><div class="field-pm"><ol>${steps.map(s => `<li>${s.replace(/^\d+\.\s*/, '')}</li>`).join('')}</ol></div></div>`;
-  }
-  if (cut.main_usp || cut.production_method) body += '<hr class="cut-sep">';
-  body += `<div><div class="field-label">Scene</div><div class="field-scene">${cut.scene || ''}</div></div>`;
-  body += '<hr class="cut-sep">';
-  body += `<div><div class="field-label">Direction</div><div class="field-direction">${cut.direction || ''}</div></div>`;
-  const captions = Array.isArray(cut.captions) ? cut.captions : [];
-  if (captions.length) {
-    body += '<hr class="cut-sep">';
-    body += `<div><div class="field-label">Caption Options</div><div class="caption-options">${captions.map(c => `<div class="caption-opt">${c}</div>`).join('')}</div></div>`;
-  }
-
-  const el = document.createElement('div');
-  el.className = 'cut-card';
-  el.innerHTML = `<div class="cut-inner">
-    <div class="cut-img-wrap">${imgHtml}
-      <div class="cut-badge-row">
-        <span class="${labelClass(cut.label)}">${cut.label}</span>
-        ${cut.pacing ? `<span class="cut-ts">${cut.pacing}</span>` : ''}
-      </div>
-    </div>
-    <div class="cut-body">${body}</div>
-  </div>`;
-  return el;
-}
-
-async function init() {
-  try {
-    const [glRows, cuts, variantRows] = await Promise.all([
-      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name)`),
-      sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`),
-      sbGet(`/rest/v1/gl_variants?product_id=eq.PLACEHOLDER&order=order.asc`)
-        .catch(() => [])
-    ]);
-    // variantRows placeholder — 재조회
-    const gl = glRows[0];
-    if (!gl) throw new Error('가이드라인을 찾을 수 없습니다');
-    const p = gl.gl_products || {};
-
-    // Variants (product_id 기반 재조회)
-    const variants = await sbGet(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(() => []);
-
-    // Header
-    document.getElementById('gl-title').textContent = gl.angle_name || '';
-    document.getElementById('gl-concept').textContent = gl.concept || '';
-
-    // Product Brief
-    if (p.product_img_url) document.getElementById('pb-img').src = p.product_img_url;
-    document.getElementById('pb-name').textContent = p.name || '';
-
-    // USP Pills
-    const pillsEl = document.getElementById('pb-pills');
-    if (pillsEl && Array.isArray(p.usp_pills)) {
-      pillsEl.innerHTML = p.usp_pills.map(pill => `<span class="pill">${pill}</span>`).join('');
-    }
-
-    // Ingredient Pills
-    const ingEl = document.getElementById('pb-ingredient-pills');
-    if (ingEl && Array.isArray(p.ingredient_pills) && p.ingredient_pills.length) {
-      ingEl.closest('.pb-ingredient-section').style.display = '';
-      ingEl.innerHTML = p.ingredient_pills.map(pill => `<span class="pill pill-blue">${pill}</span>`).join('');
-    } else if (ingEl) {
-      ingEl.closest('.pb-ingredient-section').style.display = 'none';
-    }
-
-    // Usage Method
-    const usageEl = document.getElementById('pb-usage');
-    if (usageEl) {
-      if (p.usage_method) {
-        usageEl.closest('.pb-usage-section').style.display = '';
-        usageEl.innerHTML = p.usage_method.split('\n').map((line, i) =>
-          `<li>${line.replace(/^\d+\.\s*/, '')}</li>`
-        ).join('');
-      } else {
-        usageEl.closest('.pb-usage-section').style.display = 'none';
-      }
-    }
-
-    // Precautions
-    const precEl = document.getElementById('pb-precautions');
-    if (precEl && p.precautions) {
-      precEl.innerHTML = p.precautions.split('\n').map(line =>
-        `<li>${line.replace(/^•\s*/, '')}</li>`
-      ).join('');
-    }
-
-    // Texture Notes
-    const texEl = document.getElementById('pb-texture');
-    if (texEl && p.texture_notes) texEl.textContent = p.texture_notes;
-
-    // Variants
-    const varWrap = document.getElementById('variant-wrap');
-    if (varWrap) {
-      if (variants.length > 0) {
-        document.getElementById('variant-strip').style.display = '';
-        document.getElementById('variant-count').textContent = variants.length + ' Variants Available';
-        varWrap.innerHTML = variants.map(v =>
-          `<div class="variant-item${v.is_active ? ' active' : ''}">
-            ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : `<div style="width:60px;height:60px;background:#eee;border-radius:10px"></div>`}
-            <span>${v.name}</span>
-          </div>`
-        ).join('');
-      } else {
-        document.getElementById('variant-strip').style.display = 'none';
-      }
-    }
-
-    // Angle header
-    const angleEl = document.getElementById('angle-name');
-    if (angleEl) angleEl.textContent = gl.angle_name || '';
-    const angleSubEl = document.getElementById('angle-sub');
-    if (angleSubEl) angleSubEl.textContent = `Angle #1 · ${cuts.length} Cuts`;
-
-    // Cuts
-    const cutsWrap = document.getElementById('cuts-wrap');
-    cutsWrap.innerHTML = '';
-    cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
-
-    // Hashtags
-    const hashEl = document.getElementById('hashtags-wrap');
-    if (hashEl && Array.isArray(gl.hashtags) && gl.hashtags.length) {
-      hashEl.innerHTML = gl.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('');
-    }
-
-    // Mentions
-    const mentEl = document.getElementById('mentions-wrap');
-    if (mentEl && Array.isArray(gl.mentions) && gl.mentions.length) {
-      mentEl.innerHTML = gl.mentions.map(m =>
-        `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
-      ).join('');
-    }
-
-    // Ref Videos
-    const refsWrap = document.getElementById('refs-wrap');
-    if (refsWrap) {
-      if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
-        document.getElementById('refs-section').style.display = '';
-        refsWrap.innerHTML = gl.ref_videos.map(r => {
-          const domain = r.url.replace(/https?:\/\//, '').split('/')[0];
-          return `<a class="ref-card" href="${r.url}" target="_blank">
-            <div class="ref-icon">🎵</div>
-            <div class="ref-info">
-              <div class="ref-title">${r.title}</div>
-              <div class="ref-url">${domain + r.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40)}</div>
-            </div>
-            <div class="ref-arrow">›</div>
-          </a>`;
-        }).join('');
-      } else {
-        document.getElementById('refs-section').style.display = 'none';
-      }
-    }
-
-    // Footer
-
-    // Amazon Button in product card
-    const amazonBtnEl = document.getElementById('pb-amazon-btn');
-    if (amazonBtnEl && p.footer_link) {
-      amazonBtnEl.href = p.footer_link;
-      amazonBtnEl.style.display = '';
-    }
-    const footerLinkEl = document.getElementById('footer-link');
-    if (footerLinkEl) {
-      if (p.footer_link) {
-        footerLinkEl.href = p.footer_link;
-        footerLinkEl.style.display = '';
-      } else {
-        footerLinkEl.style.display = 'none';
-      }
-    }
-
-    document.getElementById('loading-overlay').style.display = 'none';
-    document.getElementById('main-content').style.display = '';
-
-  } catch(e) {
-    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
-  }
-}
-
-init();
-
 </script>
 </body>
 </html>
