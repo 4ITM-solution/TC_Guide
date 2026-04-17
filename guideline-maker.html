@@ -889,8 +889,13 @@ async function loadGlPreviewCSS(brand) {
       const escaped = from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       css = css.replace(new RegExp(escaped + '(?=[\\s,{:>~+\\[)])', 'g'), to);
     }
-    // :root 변수 제거 (웹앱 :root와 충돌 방지)
-    css = css.replace(/:root\s*\{[^}]*\}/g, '');
+    // :root를 .gl-detail 스코프로 교체 (변수 유지하면서 충돌 방지)
+    css = css.replace(/:root\s*\{/g, '.gl-detail {');
+    // \u2022 이스케이프 → 실제 문자로 복원 (CSS content 속성)
+    css = css.replace(/\\u2022/g, '\u2022');
+    // 편집 필드 기본 숨김 강제 적용
+    css += '\n  .gl-edit-fields { display: none !important; }';
+    css += '\n  .gl-edit-fields.visible { display: flex !important; }';
     const styleEl = document.getElementById('gl-preview-css');
     if (styleEl) styleEl.textContent = css;
   } catch(e) {
