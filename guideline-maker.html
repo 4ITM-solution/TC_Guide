@@ -1330,6 +1330,11 @@ function buildCutCard(cut) {
     body += '<hr class="gl-cut-sep">';
     body += `<div><div class="gl-field-label">Caption Options</div><div class="gl-caption-options">${captions.map(c => `<div class="gl-caption-opt">${c}</div>`).join('')}</div></div>`;
   }
+  if (cut.tip) {
+    const tipItems = cut.tip.split('/').map(t => t.trim()).filter(Boolean);
+    body += '<hr class="gl-cut-sep">';
+    body += `<div><div class="gl-field-label" style="color:#c47f00">&#x1F4A1; Filming Tip</div><div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">${tipItems.map(t => `<div style="background:#fff8e6;border:1.5px solid #f5c842;border-radius:8px;padding:8px 12px;font-size:12px;color:#7a5200;line-height:1.6">${t}</div>`).join('')}</div></div>`;
+  }
 
   const captionsText = captions.join('\n');
 
@@ -1377,6 +1382,10 @@ function buildCutCard(cut) {
         </div>
         <textarea class="edit-textarea" name="production_method">${cut.production_method || ''}</textarea>
       </div>` : ''}
+      <div>
+        <div class="edit-label">&#x1F4A1; Filming Tip (여러 개는 / 로 구분)</div>
+        <textarea class="edit-textarea" name="tip">${cut.tip || ''}</textarea>
+      </div>
       <div class="cut-edit-actions">
         <button class="btn-cancel-cut">취소</button>
         <button class="btn-save-cut">💾 저장</button>
@@ -1414,8 +1423,10 @@ function buildCutCard(cut) {
     };
     const mainUspEl = card.querySelector('[name="main_usp"]');
     const pmEl = card.querySelector('[name="production_method"]');
+    const tipEl = card.querySelector('[name="tip"]');
     if (mainUspEl) fields.main_usp = mainUspEl.value.trim();
     if (pmEl) fields.production_method = pmEl.value.trim();
+    if (tipEl) fields.tip = tipEl.value.trim() || null;
 
     try {
       await updateCut(cut.id, fields);
