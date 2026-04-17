@@ -835,6 +835,7 @@ async function loadGlPreviewCSS(brand) {
       '.variant-thumbs': '.gl-variant-thumbs',
       '.variant-item': '.gl-variant-item',
       '.angle-header': '.gl-angle-header',
+      '.ah-sub': '.gl-ah-sub',
       '.cuts-wrap': '.gl-cuts-wrap',
       '.cut-card': '.gl-cut-card',
       '.cut-inner': '.gl-cut-inner',
@@ -971,7 +972,8 @@ function renderDetail(gl, p, cuts, variants) {
 
   // Header
   const brand = p.brand || '';
-  const badge = (brand + ' · USP GUIDELINE').toUpperCase();
+  const glType = (gl.type || 'USP').toUpperCase();
+  const badge = (brand + ' · ' + (glType === 'PR' ? 'PR GUIDE' : 'USP GUIDELINE')).toUpperCase();
   container.innerHTML = `
     <header class="gl-site-header">
       <div class="gl-header-badge">${badge}</div>
@@ -1072,13 +1074,14 @@ function renderDetail(gl, p, cuts, variants) {
       </div>
     </div>` : ''}
 
+    ${gl.type === 'PR' ? `
     <div class="gl-notice-section">
       <div class="gl-notice-card">
         <div class="gl-notice-title">⭐ Video DOs &amp; DON'Ts</div>
         <div class="gl-notice-hero">
           <strong>Rice Pure Essential Toner must appear in the video.</strong> This is the hero product — ensure it is clearly visible on screen.
         </div>
-        <div class="dos-donts" style="display:flex;gap:12px">
+        <div style="display:flex;gap:12px">
           <div style="flex:1">
             <div style="font-size:11px;font-weight:800;color:#c0392b;margin-bottom:6px">❌ DON'Ts</div>
             <div class="gl-rule-item">❌ Other brand's products</div>
@@ -1095,10 +1098,10 @@ function renderDetail(gl, p, cuts, variants) {
           </div>
         </div>
       </div>
-    </div>
+    </div>` : ''}
 
     <div class="gl-angle-header">
-      <div class="ah-sub">Angle #1 · ${cuts.length} Cuts</div>
+      <div class="gl-ah-sub">Angle #1 · ${cuts.length} Cuts</div>
       <h2>${gl.angle_name || ''}</h2>
     </div>
 
