@@ -453,6 +453,25 @@ async function sbUpload(filePath, file) {
   return `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
 }
 
+async function sbUploadVideo(glId, file) {
+  const ext = file.name.split('.').pop() || 'mp4';
+  const path = `ref-videos/${glId}/ref.${ext}`;
+  await fetch(`${SUPABASE_URL}/storage/v1/object/ref-videos/${path}`, {
+    method: 'DELETE',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+  });
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/ref-videos/${path}`, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY, 'Content-Type': file.type },
+    body: file
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || err.error || 'Video upload failed');
+  }
+  return `${SUPABASE_URL}/storage/v1/object/public/ref-videos/${path}`;
+}
+
 // ── GitHub Token ──
 // 볼드 적용: textarea에서 선택된 텍스트를 <b>...</b>로 감싸기
 function applyBold(textarea) {
@@ -986,6 +1005,22 @@ function renderDetail(gl, p, cuts, variants) {
       <p class="gl-header-concept">${gl.concept || ''}</p>
     </header>
 
+    <div id="ref-video-section" style="padding:12px 16px 0">
+      ${gl.ref_video_url ? `
+        <div style="background:#000;border-radius:12px;overflow:hidden;position:relative">
+          <video id="ref-video-player" src="${gl.ref_video_url}" controls playsinline
+            style="width:100%;max-height:480px;display:block;object-fit:contain">
+          </video>
+          <button id="btn-remove-video" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.6);border:none;border-radius:6px;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer">✕ 삭제</button>
+        </div>` : `
+        <label id="ref-video-upload-label" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#f5f5f8;border:2px dashed #ddd;border-radius:12px;padding:20px;cursor:pointer;font-size:13px;color:#888;transition:border-color .2s">
+          <span style="font-size:20px">&#x1F3AC;</span>
+          <span>레퍼런스 영상 업로드 (mp4, mov · 최대 100MB)</span>
+          <input type="file" id="ref-video-input" accept="video/*" style="display:none">
+        </label>`}
+      <div id="ref-video-progress" style="display:none;margin-top:8px;font-size:12px;color:#888;text-align:center">업로드 중…</div>
+    </div>
+
     <section class="gl-product-section">
       <div class="gl-product-brief" id="product-brief-card">
         <div class="gl-pb-img" id="pb-img-wrap" style="position:relative;cursor:pointer">
@@ -1158,6 +1193,62 @@ function renderDetail(gl, p, cuts, variants) {
 
   wrap.innerHTML = '';
   wrap.appendChild(container);
+
+  // ── 레퍼런스 영상 업로드/삭제 이벤트 ──
+  const videoInput = container.querySelector('#ref-video-input');
+  const videoLabel = container.querySelector('#ref-video-upload-label');
+  const videoProgress = container.querySelector('#ref-video-progress');
+  const removeVideoBtn = container.querySelector('#btn-remove-video');
+
+  if (videoInput) {
+    videoLabel.addEventListener('dragover', e => { e.preventDefault(); videoLabel.style.borderColor = 'var(--pink)'; });
+    videoLabel.addEventListener('dragleave', () => { videoLabel.style.borderColor = '#ddd'; });
+    videoLabel.addEventListener('drop', e => {
+      e.preventDefault();
+      videoLabel.style.borderColor = '#ddd';
+      const file = e.dataTransfer.files[0];
+      if (file) handleVideoUpload(file);
+    });
+    videoInput.addEventListener('change', () => {
+      if (videoInput.files[0]) handleVideoUpload(videoInput.files[0]);
+    });
+  }
+
+  if (removeVideoBtn) {
+    removeVideoBtn.addEventListener('click', async () => {
+      if (!confirm('레퍼런스 영상을 삭제할까요?')) return;
+      try {
+        await sbFetch(`/rest/v1/gl_guidelines?id=eq.${gl.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ ref_video_url: null })
+        });
+        currentGl.ref_video_url = null;
+        showToast('✅ 영상 삭제됨', 'success', 2000);
+        loadDetail(gl.id);
+      } catch(e) { showToast('❌ ' + e.message, 'error'); }
+    });
+  }
+
+  async function handleVideoUpload(file) {
+    if (file.size > 104857600) { showToast('❌ 100MB 이하 파일만 업로드 가능해요', 'error'); return; }
+    videoProgress.style.display = 'block';
+    videoProgress.textContent = '업로드 중… (파일 크기에 따라 시간이 걸릴 수 있어요)';
+    try {
+      const url = await sbUploadVideo(gl.id, file);
+      await sbFetch(`/rest/v1/gl_guidelines?id=eq.${gl.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ ref_video_url: url })
+      });
+      currentGl.ref_video_url = url;
+      showToast('✅ 영상 업로드 완료!', 'success', 3000);
+      loadDetail(gl.id);
+    } catch(e) {
+      videoProgress.style.display = 'none';
+      showToast('❌ 업로드 실패: ' + e.message, 'error');
+    }
+  }
 
   // 컷 카드 렌더
   const cutsWrap = document.getElementById('gl-cuts-wrap');
