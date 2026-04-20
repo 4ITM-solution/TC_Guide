@@ -158,13 +158,13 @@
     <div class="variant-thumbs" id="variant-wrap"></div>
   </div>
 
+
   <div id="sg-section" class="sg-section" style="display:none">
     <div class="sg-card">
       <div class="sg-title">🎬 Shooting Guide</div>
       <div class="sg-list" id="sg-list"></div>
     </div>
   </div>
-
   <div class="angle-header">
     <div class="ah-sub" id="angle-sub"></div>
     <h2 id="angle-name"></h2>
@@ -331,6 +331,7 @@ async function init() {
       }
     }
 
+
     // Shooting Guide
     const sgSection = document.getElementById('sg-section');
     const sgList = document.getElementById('sg-list');
@@ -373,4 +374,48 @@ async function init() {
         document.getElementById('refs-section').style.display = '';
         refsWrap.innerHTML = gl.ref_videos.map(r => {
           const domain = r.url.replace(/https?:\/\//, '').split('/')[0];
-          r
+          return `<a class="ref-card" href="${r.url}" target="_blank">
+            <div class="ref-icon">🎵</div>
+            <div class="ref-info">
+              <div class="ref-title">${r.title}</div>
+              <div class="ref-url">${domain + r.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40)}</div>
+            </div>
+            <div class="ref-arrow">›</div>
+          </a>`;
+        }).join('');
+      } else {
+        document.getElementById('refs-section').style.display = 'none';
+      }
+    }
+
+    // Footer
+
+    // Amazon Button in product card
+    const amazonBtnEl = document.getElementById('pb-amazon-btn');
+    if (amazonBtnEl && p.footer_link) {
+      amazonBtnEl.href = p.footer_link;
+      amazonBtnEl.style.display = '';
+    }
+    const footerLinkEl = document.getElementById('footer-link');
+    if (footerLinkEl) {
+      if (p.footer_link) {
+        footerLinkEl.href = p.footer_link;
+        footerLinkEl.style.display = '';
+      } else {
+        footerLinkEl.style.display = 'none';
+      }
+    }
+
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = '';
+
+  } catch(e) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
+  }
+}
+
+init();
+
+</script>
+</body>
+</html>
