@@ -677,7 +677,7 @@ function buildGuidelineHTML(gl, cuts) {
     <div class="loading-state"><div class="spinner"></div><div>가이드라인 불러오는 중…</div></div>
   </div>
 </section>
-<script>
+<scr${''}ipt>
 const SUPABASE_URL='${SUPABASE_URL}';
 const ANON_KEY='${SUPABASE_ANON_KEY}';
 const GUIDELINE_ID='${glId}';
@@ -1455,4 +1455,51 @@ function buildCutCard(cut) {
 
   // 이미지 업로드
   const imgOverlay = card.querySelector('.gl-img-overlay');
-  const fileInput = card.querySelector('
+  const fileInput = card.querySelector('.gl-img-upload-input');
+  const imgWrap = card.querySelector('.gl-cut-img-wrap');
+  imgOverlay.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    imgWrap.style.opacity = '0.5';
+    try {
+      const slug = currentGl.id;
+      const storageUrl = await sbUpload(`cut-images/${slug}/cut_${String(cut.order || 0).padStart(2,'0')}.jpg`, file);
+      await updateCut(cut.id, { img_url: storageUrl });
+      let img = imgWrap.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        imgWrap.querySelector('.gl-cut-no-img')?.remove();
+        imgWrap.insertBefore(img, imgWrap.firstChild);
+      }
+      img.src = storageUrl + '?t=' + Date.now();
+      showToast('🖼️ 이미지 업로드 완료', 'success');
+    } catch(e) {
+      showToast('❌ 업로드 실패: ' + e.message, 'error');
+    } finally {
+      imgWrap.style.opacity = '';
+    }
+  });
+
+  return card;
+}
+
+// ── Back button ──
+document.getElementById('btn-back').addEventListener('click', () => {
+  currentGl = null;
+  currentCuts = [];
+  showView('dashboard');
+  loadDashboard();
+});
+
+// ── Init ──
+(function init() {
+  updateTokenStatus();
+  if (getSession()) {
+    showApp();
+    loadDashboard();
+  }
+})();
+</script>
+</body>
+</h
