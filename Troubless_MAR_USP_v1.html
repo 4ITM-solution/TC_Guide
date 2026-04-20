@@ -70,6 +70,9 @@
     .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
     .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}
     .caption-opt::before{content:'•';color:var(--pink);font-size:16px;line-height:1.2;flex-shrink:0}
+    .cut-tip-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#c47f00;margin-bottom:3px}
+    .cut-tip{display:flex;align-items:flex-start;gap:8px;background:#fff8e6;border:1.5px solid #f5c842;border-radius:8px;padding:9px 12px;font-size:12px;color:#7a5200;line-height:1.6;margin-top:2px}
+    .cut-tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
     .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
     @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
     .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
@@ -239,6 +242,13 @@ function buildCutCard(cut) {
   if (captions.length) {
     body += '<hr class="cut-sep">';
     body += `<div><div class="field-label">Caption Options</div><div class="caption-options">${captions.map(c => `<div class="caption-opt">${c}</div>`).join('')}</div></div>`;
+  }
+  if (cut.tip) {
+    const tips = cut.tip.split('\n').map(t => t.trim()).filter(Boolean);
+    body += '<hr class="cut-sep">';
+    body += '<div><div class="cut-tip-label">💡 Filming Tip</div><div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">';
+    body += tips.map(t => `<div class="cut-tip"><span class="cut-tip-icon">✦</span><span>${t}</span></div>`).join('');
+    body += '</div></div>';
   }
 
   const el = document.createElement('div');
