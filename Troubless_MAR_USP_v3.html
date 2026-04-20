@@ -87,14 +87,6 @@
     .ref-title{font-size:13px;font-weight:700;margin-bottom:2px}
     .ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .ref-arrow{color:var(--muted);font-size:18px}
-    .must-watch-section{margin:20px 16px 0}
-    .must-watch-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
-    .must-watch-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
-    .must-watch-card:hover{opacity:0.88}
-    .must-watch-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
-    .must-watch-info{flex:1;min-width:0}
-    .must-watch-title{font-size:13px;font-weight:700;margin-bottom:2px}
-    .must-watch-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
         .amazon-btn{display:inline-block;margin-top:4px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
     .amazon-btn:hover{opacity:0.88}
     .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
@@ -158,34 +150,6 @@
   <div id="variant-strip" class="variant-strip">
     <div class="variant-label" id="variant-count"></div>
     <div class="variant-thumbs" id="variant-wrap"></div>
-  </div>
-
-  <div class="must-watch-section">
-    <h3>👀 반드시 보세요</h3>
-    <a class="must-watch-card" href="https://www.tiktok.com/@shay.glowy/video/7628514471778012429" target="_blank">
-      <div class="must-watch-icon">🎵</div>
-      <div class="must-watch-info">
-        <div class="must-watch-title">Reference Video 1</div>
-        <div class="must-watch-url">tiktok.com/@shay.glowy/video/7628514471778012429</div>
-      </div>
-      <div class="ref-arrow">›</div>
-    </a>
-    <a class="must-watch-card" href="https://www.tiktok.com/@lenkalul/video/7503930388146900246" target="_blank">
-      <div class="must-watch-icon">🎵</div>
-      <div class="must-watch-info">
-        <div class="must-watch-title">Reference Video 2</div>
-        <div class="must-watch-url">tiktok.com/@lenkalul/video/7503930388146900246</div>
-      </div>
-      <div class="ref-arrow">›</div>
-    </a>
-    <a class="must-watch-card" href="https://www.tiktok.com/@heidiann__/video/7523685274237357326" target="_blank">
-      <div class="must-watch-icon">🎵</div>
-      <div class="must-watch-info">
-        <div class="must-watch-title">Reference Video 3</div>
-        <div class="must-watch-url">tiktok.com/@heidiann__/video/7523685274237357326</div>
-      </div>
-      <div class="ref-arrow">›</div>
-    </a>
   </div>
 
   <div class="angle-header">
@@ -368,4 +332,66 @@ async function init() {
     // Hashtags
     const hashEl = document.getElementById('hashtags-wrap');
     if (hashEl && Array.isArray(gl.hashtags) && gl.hashtags.length) {
-      hashE
+      hashEl.innerHTML = gl.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('');
+    }
+
+    // Mentions
+    const mentEl = document.getElementById('mentions-wrap');
+    if (mentEl && Array.isArray(gl.mentions) && gl.mentions.length) {
+      mentEl.innerHTML = gl.mentions.map(m =>
+        `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
+      ).join('');
+    }
+
+    // Ref Videos
+    const refsWrap = document.getElementById('refs-wrap');
+    if (refsWrap) {
+      if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
+        document.getElementById('refs-section').style.display = '';
+        refsWrap.innerHTML = gl.ref_videos.map(r => {
+          const domain = r.url.replace(/https?:\/\//, '').split('/')[0];
+          return `<a class="ref-card" href="${r.url}" target="_blank">
+            <div class="ref-icon">🎵</div>
+            <div class="ref-info">
+              <div class="ref-title">${r.title}</div>
+              <div class="ref-url">${domain + r.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40)}</div>
+            </div>
+            <div class="ref-arrow">›</div>
+          </a>`;
+        }).join('');
+      } else {
+        document.getElementById('refs-section').style.display = 'none';
+      }
+    }
+
+    // Footer
+
+    // Amazon Button in product card
+    const amazonBtnEl = document.getElementById('pb-amazon-btn');
+    if (amazonBtnEl && p.footer_link) {
+      amazonBtnEl.href = p.footer_link;
+      amazonBtnEl.style.display = '';
+    }
+    const footerLinkEl = document.getElementById('footer-link');
+    if (footerLinkEl) {
+      if (p.footer_link) {
+        footerLinkEl.href = p.footer_link;
+        footerLinkEl.style.display = '';
+      } else {
+        footerLinkEl.style.display = 'none';
+      }
+    }
+
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = '';
+
+  } catch(e) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
+  }
+}
+
+init();
+
+</script>
+</body>
+</html>
