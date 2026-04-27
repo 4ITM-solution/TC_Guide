@@ -103,6 +103,19 @@
     .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
+    .dos-donts-section{margin:20px 16px 0;display:flex;flex-direction:column;gap:12px}
+    @media(min-width:520px){.dos-donts-section{flex-direction:row;gap:16px}}
+    .dos-card{background:#f0fff4;border:1.5px solid #6fcf97;border-radius:var(--radius);padding:16px 18px;flex:1}
+    .donts-card{background:#fff0f0;border:1.5px solid #f97070;border-radius:var(--radius);padding:16px 18px;flex:1}
+    .dd-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+    .dos-card .dd-title{color:#1a7a43}
+    .donts-card .dd-title{color:#b91c1c}
+    .dd-list{display:flex;flex-direction:column;gap:8px}
+    .dd-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.55}
+    .dos-card .dd-item{color:#1a4d2e}
+    .donts-card .dd-item{color:#7f1d1d}
+    .dd-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+    .dd-highlight{background:rgba(185,28,28,0.1);border-radius:6px;padding:8px 10px;border-left:3px solid #f97070}
 </style>
 </head>
 <body>
@@ -185,6 +198,17 @@
     <div class="hm-card">
       <div class="hm-title">@ Mention Accounts</div>
       <div id="mentions-wrap"></div>
+    </div>
+  </div>
+
+  <div class="dos-donts-section" id="dos-donts-section">
+    <div class="dos-card">
+      <div class="dd-title">✅ Do's</div>
+      <div class="dd-list" id="dos-list"></div>
+    </div>
+    <div class="donts-card">
+      <div class="dd-title">🚫 Don'ts</div>
+      <div class="dd-list" id="donts-list"></div>
     </div>
   </div>
 
@@ -379,55 +403,10 @@ async function init() {
       ).join('');
     }
 
-    // Ref Videos
-    const refsWrap = document.getElementById('refs-wrap');
-    if (refsWrap) {
-      if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
-        document.getElementById('refs-section').style.display = '';
-        refsWrap.innerHTML = gl.ref_videos.map(r => {
-          const domain = r.url.replace(/https?:\/\//, '').split('/')[0];
-          return `<a class="ref-card" href="${r.url}" target="_blank">
-            <div class="ref-icon">🎵</div>
-            <div class="ref-info">
-              <div class="ref-title">${r.title}</div>
-              <div class="ref-url">${domain + r.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40)}</div>
-            </div>
-            <div class="ref-arrow">›</div>
-          </a>`;
-        }).join('');
-      } else {
-        document.getElementById('refs-section').style.display = 'none';
-      }
-    }
-
-    // Footer
-
-    // Amazon Button in product card
-    const amazonBtnEl = document.getElementById('pb-amazon-btn');
-    if (amazonBtnEl && p.footer_link) {
-      amazonBtnEl.href = p.footer_link;
-      amazonBtnEl.style.display = '';
-    }
-    const footerLinkEl = document.getElementById('footer-link');
-    if (footerLinkEl) {
-      if (p.footer_link) {
-        footerLinkEl.href = p.footer_link;
-        footerLinkEl.style.display = '';
-      } else {
-        footerLinkEl.style.display = 'none';
-      }
-    }
-
-    document.getElementById('loading-overlay').style.display = 'none';
-    document.getElementById('main-content').style.display = '';
-
-  } catch(e) {
-    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
-  }
-}
-
-init();
-
-</script>
-</body>
-</html>
+    // Do's & Don'ts (hardcoded for PR guideline)
+    const dosList = document.getElementById('dos-list');
+    const dontsList = document.getElementById('donts-list');
+    if (dosList) {
+      const dos = [
+        "Refer to the product as 'Mildlab Centella Oint Cream', 'oint cream', or 'barrier cream'",
+        "Emphasize the red spot & post
