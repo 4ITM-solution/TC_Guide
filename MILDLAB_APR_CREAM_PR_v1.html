@@ -96,7 +96,7 @@
     .sg-list{display:flex;flex-direction:column;gap:8px}
     .sg-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#1e3a5f;line-height:1.55}
     .sg-num{min-width:22px;height:22px;background:#1a5fa8;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}
-        .amazon-btn{display:inline-block;margin-top:4px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
+    .amazon-btn{display:inline-block;margin-top:4px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
     .amazon-btn:hover{opacity:0.88}
     .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
     .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
@@ -181,7 +181,7 @@
   <div class="dos-donts-section">
     <div class="dd-outer">
       <div class="dd-outer-title">⭐ Video Do's &amp; Don'ts</div>
-      <div class="dd-hero" id="dd-hero">Mildlab Centella Oint Cream must appear in the video. This is the hero product — ensure it is clearly visible on screen.</div>
+      <div class="dd-hero">Mildlab Centella Oint Cream must appear in the video. This is the hero product — ensure it is clearly visible on screen.</div>
       <div class="dd-cols">
         <div class="dd-col donts">
           <div class="dd-col-title donts">✕ Don'ts</div>
@@ -201,6 +201,7 @@
       <div class="sg-list" id="sg-list"></div>
     </div>
   </div>
+
   <div class="angle-header">
     <div class="ah-sub" id="angle-sub"></div>
     <h2 id="angle-name"></h2>
@@ -241,7 +242,7 @@ async function sbGet(path) {
   const res = await fetch(SUPABASE_URL + path, {
     headers: {'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY}
   });
-  if (!res.ok) throw new Error('DB 오류 ' + res.status);
+  if (!res.ok) throw new Error('DB error ' + res.status);
   return res.json();
 }
 
@@ -271,13 +272,6 @@ function buildCutCard(cut) {
     body += '<hr class="cut-sep">';
     body += `<div><div class="field-label">Caption Options</div><div class="caption-options">${captions.map(c => `<div class="caption-opt">${c}</div>`).join('')}</div></div>`;
   }
-  if (cut.tip) {
-    const tips = cut.tip.split('\n').map(t => t.trim()).filter(Boolean);
-    body += '<hr class="cut-sep">';
-    body += '<div><div class="cut-tip-label">💡 Filming Tip</div><div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">';
-    body += tips.map(t => `<div class="cut-tip"><span class="cut-tip-icon">✦</span><span>${t}</span></div>`).join('');
-    body += '</div></div>';
-  }
 
   const el = document.createElement('div');
   el.className = 'cut-card';
@@ -303,24 +297,19 @@ async function init() {
     if (!gl) throw new Error('가이드라인을 찾을 수 없습니다');
     const p = gl.gl_products || {};
 
-    // Variants (product_id 기반 재조회)
     const variants = await sbGet(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(() => []);
 
-    // Header
     document.getElementById('gl-title').textContent = gl.angle_name || '';
     document.getElementById('gl-concept').textContent = gl.concept || '';
 
-    // Product Brief
     if (p.product_img_url) document.getElementById('pb-img').src = p.product_img_url;
     document.getElementById('pb-name').textContent = p.name || '';
 
-    // USP Pills
     const pillsEl = document.getElementById('pb-pills');
     if (pillsEl && Array.isArray(p.usp_pills)) {
       pillsEl.innerHTML = p.usp_pills.map(pill => `<span class="pill">${pill}</span>`).join('');
     }
 
-    // Ingredient Pills
     const ingEl = document.getElementById('pb-ingredient-pills');
     if (ingEl && Array.isArray(p.ingredient_pills) && p.ingredient_pills.length) {
       ingEl.closest('.pb-ingredient-section').style.display = '';
@@ -329,32 +318,24 @@ async function init() {
       ingEl.closest('.pb-ingredient-section').style.display = 'none';
     }
 
-    // Usage Method
     const usageEl = document.getElementById('pb-usage');
     if (usageEl) {
       if (p.usage_method) {
         usageEl.closest('.pb-usage-section').style.display = '';
-        usageEl.innerHTML = p.usage_method.split('\n').map((line, i) =>
-          `<li>${line.replace(/^\d+\.\s*/, '')}</li>`
-        ).join('');
+        usageEl.innerHTML = p.usage_method.split('\n').map(line => `<li>${line.replace(/^\d+\.\s*/, '')}</li>`).join('');
       } else {
         usageEl.closest('.pb-usage-section').style.display = 'none';
       }
     }
 
-    // Precautions
     const precEl = document.getElementById('pb-precautions');
     if (precEl && p.precautions) {
-      precEl.innerHTML = p.precautions.split('\n').map(line =>
-        `<li>${line.replace(/^•\s*/, '')}</li>`
-      ).join('');
+      precEl.innerHTML = p.precautions.split('\n').map(line => `<li>${line.replace(/^•\s*/, '')}</li>`).join('');
     }
 
-    // Texture Notes
     const texEl = document.getElementById('pb-texture');
     if (texEl && p.texture_notes) texEl.textContent = p.texture_notes;
 
-    // Variants
     const varWrap = document.getElementById('variant-wrap');
     if (varWrap) {
       if (variants.length > 0) {
@@ -371,8 +352,6 @@ async function init() {
       }
     }
 
-
-    // Shooting Guide
     const sgSection = document.getElementById('sg-section');
     const sgList = document.getElementById('sg-list');
     if (sgSection && sgList && Array.isArray(gl.shooting_guide) && gl.shooting_guide.length) {
@@ -382,24 +361,20 @@ async function init() {
       sgSection.style.display = '';
     }
 
-    // Angle header
     const angleEl = document.getElementById('angle-name');
     if (angleEl) angleEl.textContent = gl.angle_name || '';
     const angleSubEl = document.getElementById('angle-sub');
     if (angleSubEl) angleSubEl.textContent = `Angle #1 · ${cuts.length} Cuts`;
 
-    // Cuts
     const cutsWrap = document.getElementById('cuts-wrap');
     cutsWrap.innerHTML = '';
     cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
 
-    // Hashtags
     const hashEl = document.getElementById('hashtags-wrap');
     if (hashEl && Array.isArray(gl.hashtags) && gl.hashtags.length) {
       hashEl.innerHTML = gl.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('');
     }
 
-    // Mentions
     const mentEl = document.getElementById('mentions-wrap');
     if (mentEl && Array.isArray(gl.mentions) && gl.mentions.length) {
       mentEl.innerHTML = gl.mentions.map(m =>
@@ -407,7 +382,7 @@ async function init() {
       ).join('');
     }
 
-    // Do's & Don'ts (hardcoded for PR guideline)
+    // Do's & Don'ts
     const dosList = document.getElementById('dos-list');
     const dontsList = document.getElementById('donts-list');
     if (dosList) {
@@ -438,7 +413,6 @@ async function init() {
       ).join('');
     }
 
-    // Ref Videos
     const refsWrap = document.getElementById('refs-wrap');
     if (refsWrap) {
       if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
@@ -459,9 +433,6 @@ async function init() {
       }
     }
 
-    // Footer
-
-    // Amazon Button in product card
     const amazonBtnEl = document.getElementById('pb-amazon-btn');
     if (amazonBtnEl && p.footer_link) {
       amazonBtnEl.href = p.footer_link;
@@ -470,4 +441,25 @@ async function init() {
     const footerLinkEl = document.getElementById('footer-link');
     if (footerLinkEl) {
       if (p.footer_link) {
-        footerLinkEl.href = 
+        footerLinkEl.href = p.footer_link;
+        footerLinkEl.style.display = '';
+      } else {
+        footerLinkEl.style.display = 'none';
+      }
+    }
+
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = '';
+
+  } catch(e) {
+    console.error('Guideline load error:', e);
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}<br><small style="color:#aaa">${e.stack||''}</small></div>`;
+  }
+}
+
+init();
+
+</script>
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                    
