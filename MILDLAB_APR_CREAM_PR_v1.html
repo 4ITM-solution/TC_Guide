@@ -11,7 +11,7 @@
       --blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;
       --text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px;
     }
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
     .site-header{background:linear-gradient(135deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
     .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
     .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
@@ -33,8 +33,6 @@
     .variant-strip{padding:14px 16px 0}
     .variant-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
     .variant-thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-    .variant-thumbs::-webkit-scrollbar{height:3px}
-    .variant-thumbs::-webkit-scrollbar-thumb{background:var(--pink-mid);border-radius:2px}
     .variant-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;width:68px}
     .variant-item img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:2px solid transparent;transition:border-color .2s}
     .variant-item.active img{border-color:var(--pink)}
@@ -51,7 +49,6 @@
     .cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
     @media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
     .cut-no-img{width:100%;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;background:#f5f5f8}
-    @media(min-width:520px){.cut-no-img{height:100%;max-height:88vh;aspect-ratio:auto}}
     .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
     .cut-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
     .label-hook{background:var(--red)}
@@ -69,10 +66,7 @@
     .field-pm li{margin-bottom:3px}
     .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
     .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}
-    .caption-opt::before{content:'•';color:var(--pink);font-size:16px;line-height:1.2;flex-shrink:0}
-    .cut-tip-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#c47f00;margin-bottom:3px}
-    .cut-tip{display:flex;align-items:flex-start;gap:8px;background:#fff8e6;border:1.5px solid #f5c842;border-radius:8px;padding:9px 12px;font-size:12px;color:#7a5200;line-height:1.6;margin-top:2px}
-    .cut-tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+    .caption-opt::before{content:"\2022";color:var(--pink);font-size:16px;line-height:1.2;flex-shrink:0}
     .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
     @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
     .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
@@ -92,12 +86,11 @@
     .ref-arrow{color:var(--muted);font-size:18px}
     .sg-section{margin:20px 16px 0}
     .sg-card{background:#f0f7ff;border:1.5px solid #b3d4f5;border-radius:var(--radius);padding:16px 18px}
-    .sg-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#1a5fa8;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+    .sg-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#1a5fa8;margin-bottom:12px}
     .sg-list{display:flex;flex-direction:column;gap:8px}
     .sg-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#1e3a5f;line-height:1.55}
     .sg-num{min-width:22px;height:22px;background:#1a5fa8;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}
     .amazon-btn{display:inline-block;margin-top:4px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
-    .amazon-btn:hover{opacity:0.88}
     .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
     .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
     .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
@@ -123,25 +116,19 @@
 </style>
 </head>
 <body>
-
 <div id="loading-overlay" class="loading-state">
   <div><div class="spinner"></div></div>
-  <div>가이드라인 불러오는 중…</div>
+  <div>Loading...</div>
 </div>
-
 <div id="main-content" style="display:none">
-
   <header class="site-header">
     <div class="header-badge">Contents Guideline Brief</div>
     <h1 id="gl-title"></h1>
     <p class="header-concept" id="gl-concept"></p>
   </header>
-
   <section class="product-section">
     <div class="product-brief">
-      <div class="pb-img">
-        <img id="pb-img" src="" alt="Product">
-      </div>
+      <div class="pb-img"><img id="pb-img" src="" alt="Product"></div>
       <div class="pb-info">
         <div class="pb-name" id="pb-name"></div>
         <div>
@@ -160,306 +147,221 @@
         </div>
         <hr class="pb-divider">
         <div>
-          <div class="pb-section-label">⚠️ Usage Precautions</div>
+          <div class="pb-section-label">Usage Precautions</div>
           <ul class="pb-section-body" id="pb-precautions"></ul>
         </div>
         <hr class="pb-divider">
         <div>
-          <div class="pb-section-label">💧 Texture Notes</div>
+          <div class="pb-section-label">Texture Notes</div>
           <div class="pb-section-body" id="pb-texture"></div>
         </div>
-        <a id="pb-amazon-btn" href="#" target="_blank" class="amazon-btn" style="display:none">🛒 View on Amazon</a>
+        <a id="pb-amazon-btn" href="#" target="_blank" class="amazon-btn" style="display:none">View on Amazon</a>
       </div>
     </div>
   </section>
-
   <div id="variant-strip" class="variant-strip">
     <div class="variant-label" id="variant-count"></div>
     <div class="variant-thumbs" id="variant-wrap"></div>
   </div>
-
   <div class="dos-donts-section">
     <div class="dd-outer">
-      <div class="dd-outer-title">⭐ Video Do's &amp; Don'ts</div>
-      <div class="dd-hero">Mildlab Centella Oint Cream must appear in the video. This is the hero product — ensure it is clearly visible on screen.</div>
+      <div class="dd-outer-title">Video Do's &amp; Don'ts</div>
+      <div class="dd-hero">Mildlab Centella Oint Cream must appear in the video. This is the hero product.</div>
       <div class="dd-cols">
         <div class="dd-col donts">
-          <div class="dd-col-title donts">✕ Don'ts</div>
+          <div class="dd-col-title donts">Don'ts</div>
           <div class="dd-list" id="donts-list"></div>
         </div>
         <div class="dd-col dos">
-          <div class="dd-col-title dos">✓ Do's</div>
+          <div class="dd-col-title dos">Do's</div>
           <div class="dd-list" id="dos-list"></div>
         </div>
       </div>
     </div>
   </div>
-
   <div id="sg-section" class="sg-section" style="display:none">
     <div class="sg-card">
-      <div class="sg-title">🎬 Shooting Guide</div>
+      <div class="sg-title">Shooting Guide</div>
       <div class="sg-list" id="sg-list"></div>
     </div>
   </div>
-
   <div class="angle-header">
     <div class="ah-sub" id="angle-sub"></div>
     <h2 id="angle-name"></h2>
   </div>
-
   <div class="cuts-wrap" id="cuts-wrap"></div>
-
   <div class="hm-section">
     <div class="hm-card">
-      <div class="hm-title"># Hashtags</div>
+      <div class="hm-title">Hashtags</div>
       <div class="hashtag-wrap" id="hashtags-wrap"></div>
     </div>
     <div class="hm-card">
-      <div class="hm-title">@ Mention Accounts</div>
+      <div class="hm-title">Mention Accounts</div>
       <div id="mentions-wrap"></div>
     </div>
   </div>
-
   <div class="refs-section" id="refs-section">
-    <h3>📎 Additional Reference Videos</h3>
+    <h3>Additional Reference Videos</h3>
     <div id="refs-wrap"></div>
   </div>
-
   <div class="site-footer">
-    AI-generated guideline · For influencer reference only<br>
+    AI-generated guideline<br>
     <a id="footer-link" href="#" target="_blank" style="color:var(--pink)">View Product</a>
   </div>
-
 </div>
-
 <script>
+var SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
+var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
+var GUIDELINE_ID = 'd0006350-f41f-4c57-8d76-99ac53e9e557';
 
-const SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
-const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
-const GUIDELINE_ID = 'd0006350-f41f-4c57-8d76-99ac53e9e557';
-
-async function sbGet(path) {
-  const res = await fetch(SUPABASE_URL + path, {
-    headers: {'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY}
-  });
-  if (!res.ok) throw new Error('DB error ' + res.status);
-  return res.json();
+function sbGet(path) {
+  return fetch(SUPABASE_URL + path, {
+    headers: {apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY}
+  }).then(function(r){ if(!r.ok) throw new Error('DB error '+r.status); return r.json(); });
 }
 
 function labelClass(label) {
-  if (label === 'HOOK' || label.startsWith('HOOK')) return 'cut-label label-hook';
+  if (label.startsWith('HOOK')) return 'cut-label label-hook';
   if (label === 'RESULT') return 'cut-label label-result';
   return 'cut-label label-cut';
 }
 
 function buildCutCard(cut) {
-  const imgHtml = cut.img_url
-    ? `<img src="${cut.img_url}" alt="${cut.label}" />`
-    : `<div class="cut-no-img">이미지 없음</div>`;
-
-  let body = '';
-  if (cut.main_usp) body += `<div><div class="field-label">Main USP</div><div class="field-usp">${cut.main_usp}</div></div>`;
+  var imgHtml = cut.img_url ? '<img src="'+cut.img_url+'" alt="'+cut.label+'" />' : '<div class="cut-no-img">No image</div>';
+  var body = '';
+  if (cut.main_usp) body += '<div><div class="field-label">Main USP</div><div class="field-usp">'+cut.main_usp+'</div></div>';
   if (cut.production_method) {
-    const steps = cut.production_method.split('\n').filter(s => s.trim());
-    body += `<div><div class="field-label">Production Method</div><div class="field-pm"><ol>${steps.map(s => `<li>${s.replace(/^\d+\.\s*/, '')}</li>`).join('')}</ol></div></div>`;
+    var steps = cut.production_method.split('\n').filter(function(s){return s.trim();});
+    body += '<div><div class="field-label">Production Method</div><div class="field-pm"><ol>'+steps.map(function(s){return '<li>'+s.replace(/^\d+\.\s*/,'')+'</li>';}).join('')+'</ol></div></div>';
   }
   if (cut.main_usp || cut.production_method) body += '<hr class="cut-sep">';
-  body += `<div><div class="field-label">Scene</div><div class="field-scene">${cut.scene || ''}</div></div>`;
+  body += '<div><div class="field-label">Scene</div><div class="field-scene">'+(cut.scene||'')+'</div></div>';
   body += '<hr class="cut-sep">';
-  body += `<div><div class="field-label">Direction</div><div class="field-direction">${cut.direction || ''}</div></div>`;
-  const captions = Array.isArray(cut.captions) ? cut.captions : [];
+  body += '<div><div class="field-label">Direction</div><div class="field-direction">'+(cut.direction||'')+'</div></div>';
+  var captions = Array.isArray(cut.captions) ? cut.captions : [];
   if (captions.length) {
     body += '<hr class="cut-sep">';
-    body += `<div><div class="field-label">Caption Options</div><div class="caption-options">${captions.map(c => `<div class="caption-opt">${c}</div>`).join('')}</div></div>`;
+    body += '<div><div class="field-label">Caption Options</div><div class="caption-options">'+captions.map(function(c){return '<div class="caption-opt">'+c+'</div>';}).join('')+'</div></div>';
   }
-
-  const el = document.createElement('div');
+  var el = document.createElement('div');
   el.className = 'cut-card';
-  el.innerHTML = `<div class="cut-inner">
-    <div class="cut-img-wrap">${imgHtml}
-      <div class="cut-badge-row">
-        <span class="${labelClass(cut.label)}">${cut.label}</span>
-        ${cut.pacing ? `<span class="cut-ts">${cut.pacing}</span>` : ''}
-      </div>
-    </div>
-    <div class="cut-body">${body}</div>
-  </div>`;
+  el.innerHTML = '<div class="cut-inner"><div class="cut-img-wrap">'+imgHtml+'<div class="cut-badge-row"><span class="'+labelClass(cut.label)+'">'+cut.label+'</span>'+(cut.pacing?'<span class="cut-ts">'+cut.pacing+'</span>':'')+'</div></div><div class="cut-body">'+body+'</div></div>';
   return el;
 }
 
-async function init() {
-  try {
-    const [glRows, cuts] = await Promise.all([
-      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*)`),
-      sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`)
-    ]);
-    const gl = glRows[0];
-    if (!gl) throw new Error('가이드라인을 찾을 수 없습니다');
-    const p = gl.gl_products || {};
-
-    const variants = await sbGet(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(() => []);
+function init() {
+  Promise.all([
+    sbGet('/rest/v1/gl_guidelines?id=eq.'+GUIDELINE_ID+'&select=*,gl_products(*)'),
+    sbGet('/rest/v1/gl_cuts?guideline_id=eq.'+GUIDELINE_ID+'&order=order.asc')
+  ]).then(function(results) {
+    var gl = results[0][0];
+    var cuts = results[1];
+    if (!gl) throw new Error('Guideline not found');
+    var p = gl.gl_products || {};
 
     document.getElementById('gl-title').textContent = gl.angle_name || '';
     document.getElementById('gl-concept').textContent = gl.concept || '';
-
     if (p.product_img_url) document.getElementById('pb-img').src = p.product_img_url;
     document.getElementById('pb-name').textContent = p.name || '';
 
-    const pillsEl = document.getElementById('pb-pills');
+    var pillsEl = document.getElementById('pb-pills');
     if (pillsEl && Array.isArray(p.usp_pills)) {
-      pillsEl.innerHTML = p.usp_pills.map(pill => `<span class="pill">${pill}</span>`).join('');
+      pillsEl.innerHTML = p.usp_pills.map(function(pill){return '<span class="pill">'+pill+'</span>';}).join('');
     }
-
-    const ingEl = document.getElementById('pb-ingredient-pills');
-    if (ingEl && Array.isArray(p.ingredient_pills) && p.ingredient_pills.length) {
-      ingEl.closest('.pb-ingredient-section').style.display = '';
-      ingEl.innerHTML = p.ingredient_pills.map(pill => `<span class="pill pill-blue">${pill}</span>`).join('');
-    } else if (ingEl) {
-      ingEl.closest('.pb-ingredient-section').style.display = 'none';
+    var ingEl = document.getElementById('pb-ingredient-pills');
+    if (ingEl) {
+      if (Array.isArray(p.ingredient_pills) && p.ingredient_pills.length) {
+        ingEl.closest('.pb-ingredient-section').style.display = '';
+        ingEl.innerHTML = p.ingredient_pills.map(function(pill){return '<span class="pill pill-blue">'+pill+'</span>';}).join('');
+      } else {
+        ingEl.closest('.pb-ingredient-section').style.display = 'none';
+      }
     }
-
-    const usageEl = document.getElementById('pb-usage');
+    var usageEl = document.getElementById('pb-usage');
     if (usageEl) {
       if (p.usage_method) {
         usageEl.closest('.pb-usage-section').style.display = '';
-        usageEl.innerHTML = p.usage_method.split('\n').map(line => `<li>${line.replace(/^\d+\.\s*/, '')}</li>`).join('');
+        usageEl.innerHTML = p.usage_method.split('\n').map(function(l){return '<li>'+l.replace(/^\d+\.\s*/,'')+'</li>';}).join('');
       } else {
         usageEl.closest('.pb-usage-section').style.display = 'none';
       }
     }
-
-    const precEl = document.getElementById('pb-precautions');
+    var precEl = document.getElementById('pb-precautions');
     if (precEl && p.precautions) {
-      precEl.innerHTML = p.precautions.split('\n').map(line => `<li>${line.replace(/^•\s*/, '')}</li>`).join('');
+      precEl.innerHTML = p.precautions.split('\n').map(function(l){return '<li>'+l.replace(/^\u2022\s*/,'')+'</li>';}).join('');
     }
-
-    const texEl = document.getElementById('pb-texture');
+    var texEl = document.getElementById('pb-texture');
     if (texEl && p.texture_notes) texEl.textContent = p.texture_notes;
 
-    const varWrap = document.getElementById('variant-wrap');
-    if (varWrap) {
-      if (variants.length > 0) {
-        document.getElementById('variant-strip').style.display = '';
-        document.getElementById('variant-count').textContent = variants.length + ' Variants Available';
-        varWrap.innerHTML = variants.map(v =>
-          `<div class="variant-item${v.is_active ? ' active' : ''}">
-            ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : `<div style="width:60px;height:60px;background:#eee;border-radius:10px"></div>`}
-            <span>${v.name}</span>
-          </div>`
-        ).join('');
-      } else {
-        document.getElementById('variant-strip').style.display = 'none';
+    return sbGet('/rest/v1/gl_variants?product_id=eq.'+p.id+'&order=order.asc').catch(function(){return [];}).then(function(variants){
+      var varWrap = document.getElementById('variant-wrap');
+      if (varWrap) {
+        if (variants.length > 0) {
+          document.getElementById('variant-strip').style.display = '';
+          document.getElementById('variant-count').textContent = variants.length + ' Variants Available';
+          varWrap.innerHTML = variants.map(function(v){return '<div class="variant-item'+(v.is_active?' active':'')+'">'+( v.img_url?'<img src="'+v.img_url+'" alt="'+v.name+'">':'<div style="width:60px;height:60px;background:#eee;border-radius:10px"></div>')+'<span>'+v.name+'</span></div>';}).join('');
+        } else {
+          document.getElementById('variant-strip').style.display = 'none';
+        }
       }
-    }
 
-    const sgSection = document.getElementById('sg-section');
-    const sgList = document.getElementById('sg-list');
-    if (sgSection && sgList && Array.isArray(gl.shooting_guide) && gl.shooting_guide.length) {
-      sgList.innerHTML = gl.shooting_guide.map((item, i) =>
-        `<div class="sg-item"><span class="sg-num">${i+1}</span><span>${item}</span></div>`
-      ).join('');
-      sgSection.style.display = '';
-    }
+      var angleEl = document.getElementById('angle-name');
+      if (angleEl) angleEl.textContent = gl.angle_name || '';
+      var angleSubEl = document.getElementById('angle-sub');
+      if (angleSubEl) angleSubEl.textContent = 'Angle #1 · ' + cuts.length + ' Cuts';
 
-    const angleEl = document.getElementById('angle-name');
-    if (angleEl) angleEl.textContent = gl.angle_name || '';
-    const angleSubEl = document.getElementById('angle-sub');
-    if (angleSubEl) angleSubEl.textContent = `Angle #1 · ${cuts.length} Cuts`;
+      var cutsWrap = document.getElementById('cuts-wrap');
+      cutsWrap.innerHTML = '';
+      cuts.forEach(function(cut){ cutsWrap.appendChild(buildCutCard(cut)); });
 
-    const cutsWrap = document.getElementById('cuts-wrap');
-    cutsWrap.innerHTML = '';
-    cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
-
-    const hashEl = document.getElementById('hashtags-wrap');
-    if (hashEl && Array.isArray(gl.hashtags) && gl.hashtags.length) {
-      hashEl.innerHTML = gl.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('');
-    }
-
-    const mentEl = document.getElementById('mentions-wrap');
-    if (mentEl && Array.isArray(gl.mentions) && gl.mentions.length) {
-      mentEl.innerHTML = gl.mentions.map(m =>
-        `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
-      ).join('');
-    }
-
-    // Do's & Don'ts
-    const dosList = document.getElementById('dos-list');
-    const dontsList = document.getElementById('donts-list');
-    if (dosList) {
-      const dos = [
-        "Refer to the product as 'Mildlab Centella Oint Cream', 'oint cream', or 'barrier cream'",
-        "Emphasize the red spot & post-acne mark improvement angle",
-        "Highlight the TECA 10,000ppm and Centella Exosome Complex 5% as key ingredients",
-        "Show the cream being applied directly on the troubled area (cheeks, red spots)",
-        "Use a BEFORE & AFTER concept — bare skin before, improved skin after",
-        "Mention that it is suitable for sensitive and acne-prone skin",
-        "Film in natural or soft studio lighting to show skin texture clearly"
-      ];
-      dosList.innerHTML = dos.map(d => `<div class="dd-item"><span class="dd-icon">✦</span><span>${d}</span></div>`).join('');
-    }
-    if (dontsList) {
-      const donts = [
-        { text: "Do NOT call this product '연고' (ointment) — this has medical connotations that are not allowed", highlight: true },
-        { text: "Do not claim this is a medical treatment or drug — it is a cosmetic skincare product", highlight: false },
-        { text: "Do not exaggerate clinical results beyond what is stated (e.g. '100% acne cure')", highlight: false },
-        { text: "Do not apply to broken or severely irritated skin on camera", highlight: false },
-        { text: "Do not compare directly to competitor products by name", highlight: false },
-        { text: "Do not film in harsh or unflattering lighting that misrepresents the product texture", highlight: false }
-      ];
-      dontsList.innerHTML = donts.map(d =>
-        d.highlight
-          ? `<div class="dd-item dd-highlight"><span class="dd-icon">⚠️</span><span><strong>${d.text}</strong></span></div>`
-          : `<div class="dd-item"><span class="dd-icon">✦</span><span>${d.text}</span></div>`
-      ).join('');
-    }
-
-    const refsWrap = document.getElementById('refs-wrap');
-    if (refsWrap) {
-      if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
-        document.getElementById('refs-section').style.display = '';
-        refsWrap.innerHTML = gl.ref_videos.map(r => {
-          const domain = r.url.replace(/https?:\/\//, '').split('/')[0];
-          return `<a class="ref-card" href="${r.url}" target="_blank">
-            <div class="ref-icon">🎵</div>
-            <div class="ref-info">
-              <div class="ref-title">${r.title}</div>
-              <div class="ref-url">${domain + r.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40)}</div>
-            </div>
-            <div class="ref-arrow">›</div>
-          </a>`;
-        }).join('');
-      } else {
-        document.getElementById('refs-section').style.display = 'none';
+      var hashEl = document.getElementById('hashtags-wrap');
+      if (hashEl && Array.isArray(gl.hashtags) && gl.hashtags.length) {
+        hashEl.innerHTML = gl.hashtags.map(function(h){return '<span class="hashtag">'+h+'</span>';}).join('');
       }
-    }
-
-    const amazonBtnEl = document.getElementById('pb-amazon-btn');
-    if (amazonBtnEl && p.footer_link) {
-      amazonBtnEl.href = p.footer_link;
-      amazonBtnEl.style.display = '';
-    }
-    const footerLinkEl = document.getElementById('footer-link');
-    if (footerLinkEl) {
-      if (p.footer_link) {
-        footerLinkEl.href = p.footer_link;
-        footerLinkEl.style.display = '';
-      } else {
-        footerLinkEl.style.display = 'none';
+      var mentEl = document.getElementById('mentions-wrap');
+      if (mentEl && Array.isArray(gl.mentions) && gl.mentions.length) {
+        mentEl.innerHTML = gl.mentions.map(function(m){return '<div class="mention-item"><span class="mention-at">'+m+'</span></div>';}).join('');
       }
-    }
 
-    document.getElementById('loading-overlay').style.display = 'none';
-    document.getElementById('main-content').style.display = '';
+      var dosList = document.getElementById('dos-list');
+      var dontsList = document.getElementById('donts-list');
+      if (dosList) {
+        var dos = ["Refer to the product as Mildlab Centella Oint Cream, oint cream, or barrier cream","Emphasize the red spot & post-acne mark improvement angle","Highlight the TECA 10,000ppm and Centella Exosome Complex 5% as key ingredients","Show the cream being applied directly on the troubled area (cheeks, red spots)","Use a BEFORE & AFTER concept — bare skin before, improved skin after","Mention that it is suitable for sensitive and acne-prone skin","Film in natural or soft studio lighting to show skin texture clearly"];
+        dosList.innerHTML = dos.map(function(d){return '<div class="dd-item"><span class="dd-icon">❖</span><span>'+d+'</span></div>';}).join('');
+      }
+      if (dontsList) {
+        var donts = [{text:"Do NOT call this product 'yeongo' (ointment) — this has medical connotations that are not allowed",h:true},{text:"Do not claim this is a medical treatment or drug — it is a cosmetic skincare product",h:false},{text:"Do not exaggerate clinical results beyond what is stated",h:false},{text:"Do not apply to broken or severely irritated skin on camera",h:false},{text:"Do not compare directly to competitor products by name",h:false},{text:"Do not film in harsh or unflattering lighting that misrepresents the product texture",h:false}];
+        dontsList.innerHTML = donts.map(function(d){return d.h?'<div class="dd-item dd-highlight"><span class="dd-icon">⚠️</span><span><strong>'+d.text+'</strong></span></div>':'<div class="dd-item"><span class="dd-icon">❖</span><span>'+d.text+'</span></div>';}).join('');
+      }
 
-  } catch(e) {
+      var refsWrap = document.getElementById('refs-wrap');
+      if (refsWrap) {
+        if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
+          document.getElementById('refs-section').style.display = '';
+          refsWrap.innerHTML = gl.ref_videos.map(function(r){var domain=r.url.replace(/https?:\/\//,'').split('/')[0];return '<a class="ref-card" href="'+r.url+'" target="_blank"><div class="ref-icon">🎵</div><div class="ref-info"><div class="ref-title">'+r.title+'</div><div class="ref-url">'+domain+'</div></div><div class="ref-arrow">&#x203a;</div></a>';}).join('');
+        } else {
+          document.getElementById('refs-section').style.display = 'none';
+        }
+      }
+
+      var amazonBtn = document.getElementById('pb-amazon-btn');
+      if (amazonBtn && p.footer_link) { amazonBtn.href = p.footer_link; amazonBtn.style.display = ''; }
+      var footerLink = document.getElementById('footer-link');
+      if (footerLink) {
+        if (p.footer_link) { footerLink.href = p.footer_link; footerLink.style.display = ''; }
+        else { footerLink.style.display = 'none'; }
+      }
+
+      document.getElementById('loading-overlay').style.display = 'none';
+      document.getElementById('main-content').style.display = '';
+    });
+  }).catch(function(e) {
     console.error('Guideline load error:', e);
-    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}<br><small style="color:#aaa">${e.stack||''}</small></div>`;
-  }
+    document.getElementById('loading-overlay').innerHTML = '<div class="error-state">Error: '+e.message+'</div>';
+  });
 }
 
 init();
-
 </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                    
