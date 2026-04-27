@@ -103,19 +103,23 @@
     .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
-    .dos-donts-section{margin:20px 16px 0;display:flex;flex-direction:column;gap:12px}
-    @media(min-width:520px){.dos-donts-section{flex-direction:row;gap:16px}}
-    .dos-card{background:#f0fff4;border:1.5px solid #6fcf97;border-radius:var(--radius);padding:16px 18px;flex:1}
-    .donts-card{background:#fff0f0;border:1.5px solid #f97070;border-radius:var(--radius);padding:16px 18px;flex:1}
-    .dd-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-    .dos-card .dd-title{color:#1a7a43}
-    .donts-card .dd-title{color:#b91c1c}
-    .dd-list{display:flex;flex-direction:column;gap:8px}
-    .dd-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.55}
-    .dos-card .dd-item{color:#1a4d2e}
-    .donts-card .dd-item{color:#7f1d1d}
-    .dd-icon{font-size:14px;flex-shrink:0;margin-top:1px}
-    .dd-highlight{background:rgba(185,28,28,0.1);border-radius:6px;padding:8px 10px;border-left:3px solid #f97070}
+    .dos-donts-section{margin:20px 16px 0}
+    .dd-outer{background:#fffbe6;border:1.5px solid #f5c842;border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+    .dd-outer-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#c47f00;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+    .dd-hero{font-size:13px;font-weight:700;color:#5a3a00;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #f0d97a}
+    .dd-cols{display:flex;flex-direction:column;gap:16px}
+    @media(min-width:520px){.dd-cols{flex-direction:row;gap:20px}}
+    .dd-col{flex:1}
+    .dd-col-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+    .dd-col-title.donts{color:#c0392b}
+    .dd-col-title.dos{color:#1a7a43}
+    .dd-list{display:flex;flex-direction:column;gap:0}
+    .dd-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.55;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)}
+    .dd-item:last-child{border-bottom:none}
+    .dd-col.donts .dd-item{color:#5a1a1a}
+    .dd-col.dos .dd-item{color:#1a3a25}
+    .dd-icon{font-size:15px;flex-shrink:0;margin-top:1px}
+    .dd-highlight{background:rgba(192,57,43,0.08);border-radius:6px;padding:8px 10px;border-left:3px solid #c0392b;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -174,8 +178,22 @@
     <div class="variant-thumbs" id="variant-wrap"></div>
   </div>
 
-
-  
+  <div class="dos-donts-section">
+    <div class="dd-outer">
+      <div class="dd-outer-title">⭐ Video Do's &amp; Don'ts</div>
+      <div class="dd-hero" id="dd-hero">Mildlab Centella Oint Cream must appear in the video. This is the hero product — ensure it is clearly visible on screen.</div>
+      <div class="dd-cols">
+        <div class="dd-col donts">
+          <div class="dd-col-title donts">✕ Don'ts</div>
+          <div class="dd-list" id="donts-list"></div>
+        </div>
+        <div class="dd-col dos">
+          <div class="dd-col-title dos">✓ Do's</div>
+          <div class="dd-list" id="dos-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="sg-section" class="sg-section" style="display:none">
     <div class="sg-card">
@@ -198,17 +216,6 @@
     <div class="hm-card">
       <div class="hm-title">@ Mention Accounts</div>
       <div id="mentions-wrap"></div>
-    </div>
-  </div>
-
-  <div class="dos-donts-section" id="dos-donts-section">
-    <div class="dos-card">
-      <div class="dd-title">✅ Do's</div>
-      <div class="dd-list" id="dos-list"></div>
-    </div>
-    <div class="donts-card">
-      <div class="dd-title">🚫 Don'ts</div>
-      <div class="dd-list" id="donts-list"></div>
     </div>
   </div>
 
@@ -461,29 +468,4 @@ async function init() {
     const amazonBtnEl = document.getElementById('pb-amazon-btn');
     if (amazonBtnEl && p.footer_link) {
       amazonBtnEl.href = p.footer_link;
-      amazonBtnEl.style.display = '';
-    }
-    const footerLinkEl = document.getElementById('footer-link');
-    if (footerLinkEl) {
-      if (p.footer_link) {
-        footerLinkEl.href = p.footer_link;
-        footerLinkEl.style.display = '';
-      } else {
-        footerLinkEl.style.display = 'none';
-      }
-    }
-
-    document.getElementById('loading-overlay').style.display = 'none';
-    document.getElementById('main-content').style.display = '';
-
-  } catch(e) {
-    console.error('Guideline load error:', e);
-    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}<br><small style="color:#aaa">${e.stack||''}</small></div>`;
-  }
-}
-
-init();
-
-</script>
-</body>
-</html>
+      amazonBtnEl.style.di
