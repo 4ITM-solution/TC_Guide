@@ -295,13 +295,10 @@ function buildCutCard(cut) {
 
 async function init() {
   try {
-    const [glRows, cuts, variantRows] = await Promise.all([
+    const [glRows, cuts] = await Promise.all([
       sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*)`),
-      sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`),
-      sbGet(`/rest/v1/gl_variants?product_id=eq.PLACEHOLDER&order=order.asc`)
-        .catch(() => [])
+      sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`)
     ]);
-    // variantRows placeholder — 재조회
     const gl = glRows[0];
     if (!gl) throw new Error('가이드라인을 찾을 수 없습니다');
     const p = gl.gl_products || {};
@@ -468,4 +465,9 @@ async function init() {
     const amazonBtnEl = document.getElementById('pb-amazon-btn');
     if (amazonBtnEl && p.footer_link) {
       amazonBtnEl.href = p.footer_link;
-      amazonBtnEl.style.di
+      amazonBtnEl.style.display = '';
+    }
+    const footerLinkEl = document.getElementById('footer-link');
+    if (footerLinkEl) {
+      if (p.footer_link) {
+        footerLinkEl.href = 
