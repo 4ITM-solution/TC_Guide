@@ -289,7 +289,7 @@ function buildCutCard(cut) {
 async function init() {
   try {
     const [glRows, cuts, variantRows] = await Promise.all([
-      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name)`),
+      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*)`),
       sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`),
       sbGet(`/rest/v1/gl_variants?product_id=eq.PLACEHOLDER&order=order.asc`)
         .catch(() => [])
@@ -409,4 +409,81 @@ async function init() {
     if (dosList) {
       const dos = [
         "Refer to the product as 'Mildlab Centella Oint Cream', 'oint cream', or 'barrier cream'",
-        "Emphasize the red spot & post
+        "Emphasize the red spot & post-acne mark improvement angle",
+        "Highlight the TECA 10,000ppm and Centella Exosome Complex 5% as key ingredients",
+        "Show the cream being applied directly on the troubled area (cheeks, red spots)",
+        "Use a BEFORE & AFTER concept — bare skin before, improved skin after",
+        "Mention that it is suitable for sensitive and acne-prone skin",
+        "Film in natural or soft studio lighting to show skin texture clearly"
+      ];
+      dosList.innerHTML = dos.map(d => `<div class="dd-item"><span class="dd-icon">✦</span><span>${d}</span></div>`).join('');
+    }
+    if (dontsList) {
+      const donts = [
+        { text: "Do NOT call this product '연고' (ointment) — this has medical connotations that are not allowed", highlight: true },
+        { text: "Do not claim this is a medical treatment or drug — it is a cosmetic skincare product", highlight: false },
+        { text: "Do not exaggerate clinical results beyond what is stated (e.g. '100% acne cure')", highlight: false },
+        { text: "Do not apply to broken or severely irritated skin on camera", highlight: false },
+        { text: "Do not compare directly to competitor products by name", highlight: false },
+        { text: "Do not film in harsh or unflattering lighting that misrepresents the product texture", highlight: false }
+      ];
+      dontsList.innerHTML = donts.map(d =>
+        d.highlight
+          ? `<div class="dd-item dd-highlight"><span class="dd-icon">⚠️</span><span><strong>${d.text}</strong></span></div>`
+          : `<div class="dd-item"><span class="dd-icon">✦</span><span>${d.text}</span></div>`
+      ).join('');
+    }
+
+    // Ref Videos
+    const refsWrap = document.getElementById('refs-wrap');
+    if (refsWrap) {
+      if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
+        document.getElementById('refs-section').style.display = '';
+        refsWrap.innerHTML = gl.ref_videos.map(r => {
+          const domain = r.url.replace(/https?:\/\//, '').split('/')[0];
+          return `<a class="ref-card" href="${r.url}" target="_blank">
+            <div class="ref-icon">🎵</div>
+            <div class="ref-info">
+              <div class="ref-title">${r.title}</div>
+              <div class="ref-url">${domain + r.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40)}</div>
+            </div>
+            <div class="ref-arrow">›</div>
+          </a>`;
+        }).join('');
+      } else {
+        document.getElementById('refs-section').style.display = 'none';
+      }
+    }
+
+    // Footer
+
+    // Amazon Button in product card
+    const amazonBtnEl = document.getElementById('pb-amazon-btn');
+    if (amazonBtnEl && p.footer_link) {
+      amazonBtnEl.href = p.footer_link;
+      amazonBtnEl.style.display = '';
+    }
+    const footerLinkEl = document.getElementById('footer-link');
+    if (footerLinkEl) {
+      if (p.footer_link) {
+        footerLinkEl.href = p.footer_link;
+        footerLinkEl.style.display = '';
+      } else {
+        footerLinkEl.style.display = 'none';
+      }
+    }
+
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = '';
+
+  } catch(e) {
+    console.error('Guideline load error:', e);
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}<br><small style="color:#aaa">${e.stack||''}</small></div>`;
+  }
+}
+
+init();
+
+</script>
+</body>
+</html>
