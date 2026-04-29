@@ -94,15 +94,15 @@
     .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
-.ref-shoot-row{display:flex;gap:16px;margin:20px 16px 0;align-items:flex-start}
-.ref-shoot-row .ref-video-col{flex:0 0 auto;width:min(44%,240px)}
+.ref-shoot-row{display:flex;gap:16px;margin:24px 0 0;padding:20px 16px;background:linear-gradient(135deg,#fff5f9 0%,#fdf0ff 100%);border-top:2px solid var(--pink-mid);border-bottom:2px solid var(--pink-mid);align-items:flex-start}
+.ref-shoot-row .ref-video-col{flex:0 0 auto;width:min(42%,220px)}
 .ref-shoot-row .shoot-col{flex:1;min-width:0}
 @media(max-width:480px){.ref-shoot-row{flex-direction:column}.ref-shoot-row .ref-video-col{width:100%}}
-.ref-video-player{width:100%;border-radius:12px;overflow:hidden;background:#000}
-.ref-video-player video{width:100%;display:block;border-radius:12px}
-.ref-shoot-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:10px}
+.ref-video-player{width:100%;border-radius:10px;overflow:hidden;background:#000;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.ref-video-player video{width:100%;display:block;border-radius:10px}
+.ref-shoot-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--pink-dark);margin-bottom:10px;display:flex;align-items:center;gap:5px}
 .shooting-guide-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:10px}
-.shooting-guide-list li{font-size:13px;line-height:1.6;color:var(--text)}
+.shooting-guide-list li{font-size:13px;line-height:1.65;color:var(--text)}
 </style>
 </head>
 <body>
@@ -375,7 +375,8 @@ async function init() {
       if (refShootRow) refShootRow.style.display = '';
       if (hasVideo) refVideoPlayer.src = gl.ref_video_url;
       if (!hasVideo) document.getElementById('ref-video-section').style.display = 'none';
-      if (hasGuide) sgWrap.innerHTML = gl.shooting_guide.map(s => `<li>${s}</li>`).join('');
+      const SHOOTING_GUIDE_EN = ["Always use a cup to measure water — scoop it with the spoon so you get exactly 8 spoonfuls! 🥄", "After shaking, knead and press the pack with your hands 🤲 — this ensures a smooth, lump-free mix.", "The pack hardens quickly, so apply it right after mixing! ⏱️ Don't hesitate — timing matters.", "Don't squeeze in zigzags. Apply in one go to the center of your cheek, then spread outward with gentle strokes for a smoother finish. 🫧", "Apply thicker at the edges! Leave a small gap around the nose, chin, and forehead — going over the lines can leave residue. 😉"];
+    if (hasGuide) sgWrap.innerHTML = (SHOOTING_GUIDE_EN.length ? SHOOTING_GUIDE_EN : gl.shooting_guide).map(s => `<li>${s}</li>`).join('');
       if (!hasGuide) document.getElementById('shooting-guide-section').style.display = 'none';
     }
 
