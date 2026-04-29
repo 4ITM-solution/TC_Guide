@@ -375,8 +375,7 @@ async function init() {
       if (refShootRow) refShootRow.style.display = '';
       if (hasVideo) refVideoPlayer.src = gl.ref_video_url;
       if (!hasVideo) document.getElementById('ref-video-section').style.display = 'none';
-      const SHOOTING_GUIDE_EN = ["Always use a cup to measure water — scoop it with the spoon so you get exactly 8 spoonfuls! 🥄", "After shaking, knead and press the pack with your hands 🤲 — this ensures a smooth, lump-free mix.", "The pack hardens quickly, so apply it right after mixing! ⏱️ Don't hesitate — timing matters.", "Don't squeeze in zigzags. Apply in one go to the center of your cheek, then spread outward with gentle strokes for a smoother finish. 🫧", "Apply thicker at the edges! Leave a small gap around the nose, chin, and forehead — going over the lines can leave residue. 😉"];
-    if (hasGuide) sgWrap.innerHTML = (SHOOTING_GUIDE_EN.length ? SHOOTING_GUIDE_EN : gl.shooting_guide).map(s => `<li>${s}</li>`).join('');
+      if (hasGuide) sgWrap.innerHTML = gl.shooting_guide.map(s => `<li>${s}</li>`).join('');
       if (!hasGuide) document.getElementById('shooting-guide-section').style.display = 'none';
     }
 
