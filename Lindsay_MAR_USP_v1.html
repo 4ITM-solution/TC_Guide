@@ -96,6 +96,10 @@
     .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
 .shooting-guide-list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
 .shooting-guide-list li{font-size:13px;line-height:1.65;color:var(--text)}
+.ref-video-section{margin:20px 16px 0}
+.ref-video-section .hm-title{margin-bottom:10px}
+.ref-video-player{width:100%;max-width:360px;border-radius:12px;overflow:hidden;background:#000;display:block}
+.ref-video-player video{width:100%;display:block;border-radius:12px}
 </style>
 </head>
 <body>
@@ -159,6 +163,18 @@
     <h2 id="angle-name"></h2>
   </div>
 
+  <div class="ref-video-section" id="ref-video-section" style="display:none">
+    <div class="hm-title">🎬 Reference Video</div>
+    <div class="ref-video-player">
+      <video id="ref-video-player" controls playsinline preload="metadata"></video>
+    </div>
+  </div>
+
+  <div class="hm-section" id="shooting-guide-section" style="display:none">
+    <div class="hm-title">📋 Shooting Guide</div>
+    <ol class="shooting-guide-list" id="shooting-guide-wrap"></ol>
+  </div>
+
   <div class="cuts-wrap" id="cuts-wrap"></div>
 
   <div class="hm-section">
@@ -172,10 +188,6 @@
     </div>
   </div>
 
-  <div class="hm-section" id="shooting-guide-section" style="display:none">
-    <div class="hm-title">📋 Shooting Guide</div>
-    <ol class="shooting-guide-list" id="shooting-guide-wrap"></ol>
-  </div>
   <div class="refs-section" id="refs-section">
     <h3>📎 Additional Reference Videos</h3>
     <div id="refs-wrap"></div>
@@ -347,6 +359,14 @@ async function init() {
       mentEl.innerHTML = gl.mentions.map(m =>
         `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
       ).join('');
+    }
+
+    // Reference Video (Supabase Storage)
+    const refVideoSection = document.getElementById('ref-video-section');
+    const refVideoPlayer = document.getElementById('ref-video-player');
+    if (refVideoSection && refVideoPlayer && gl.ref_video_url) {
+      refVideoSection.style.display = '';
+      refVideoPlayer.src = gl.ref_video_url;
     }
 
     // Shooting Guide
