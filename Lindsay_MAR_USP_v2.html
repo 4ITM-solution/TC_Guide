@@ -94,12 +94,15 @@
     .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
-.shooting-guide-list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
-.shooting-guide-list li{font-size:13px;line-height:1.65;color:var(--text)}
-.ref-video-section{margin:20px 16px 0}
-.ref-video-section .hm-title{margin-bottom:10px}
-.ref-video-player{width:100%;max-width:360px;border-radius:12px;overflow:hidden;background:#000;display:block}
+.ref-shoot-row{display:flex;gap:16px;margin:20px 16px 0;align-items:flex-start}
+.ref-shoot-row .ref-video-col{flex:0 0 auto;width:min(44%,240px)}
+.ref-shoot-row .shoot-col{flex:1;min-width:0}
+@media(max-width:480px){.ref-shoot-row{flex-direction:column}.ref-shoot-row .ref-video-col{width:100%}}
+.ref-video-player{width:100%;border-radius:12px;overflow:hidden;background:#000}
 .ref-video-player video{width:100%;display:block;border-radius:12px}
+.ref-shoot-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:10px}
+.shooting-guide-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:10px}
+.shooting-guide-list li{font-size:13px;line-height:1.6;color:var(--text)}
 </style>
 </head>
 <body>
@@ -163,16 +166,17 @@
     <h2 id="angle-name"></h2>
   </div>
 
-  <div class="ref-video-section" id="ref-video-section" style="display:none">
-    <div class="hm-title">🎬 Reference Video</div>
-    <div class="ref-video-player">
-      <video id="ref-video-player" controls playsinline preload="metadata"></video>
+  <div class="ref-shoot-row" id="ref-shoot-row" style="display:none">
+    <div class="ref-video-col" id="ref-video-section">
+      <div class="ref-shoot-label">🎬 Reference Video</div>
+      <div class="ref-video-player">
+        <video id="ref-video-player" controls playsinline preload="metadata"></video>
+      </div>
     </div>
-  </div>
-
-  <div class="hm-section" id="shooting-guide-section" style="display:none">
-    <div class="hm-title">📋 Shooting Guide</div>
-    <ol class="shooting-guide-list" id="shooting-guide-wrap"></ol>
+    <div class="shoot-col" id="shooting-guide-section">
+      <div class="ref-shoot-label">📋 Shooting Guide</div>
+      <ol class="shooting-guide-list" id="shooting-guide-wrap"></ol>
+    </div>
   </div>
 
   <div class="cuts-wrap" id="cuts-wrap"></div>
@@ -361,20 +365,18 @@ async function init() {
       ).join('');
     }
 
-    // Reference Video (Supabase Storage)
-    const refVideoSection = document.getElementById('ref-video-section');
+    // Reference Video + Shooting Guide (side by side)
+    const refShootRow = document.getElementById('ref-shoot-row');
     const refVideoPlayer = document.getElementById('ref-video-player');
-    if (refVideoSection && refVideoPlayer && gl.ref_video_url) {
-      refVideoSection.style.display = '';
-      refVideoPlayer.src = gl.ref_video_url;
-    }
-
-    // Shooting Guide
-    const sgSection = document.getElementById('shooting-guide-section');
     const sgWrap = document.getElementById('shooting-guide-wrap');
-    if (sgSection && sgWrap && Array.isArray(gl.shooting_guide) && gl.shooting_guide.length) {
-      sgSection.style.display = '';
-      sgWrap.innerHTML = gl.shooting_guide.map(s => `<li>${s}</li>`).join('');
+    const hasVideo = gl.ref_video_url && refVideoPlayer;
+    const hasGuide = Array.isArray(gl.shooting_guide) && gl.shooting_guide.length && sgWrap;
+    if (hasVideo || hasGuide) {
+      if (refShootRow) refShootRow.style.display = '';
+      if (hasVideo) refVideoPlayer.src = gl.ref_video_url;
+      if (!hasVideo) document.getElementById('ref-video-section').style.display = 'none';
+      if (hasGuide) sgWrap.innerHTML = gl.shooting_guide.map(s => `<li>${s}</li>`).join('');
+      if (!hasGuide) document.getElementById('shooting-guide-section').style.display = 'none';
     }
 
     // Ref Videos
