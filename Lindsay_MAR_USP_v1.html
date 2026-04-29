@@ -94,6 +94,8 @@
     .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
+.shooting-guide-list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.shooting-guide-list li{font-size:13px;line-height:1.65;color:var(--text)}
 </style>
 </head>
 <body>
@@ -170,6 +172,10 @@
     </div>
   </div>
 
+  <div class="hm-section" id="shooting-guide-section" style="display:none">
+    <div class="hm-title">📋 Shooting Guide</div>
+    <ol class="shooting-guide-list" id="shooting-guide-wrap"></ol>
+  </div>
   <div class="refs-section" id="refs-section">
     <h3>📎 Additional Reference Videos</h3>
     <div id="refs-wrap"></div>
@@ -341,6 +347,14 @@ async function init() {
       mentEl.innerHTML = gl.mentions.map(m =>
         `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
       ).join('');
+    }
+
+    // Shooting Guide
+    const sgSection = document.getElementById('shooting-guide-section');
+    const sgWrap = document.getElementById('shooting-guide-wrap');
+    if (sgSection && sgWrap && Array.isArray(gl.shooting_guide) && gl.shooting_guide.length) {
+      sgSection.style.display = '';
+      sgWrap.innerHTML = gl.shooting_guide.map(s => `<li>${s}</li>`).join('');
     }
 
     // Ref Videos
