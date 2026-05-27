@@ -329,12 +329,32 @@ async function init() {
       if (variants.length > 0) {
         document.getElementById('variant-strip').style.display = '';
         document.getElementById('variant-count').textContent = variants.length + ' Variants Available';
-        varWrap.innerHTML = variants.map(v =>
-          `<div class="variant-item${v.is_active ? ' active' : ''}">
+        varWrap.innerHTML = variants.map((v, idx) =>
+          `<div class="variant-item${v.is_active ? ' active' : ''}" data-idx="${idx}" style="cursor:pointer">
             ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : `<div style="width:60px;height:60px;background:#eee;border-radius:10px"></div>`}
             <span>${v.name}</span>
           </div>`
         ).join('');
+
+        // 클릭 인터랙션
+        varWrap.querySelectorAll('.variant-item').forEach(el => {
+          el.addEventListener('click', function() {
+            const idx = parseInt(this.dataset.idx);
+            const v = variants[idx];
+            // active 클래스 토글
+            varWrap.querySelectorAll('.variant-item').forEach(e => e.classList.remove('active'));
+            this.classList.add('active');
+            // 제품 이미지 변경
+            const pbImg = document.getElementById('pb-img');
+            if (pbImg && v.img_url) pbImg.src = v.img_url;
+            // 제품명 뱃지 업데이트
+            const pbName = document.getElementById('pb-name');
+            if (pbName && v.name) {
+              const base = pbName.textContent.split('·')[0].trim();
+              pbName.textContent = base + ' · ' + v.name;
+            }
+          });
+        });
       } else {
         document.getElementById('variant-strip').style.display = 'none';
       }
