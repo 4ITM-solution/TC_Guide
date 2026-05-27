@@ -395,7 +395,7 @@ async function init() {
     const hasGuide = Array.isArray(gl.shooting_guide) && gl.shooting_guide.length && sgWrap;
     if (hasVideo || hasGuide) {
       if (refShootRow) refShootRow.style.display = '';
-      if (hasVideo) refVideoPlayer.src = gl.ref_video_url;
+      if (hasVideo) refVideoPlayer.src = 'videos/lindsay_may_pr_v1_ref.mp4';
       if (!hasVideo) document.getElementById('ref-video-section').style.display = 'none';
       if (hasGuide) sgWrap.innerHTML = gl.shooting_guide.map(s => `<li>${s}</li>`).join('');
       if (!hasGuide) document.getElementById('shooting-guide-section').style.display = 'none';
@@ -452,4 +452,4 @@ init();
 
 </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                             
+</html>                                                                                                                                                                                                                                                                                                           
