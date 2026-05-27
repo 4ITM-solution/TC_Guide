@@ -353,6 +353,11 @@ async function init() {
               const base = pbName.textContent.split('·')[0].trim();
               pbName.textContent = base + ' · ' + v.name;
             }
+            // 아마존 링크 업데이트
+            const amazonBtn = document.getElementById('pb-amazon-btn');
+            if (amazonBtn && v.footer_link) amazonBtn.href = v.footer_link;
+            const footerLink = document.getElementById('footer-link');
+            if (footerLink && v.footer_link) footerLink.href = v.footer_link;
           });
         });
       } else {
