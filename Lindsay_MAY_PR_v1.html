@@ -358,6 +358,11 @@ async function init() {
             if (amazonBtn && v.footer_link) amazonBtn.href = v.footer_link;
             const footerLink = document.getElementById('footer-link');
             if (footerLink && v.footer_link) footerLink.href = v.footer_link;
+            // Key Ingredients 업데이트
+            const pillsEl = document.getElementById('pb-ingredient-pills');
+            if (pillsEl && Array.isArray(v.ingredient_pills) && v.ingredient_pills.length) {
+              pillsEl.innerHTML = v.ingredient_pills.map(p => `<span class="pill">${p}</span>`).join('');
+            }
           });
         });
       } else {
