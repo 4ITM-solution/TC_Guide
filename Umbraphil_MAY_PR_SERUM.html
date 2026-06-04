@@ -28,7 +28,7 @@
     .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
     .pills{display:flex;flex-wrap:wrap;gap:5px}
     .pill{background:var(--pink-light);color:var(--pink-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
-    .pill-blue{background:#e8f0fe;color:var(--blue)}
+    .pill-blue{background:#E6F9F0;color:#0E8A5F}
     .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
     .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
     .pb-section-body li{margin-left:14px;margin-bottom:2px}
@@ -119,7 +119,7 @@
 
   <header class="site-header">
     <div class="header-badge">Contents Guideline Brief</div>
-    <h1 id="gl-title"></h1>
+    <h1 id="gl-title" style="white-space:pre-line"></h1>
     <p class="header-concept" id="gl-concept"></p>
   </header>
 
@@ -438,4 +438,31 @@ async function init() {
     // Footer
 
     // Amazon Button in product card
-    const amazonBtnEl = docum
+    const amazonBtnEl = document.getElementById('pb-amazon-btn');
+    if (amazonBtnEl && p.footer_link) {
+      amazonBtnEl.href = p.footer_link;
+      amazonBtnEl.style.display = '';
+    }
+    const footerLinkEl = document.getElementById('footer-link');
+    if (footerLinkEl) {
+      if (p.footer_link) {
+        footerLinkEl.href = p.footer_link;
+        footerLinkEl.style.display = '';
+      } else {
+        footerLinkEl.style.display = 'none';
+      }
+    }
+
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = '';
+
+  } catch(e) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
+  }
+}
+
+init();
+
+</script>
+</body>
+</html>
