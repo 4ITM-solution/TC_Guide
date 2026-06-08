@@ -29,7 +29,6 @@
   .pills{display:flex;flex-wrap:wrap;gap:5px}
   .pill{background:var(--brand-light);color:var(--brand-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
   .pill-blue{background:#E8F5EC;color:#2E7A4A;border:1px solid #C8E6D2}
-  .ingredient-section-tint{background:#F4FBF6;border-radius:10px;padding:10px 12px;margin-top:2px}
   .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
   .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
   .pb-section-body li{margin-left:14px;margin-bottom:2px}
@@ -156,7 +155,6 @@
     </div>
   </section>
 
-  <!-- ===== Extra sections (rendered only when present in DB) ===== -->
   <div id="extra-product-usp" class="extra-section" style="display:none">
     <div class="extra-head"><h3 id="x-usp-title">Product USP &amp; Key Ingredients</h3></div>
     <div class="extra-body">
@@ -276,25 +274,20 @@ function buildCutCard(cut) {
 
 function renderExtraSections(extra) {
   if (!extra || typeof extra !== 'object') return;
-  // Product USP
   if (extra.product_usp) {
     const u = extra.product_usp;
     document.getElementById('extra-product-usp').style.display = '';
     if (u.title) document.getElementById('x-usp-title').textContent = u.title;
-    const uspList = document.getElementById('x-usp-list');
-    if (Array.isArray(u.usp)) uspList.innerHTML = u.usp.map(x => `<div class="usp-item">${x}</div>`).join('');
-    const ingList = document.getElementById('x-ing-list');
-    if (Array.isArray(u.ingredients)) ingList.innerHTML = u.ingredients.map(x => `<span class="ingredient-pill">${x}</span>`).join('');
+    if (Array.isArray(u.usp)) document.getElementById('x-usp-list').innerHTML = u.usp.map(x => `<div class="usp-item">${x}</div>`).join('');
+    if (Array.isArray(u.ingredients)) document.getElementById('x-ing-list').innerHTML = u.ingredients.map(x => `<span class="ingredient-pill">${x}</span>`).join('');
     if (u.note) { const n = document.getElementById('x-usp-note'); n.style.display = ''; n.textContent = '⇒ ' + u.note; }
   }
-  // Required Scenes
   if (extra.required_scenes) {
     const r = extra.required_scenes;
     document.getElementById('extra-required').style.display = '';
     if (r.title) document.getElementById('x-req-title').textContent = r.title;
     if (Array.isArray(r.items)) document.getElementById('x-req-list').innerHTML = r.items.map(x => `<li>${x}</li>`).join('');
   }
-  // DOs / DONTs
   if (extra.dos_donts) {
     const d = extra.dos_donts;
     document.getElementById('extra-dod').style.display = '';
@@ -314,7 +307,6 @@ async function init() {
     if (!gl) throw new Error('Guideline not found');
     const p = gl.gl_products || {};
 
-    // Header — split angle_name at emoji to break into two lines
     const titleEl = document.getElementById('gl-title');
     const raw = gl.angle_name || '';
     const m = raw.match(/^(.+?)([\p{Extended_Pictographic}✨])\s*(.*)$/u);
@@ -322,7 +314,6 @@ async function init() {
     else titleEl.textContent = raw;
     document.getElementById('gl-concept').textContent = gl.concept || '';
 
-    // Product Brief
     if (p.product_img_url) document.getElementById('pb-img').src = p.product_img_url;
     document.getElementById('pb-name').textContent = p.name || '';
     const pillsEl = document.getElementById('pb-pills');
@@ -336,29 +327,23 @@ async function init() {
     const amazonBtn = document.getElementById('pb-amazon-btn');
     if (amazonBtn && p.footer_link) { amazonBtn.href = p.footer_link; amazonBtn.style.display = ''; }
 
-    // Extra sections (Mildlab-only)
     renderExtraSections(gl.extra_sections);
 
-    // Angle header
     document.getElementById('angle-name').textContent = gl.angle_name || '';
     document.getElementById('angle-sub').textContent = `Angle #1 · ${cuts.length} Cuts`;
 
-    // Cuts
     const cutsWrap = document.getElementById('cuts-wrap');
     cutsWrap.innerHTML = '';
     cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
 
-    // Hashtags
     const hashEl = document.getElementById('hashtags-wrap');
     if (Array.isArray(gl.hashtags)) hashEl.innerHTML = gl.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('');
 
-    // Mentions
     const mentEl = document.getElementById('mentions-wrap');
     if (Array.isArray(gl.mentions)) mentEl.innerHTML = gl.mentions.map(m =>
       `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
     ).join('');
 
-    // Ref Videos
     const refsWrap = document.getElementById('refs-wrap');
     if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
       refsWrap.innerHTML = gl.ref_videos.map(r => {
@@ -376,4 +361,15 @@ async function init() {
       document.getElementById('refs-section').style.display = 'none';
     }
 
-    docu
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = '';
+  } catch(e) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
+                                                                                                                                                                                                     
