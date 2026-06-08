@@ -82,12 +82,14 @@
   .label-hook{background:#E5484D}
   .label-cut{background:var(--brand-dark)}
   .label-result{background:var(--brand);color:#fff}
+  .label-thumbnail{background:#1e1e2e;color:#fff}
   .cut-ts{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.45);padding:3px 8px;border-radius:100px}
   .cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:11px}
   .field-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
   .field-scene{font-size:14px;font-weight:700;line-height:1.45}
   .cut-sep{border:none;border-top:1px solid #f0f0f0}
-  .field-direction{font-size:13px;line-height:1.65;color:var(--text)}
+  .field-direction{font-size:13px;line-height:1.65;color:var(--text);white-space:pre-line}
+  .field-direction strong{font-weight:800;color:var(--brand-dark)}
   .field-usp{display:inline-block;background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:800;padding:5px 14px;border-radius:100px;border:1px solid var(--brand-mid)}
   .field-pm{font-size:12px;line-height:1.7;color:var(--text);background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}
   .field-pm ol{margin-left:16px}
@@ -234,6 +236,7 @@ async function sbGet(path) {
 }
 
 function labelClass(label) {
+  if (label === 'THUMBNAIL') return 'cut-label label-thumbnail';
   if (label === 'HOOK' || label.startsWith('HOOK')) return 'cut-label label-hook';
   if (label === 'RESULT') return 'cut-label label-result';
   return 'cut-label label-cut';
@@ -373,14 +376,4 @@ async function init() {
     }
 
     document.getElementById('loading-overlay').style.display = 'none';
-    document.getElementById('main-content').style.display = '';
-  } catch(e) {
-    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
-  }
-}
-
-init();
-</script>
-</body>
-</html>
-           
+    document.getElementById('main-content
