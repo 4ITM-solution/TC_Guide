@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guideline · Mildlab Centella Oint Cream</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    /* Mildlab JUN PR — Centella green/cream theme (independent from other guidelines) */
+    --brand:#4FA86F;--brand-dark:#2E7A4A;--brand-light:#E8F5EC;--brand-mid:#A8D9B8;
+    --blue:#1B5EA6;--green:#2ED573;--gold:#FFA502;--red:#E5484D;--ok:#3DBA72;
+    --text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .site-header{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
+  .site-header h1 .gl-product-name{display:block;margin-top:4px;font-size:0.85em;font-weight:800;opacity:0.95}
+  .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
+  .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
+  .header-concept{font-size:13px;color:rgba(255,255,255,0.85);margin-top:6px;font-weight:500}
+
+  .product-section{padding:16px 16px 0}
+  .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);display:flex;flex-direction:column}
+  @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:340px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover}}
+  .pb-img{background:var(--brand-light);overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:420px;object-position:center}
+  .pb-info{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
+  .pills{display:flex;flex-wrap:wrap;gap:5px}
+  .pill{background:var(--brand-light);color:var(--brand-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+  .pill-blue{background:#e8f0fe;color:var(--blue)}
+  .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
+  .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
+  .pb-section-body li{margin-left:14px;margin-bottom:2px}
+  .pb-divider{border:none;border-top:1px solid #f0f0f0;margin:0}
+  .amazon-btn{display:inline-block;margin-top:4px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
+  .amazon-btn:hover{opacity:0.88}
+
+  /* ===== Extra sections (Mildlab-only blocks) ===== */
+  .extra-section{margin:18px 16px 0;background:var(--card);border-radius:var(--radius);box-shadow:0 2px 12px rgba(0,0,0,0.07);overflow:hidden}
+  .extra-head{padding:14px 18px;background:var(--brand-light);border-bottom:1px solid var(--brand-mid)}
+  .extra-head h3{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:1.4px;color:var(--brand-dark);margin:0}
+  .extra-body{padding:16px 18px}
+  .usp-grid{display:grid;grid-template-columns:1fr;gap:14px}
+  @media(min-width:600px){.usp-grid{grid-template-columns:1fr 1fr}}
+  .usp-block-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:8px}
+  .usp-pill-list{display:flex;flex-direction:column;gap:6px}
+  .usp-item{font-size:13px;line-height:1.5;display:flex;align-items:flex-start;gap:8px;color:var(--text)}
+  .usp-item::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--brand);margin-top:7px;flex-shrink:0}
+  .ingredient-pills{display:flex;flex-wrap:wrap;gap:6px}
+  .ingredient-pill{background:#fff;color:var(--brand-dark);font-size:12px;font-weight:700;padding:5px 12px;border-radius:100px;border:1.5px solid var(--brand-mid)}
+  .usp-note{margin-top:12px;padding:10px 12px;background:#FFFBF0;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:12px;line-height:1.55;color:var(--text)}
+  .required-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .required-list li{font-size:13px;line-height:1.55;display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--brand-light);border-radius:10px;border-left:3px solid var(--brand)}
+  .required-list li::before{content:'★';color:var(--brand-dark);font-size:14px;line-height:1.3;flex-shrink:0;font-weight:900}
+  .dod-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:600px){.dod-grid{grid-template-columns:1fr 1fr}}
+  .dod-card{padding:14px;border-radius:10px}
+  .dod-do{background:#E8F5EC;border:1px solid #A8D9B8}
+  .dod-dont{background:#FCEAEC;border:1px solid #F4B5B8}
+  .dod-title{font-size:11px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .dod-do .dod-title{color:var(--ok)}
+  .dod-dont .dod-title{color:var(--red)}
+  .dod-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .dod-list li{font-size:12.5px;line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+  .dod-do .dod-list li::before{content:'✓';color:var(--ok);font-weight:900;flex-shrink:0}
+  .dod-dont .dod-list li::before{content:'✕';color:var(--red);font-weight:900;flex-shrink:0}
+
+  /* Angle header + cuts (shared style) */
+  .angle-header{margin:20px 16px 10px}
+  .angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}
+  .angle-header h2{font-size:22px;font-weight:900;color:var(--text)}
+  .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
+  .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
+  .cut-inner{display:flex;flex-direction:column}
+  @media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
+  .cut-img-wrap{position:relative;background:#111}
+  .cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
+  @media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
+  .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
+  .cut-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
+  .label-hook{background:#E5484D}
+  .label-cut{background:var(--brand-dark)}
+  .label-result{background:var(--brand);color:#fff}
+  .cut-ts{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.45);padding:3px 8px;border-radius:100px}
+  .cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:11px}
+  .field-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
+  .field-scene{font-size:14px;font-weight:700;line-height:1.45}
+  .cut-sep{border:none;border-top:1px solid #f0f0f0}
+  .field-direction{font-size:13px;line-height:1.65;color:var(--text)}
+  .field-usp{display:inline-block;background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:800;padding:5px 14px;border-radius:100px;border:1px solid var(--brand-mid)}
+  .field-pm{font-size:12px;line-height:1.7;color:var(--text);background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}
+  .field-pm ol{margin-left:16px}
+  .field-pm li{margin-bottom:3px}
+  .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}
+  .caption-opt::before{content:'•';color:var(--brand);font-size:16px;line-height:1.2;flex-shrink:0}
+
+  .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
+  @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
+  .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
+  .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
+  .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}
+  .hashtag{background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
+  .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+  .mention-item:last-child{border-bottom:none}
+  .mention-at{color:var(--brand-dark);font-weight:700}
+  .refs-section{margin:20px 16px 0}
+  .refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .ref-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
+  .ref-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+  .ref-info{flex:1;min-width:0}
+  .ref-title{font-size:13px;font-weight:700;margin-bottom:2px}
+  .ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ref-arrow{color:var(--muted);font-size:18px}
+  .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
+  .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
+  .spinner{display:inline-block;width:24px;height:24px;border:3px solid #d4ecdf;border-top-color:var(--brand);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
+</style>
+</head>
+<body>
+
+<div id="loading-overlay" class="loading-state">
+  <div><div class="spinner"></div></div>
+  <div>Loading guideline…</div>
+</div>
+
+<div id="main-content" style="display:none">
+  <header class="site-header">
+    <div class="header-badge">Contents Guideline Brief</div>
+    <h1 id="gl-title"></h1>
+    <p class="header-concept" id="gl-concept"></p>
+  </header>
+
+  <section class="product-section">
+    <div class="product-brief">
+      <div class="pb-img"><img id="pb-img" src="" alt="Product"></div>
+      <div class="pb-info">
+        <div class="pb-name" id="pb-name"></div>
+        <div>
+          <div class="pb-section-label">Key USP</div>
+          <div class="pills" id="pb-pills"></div>
+        </div>
+        <hr class="pb-divider">
+        <div class="pb-ingredient-section">
+          <div class="pb-section-label">Key Ingredients</div>
+          <div class="pills" id="pb-ingredient-pills"></div>
+        </div>
+        <a id="pb-amazon-btn" href="#" target="_blank" class="amazon-btn" style="display:none">🛒 View Product</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Extra sections (rendered only when present in DB) ===== -->
+  <div id="extra-product-usp" class="extra-section" style="display:none">
+    <div class="extra-head"><h3 id="x-usp-title">Product USP &amp; Key Ingredients</h3></div>
+    <div class="extra-body">
+      <div class="usp-grid">
+        <div>
+          <div class="usp-block-label">USP</div>
+          <div class="usp-pill-list" id="x-usp-list"></div>
+        </div>
+        <div>
+          <div class="usp-block-label">Key Ingredients</div>
+          <div class="ingredient-pills" id="x-ing-list"></div>
+        </div>
+      </div>
+      <div class="usp-note" id="x-usp-note" style="display:none"></div>
+    </div>
+  </div>
+
+  <div id="extra-required" class="extra-section" style="display:none">
+    <div class="extra-head"><h3 id="x-req-title">Required Scenes</h3></div>
+    <div class="extra-body">
+      <ul class="required-list" id="x-req-list"></ul>
+    </div>
+  </div>
+
+  <div id="extra-dod" class="extra-section" style="display:none">
+    <div class="extra-head"><h3 id="x-dod-title">DOs &amp; DONTs</h3></div>
+    <div class="extra-body">
+      <div class="dod-grid">
+        <div class="dod-card dod-do">
+          <div class="dod-title">✓ DOs</div>
+          <ul class="dod-list" id="x-do-list"></ul>
+        </div>
+        <div class="dod-card dod-dont">
+          <div class="dod-title">✕ DONTs</div>
+          <ul class="dod-list" id="x-dont-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="angle-header">
+    <div class="ah-sub" id="angle-sub"></div>
+    <h2 id="angle-name"></h2>
+  </div>
+
+  <div class="cuts-wrap" id="cuts-wrap"></div>
+
+  <div class="hm-section">
+    <div class="hm-card">
+      <div class="hm-title"># Hashtags</div>
+      <div class="hashtag-wrap" id="hashtags-wrap"></div>
+    </div>
+    <div class="hm-card">
+      <div class="hm-title">@ Mention Accounts</div>
+      <div id="mentions-wrap"></div>
+    </div>
+  </div>
+
+  <div class="refs-section" id="refs-section">
+    <h3>📎 Reference Videos</h3>
+    <div id="refs-wrap"></div>
+  </div>
+
+  <div class="site-footer">
+    AI-generated guideline · For influencer reference only
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
+const GUIDELINE_ID = '1eef0dd1-c962-4f52-a04c-479c144a2d01';
+
+async function sbGet(path) {
+  const res = await fetch(SUPABASE_URL + path, { headers: {'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY} });
+  if (!res.ok) throw new Error('DB error ' + res.status);
+  return res.json();
+}
+
+function labelClass(label) {
+  if (label === 'HOOK' || label.startsWith('HOOK')) return 'cut-label label-hook';
+  if (label === 'RESULT') return 'cut-label label-result';
+  return 'cut-label label-cut';
+}
+
+function buildCutCard(cut) {
+  const imgHtml = cut.img_url ? `<img src="${cut.img_url}" alt="${cut.label}" />` : `<div class="cut-no-img">No image</div>`;
+  let body = '';
+  if (cut.main_usp) body += `<div><div class="field-label">Main USP</div><div class="field-usp">${cut.main_usp}</div></div>`;
+  if (cut.production_method) {
+    const steps = cut.production_method.split('\n').filter(s => s.trim());
+    body += `<div><div class="field-label">Production Method</div><div class="field-pm"><ol>${steps.map(s => `<li>${s.replace(/^\d+\.\s*/, '')}</li>`).join('')}</ol></div></div>`;
+  }
+  if (cut.main_usp || cut.production_method) body += '<hr class="cut-sep">';
+  body += `<div><div class="field-label">Scene</div><div class="field-scene">${cut.scene || ''}</div></div>`;
+  body += '<hr class="cut-sep">';
+  body += `<div><div class="field-label">Direction</div><div class="field-direction">${cut.direction || ''}</div></div>`;
+  const captions = Array.isArray(cut.captions) ? cut.captions : [];
+  if (captions.length) {
+    body += '<hr class="cut-sep">';
+    body += `<div><div class="field-label">Caption Options</div><div class="caption-options">${captions.map(c => `<div class="caption-opt">${c}</div>`).join('')}</div></div>`;
+  }
+  const el = document.createElement('div');
+  el.className = 'cut-card';
+  el.innerHTML = `<div class="cut-inner">
+    <div class="cut-img-wrap">${imgHtml}
+      <div class="cut-badge-row">
+        <span class="${labelClass(cut.label)}">${cut.label}</span>
+        ${cut.pacing ? `<span class="cut-ts">${cut.pacing}</span>` : ''}
+      </div>
+    </div>
+    <div class="cut-body">${body}</div>
+  </div>`;
+  return el;
+}
+
+function renderExtraSections(extra) {
+  if (!extra || typeof extra !== 'object') return;
+  // Product USP
+  if (extra.product_usp) {
+    const u = extra.product_usp;
+    document.getElementById('extra-product-usp').style.display = '';
+    if (u.title) document.getElementById('x-usp-title').textContent = u.title;
+    const uspList = document.getElementById('x-usp-list');
+    if (Array.isArray(u.usp)) uspList.innerHTML = u.usp.map(x => `<div class="usp-item">${x}</div>`).join('');
+    const ingList = document.getElementById('x-ing-list');
+    if (Array.isArray(u.ingredients)) ingList.innerHTML = u.ingredients.map(x => `<span class="ingredient-pill">${x}</span>`).join('');
+    if (u.note) { const n = document.getElementById('x-usp-note'); n.style.display = ''; n.textContent = '⇒ ' + u.note; }
+  }
+  // Required Scenes
+  if (extra.required_scenes) {
+    const r = extra.required_scenes;
+    document.getElementById('extra-required').style.display = '';
+    if (r.title) document.getElementById('x-req-title').textContent = r.title;
+    if (Array.isArray(r.items)) document.getElementById('x-req-list').innerHTML = r.items.map(x => `<li>${x}</li>`).join('');
+  }
+  // DOs / DONTs
+  if (extra.dos_donts) {
+    const d = extra.dos_donts;
+    document.getElementById('extra-dod').style.display = '';
+    if (d.title) document.getElementById('x-dod-title').textContent = d.title;
+    if (Array.isArray(d.dos)) document.getElementById('x-do-list').innerHTML = d.dos.map(x => `<li>${x}</li>`).join('');
+    if (Array.isArray(d.donts)) document.getElementById('x-dont-list').innerHTML = d.donts.map(x => `<li>${x}</li>`).join('');
+  }
+}
+
+async function init() {
+  try {
+    const [glRows, cuts] = await Promise.all([
+      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*)`),
+      sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`)
+    ]);
+    const gl = glRows[0];
+    if (!gl) throw new Error('Guideline not found');
+    const p = gl.gl_products || {};
+
+    // Header — split angle_name at emoji to break into two lines
+    const titleEl = document.getElementById('gl-title');
+    const raw = gl.angle_name || '';
+    const m = raw.match(/^(.+?)([\p{Extended_Pictographic}✨])\s*(.*)$/u);
+    if (m && m[3]) titleEl.innerHTML = `${m[1]}${m[2]}<span class="gl-product-name">${m[3]}</span>`;
+    else titleEl.textContent = raw;
+    document.getElementById('gl-concept').textContent = gl.concept || '';
+
+    // Product Brief
+    if (p.product_img_url) document.getElementById('pb-img').src = p.product_img_url;
+    document.getElementById('pb-name').textContent = p.name || '';
+    const pillsEl = document.getElementById('pb-pills');
+    if (Array.isArray(p.usp_pills)) pillsEl.innerHTML = p.usp_pills.map(x => `<span class="pill">${x}</span>`).join('');
+    const ingEl = document.getElementById('pb-ingredient-pills');
+    if (Array.isArray(p.ingredient_pills) && p.ingredient_pills.length) {
+      ingEl.innerHTML = p.ingredient_pills.map(x => `<span class="pill pill-blue">${x}</span>`).join('');
+    } else if (ingEl) {
+      ingEl.closest('.pb-ingredient-section').style.display = 'none';
+    }
+    const amazonBtn = document.getElementById('pb-amazon-btn');
+    if (amazonBtn && p.footer_link) { amazonBtn.href = p.footer_link; amazonBtn.style.display = ''; }
+
+    // Extra sections (Mildlab-only)
+    renderExtraSections(gl.extra_sections);
+
+    // Angle header
+    document.getElementById('angle-name').textContent = gl.angle_name || '';
+    document.getElementById('angle-sub').textContent = `Angle #1 · ${cuts.length} Cuts`;
+
+    // Cuts
+    const cutsWrap = document.getElementById('cuts-wrap');
+    cutsWrap.innerHTML = '';
+    cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
+
+    // Hashtags
+    const hashEl = document.getElementById('hashtags-wrap');
+    if (Array.isArray(gl.hashtags)) hashEl.innerHTML = gl.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('');
+
+    // Mentions
+    const mentEl = document.getElementById('mentions-wrap');
+    if (Array.isArray(gl.mentions)) mentEl.innerHTML = gl.mentions.map(m =>
+      `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
+    ).join('');
+
+    // Ref Videos
+    const refsWrap = document.getElementById('refs-wrap');
+    if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
+      refsWrap.innerHTML = gl.ref_videos.map(r => {
+        const domain = r.url.replace(/https?:\/\//, '').split('/')[0];
+        return `<a class="ref-card" href="${r.url}" target="_blank">
+          <div class="ref-icon">🎵</div>
+          <div class="ref-info">
+            <div class="ref-title">${r.title}</div>
+            <div class="ref-url">${domain + r.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40)}</div>
+          </div>
+          <div class="ref-arrow">›</div>
+        </a>`;
+      }).join('');
+    } else {
+      document.getElementById('refs-section').style.display = 'none';
+    }
+
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = '';
+  } catch(e) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
