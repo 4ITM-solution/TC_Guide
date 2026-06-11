@@ -103,6 +103,34 @@
 .ref-shoot-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--pink-dark);margin-bottom:10px;display:flex;align-items:center;gap:5px}
 .shooting-guide-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:10px}
 .shooting-guide-list li{font-size:13px;line-height:1.65;color:var(--text)}
+    /* How to Cut */
+    .howcut-section{margin:20px 16px 0}
+    .howcut-card{background:var(--card);border:1.5px solid var(--pink-mid);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+    .howcut-title{font-size:13px;font-weight:900;color:var(--pink-dark);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+    .howcut-card{display:flex;flex-direction:column;gap:16px}
+    @media(min-width:600px){.howcut-card{flex-direction:row;align-items:flex-start}.howcut-img-wrap{width:300px;flex-shrink:0}}
+    .howcut-img-wrap img{width:100%;border-radius:10px;display:block}
+    .howcut-body{flex:1}
+    .howcut-lead{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px}
+    .howcut-order{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:9px}
+    .howcut-order li{font-size:13px;line-height:1.5;color:var(--text);display:flex;align-items:center;gap:9px;font-weight:600}
+    .hc-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;display:inline-block}
+    .hc-red{background:#ff3b30}.hc-orange{background:#ff7a1a}.hc-yellow{background:#ffcc00}.hc-green{background:#2ecc40}
+    .howcut-key{font-size:13px;line-height:1.6;color:var(--pink-dark);background:var(--pink-light);border-left:3px solid var(--pink);border-radius:8px;padding:11px 13px}
+    /* DOs & DON'Ts */
+    .dosdonts-section{margin:20px 16px 0}
+    .dd-outer{background:var(--card);border:1.5px solid #e3e3ea;border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+    .dd-outer-title{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;color:var(--text);margin-bottom:14px}
+    .dd-cols{display:flex;flex-direction:column;gap:16px}
+    @media(min-width:520px){.dd-cols{flex-direction:row;gap:20px}}
+    .dd-col{flex:1}
+    .dd-col-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+    .dd-col-title.dos{color:#1a7a43}.dd-col-title.donts{color:#c0392b}
+    .dd-list{display:flex;flex-direction:column}
+    .dd-item{display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.55;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)}
+    .dd-item:last-child{border-bottom:none}
+    .dd-col.dos .dd-item{color:#1a3a25}.dd-col.donts .dd-item{color:#5a1a1a}
+    .dd-icon{font-size:14px;flex-shrink:0;margin-top:1px}
 </style>
 </head>
 <body>
@@ -150,6 +178,39 @@
       </div>
     </div>
   </section>
+
+  <div id="howcut-section" class="howcut-section" style="display:none">
+    <div class="howcut-card">
+      <div class="howcut-title">✂️ How to Cut the Mask</div>
+      <div class="howcut-img-wrap"><img id="howcut-img" src="" alt="How to cut the sheet mask"></div>
+      <div class="howcut-body">
+        <p class="howcut-lead">Cut along the lines in this order:</p>
+        <ol class="howcut-order">
+          <li><span class="hc-dot hc-red"></span>Red — across the brow line (between the eyes)</li>
+          <li><span class="hc-dot hc-orange"></span>Orange — diagonally out from each outer eye corner</li>
+          <li><span class="hc-dot hc-yellow"></span>Yellow — diagonally out at both smile lines (sides of the mouth)</li>
+          <li><span class="hc-dot hc-green"></span>Green — from under the nose down through the mouth, and straight down the chin</li>
+        </ol>
+        <p class="howcut-key">Make clean cuts, then press the mask down with <strong>no white folds or gaps</strong> — it should sit completely flush against every curve of the face.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="dosdonts-section" class="dosdonts-section" style="display:none">
+    <div class="dd-outer">
+      <div class="dd-outer-title" id="dd-title">DOs &amp; DON'Ts</div>
+      <div class="dd-cols">
+        <div class="dd-col dos">
+          <div class="dd-col-title dos">Do's</div>
+          <div class="dd-list" id="dos-list"></div>
+        </div>
+        <div class="dd-col donts">
+          <div class="dd-col-title donts">Don'ts</div>
+          <div class="dd-list" id="donts-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="variant-strip" class="variant-strip">
     <div class="variant-label" id="variant-count"></div>
@@ -257,7 +318,7 @@ function buildCutCard(cut) {
 async function init() {
   try {
     const [glRows, cuts, variantRows] = await Promise.all([
-      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name)`),
+      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name,default_extra_sections)`),
       sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`),
       sbGet(`/rest/v1/gl_variants?product_id=eq.PLACEHOLDER&order=order.asc`)
         .catch(() => [])
@@ -269,6 +330,31 @@ async function init() {
 
     // Variants (re-fetch by product_id)
     const variants = await sbGet(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(() => []);
+
+    // How to Cut section (image URL set once uploaded)
+    var HOWCUT_IMG_URL = 'https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/cure-jun-phytogreen-sheetmask/howtocut.jpg';
+    var howcutSec = document.getElementById('howcut-section');
+    if (howcutSec && HOWCUT_IMG_URL) {
+      document.getElementById('howcut-img').src = HOWCUT_IMG_URL;
+      howcutSec.style.display = '';
+    }
+
+    // DOs & DON'Ts from gl_types.default_extra_sections (PR type)
+    var extra = (gl.gl_types && gl.gl_types.default_extra_sections) || {};
+    var dd = extra.dos_donts;
+    if (dd && (Array.isArray(dd.dos) || Array.isArray(dd.donts))) {
+      var ddSec = document.getElementById('dosdonts-section');
+      if (dd.title) document.getElementById('dd-title').textContent = dd.title;
+      var dosList = document.getElementById('dos-list');
+      var dontsList = document.getElementById('donts-list');
+      if (dosList && Array.isArray(dd.dos)) {
+        dosList.innerHTML = dd.dos.map(function(d){return '<div class="dd-item"><span class="dd-icon">✅</span><span>'+d+'</span></div>';}).join('');
+      }
+      if (dontsList && Array.isArray(dd.donts)) {
+        dontsList.innerHTML = dd.donts.map(function(d){return '<div class="dd-item"><span class="dd-icon">🚫</span><span>'+d+'</span></div>';}).join('');
+      }
+      if (ddSec) ddSec.style.display = '';
+    }
 
     // Header
     document.getElementById('gl-title').textContent = gl.angle_name || '';
