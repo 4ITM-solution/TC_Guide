@@ -7,17 +7,17 @@
 <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --pink:#4A90D9;--pink-dark:#1B5EA6;--pink-light:#E8F3FF;--pink-mid:#90C2F0;
-      --blue:#1B5EA6;--green:#2ED573;--gold:#FFA502;--red:#FF4757;
-      --text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px;
+      --pink:#5DBB3A;--pink-dark:#2E7D32;--pink-light:#EAF7E3;--pink-mid:#A5D98A;
+      --blue:#2E7D32;--green:#7AC943;--gold:#FFA502;--red:#E74C3C;
+      --text:#1e2e1e;--muted:#7d8a7d;--bg:#f3f8f0;--card:#fff;--radius:14px;
     }
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-    .site-header{background:linear-gradient(135deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
+    .site-header{background:linear-gradient(135deg,#7AC943 0%,#2E7D32 100%);color:#fff;padding:22px 18px 20px;text-align:center}
     .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
     .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
     .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
     .product-section{padding:16px 16px 0}
-    .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);display:flex;flex-direction:column}
+    .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 6px 22px rgba(46,125,50,0.14);display:flex;flex-direction:column}
     @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover;transform:scale(1.6);transform-origin:center}}
     .pb-img{background:#f0f0f0;overflow:hidden}
     .pb-img img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;max-height:420px;object-position:center;background:#f0f5ff;transform:scale(1.6);transform-origin:center}
@@ -44,7 +44,7 @@
     .angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}
     .angle-header h2{font-size:22px;font-weight:900;color:var(--text)}
     .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
-    .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
+    .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 6px 22px rgba(46,125,50,0.13)}
     .cut-inner{display:flex;flex-direction:column}
     @media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
     .cut-img-wrap{position:relative;background:#111}
@@ -72,7 +72,7 @@
     .caption-opt::before{content:'•';color:var(--pink);font-size:16px;line-height:1.2;flex-shrink:0}
     .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
     @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
-    .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
+    .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 22px rgba(46,125,50,0.12);flex:1}
     .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
     .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}
     .hashtag{background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
@@ -91,10 +91,10 @@
     .amazon-btn:hover{opacity:0.88}
     .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
     .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
-    .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
+    .spinner{display:inline-block;width:24px;height:24px;border:3px solid #d4ebc4;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
-.ref-shoot-row{display:flex;gap:16px;margin:24px 0 0;padding:20px 16px;background:linear-gradient(135deg,#fff5f9 0%,#fdf0ff 100%);border-top:2px solid var(--pink-mid);border-bottom:2px solid var(--pink-mid);align-items:flex-start}
+.ref-shoot-row{display:flex;gap:16px;margin:24px 0 0;padding:20px 16px;background:linear-gradient(135deg,#f0f9ea 0%,#eaf7e3 100%);border-top:2px solid var(--pink-mid);border-bottom:2px solid var(--pink-mid);align-items:flex-start}
 .ref-shoot-row .ref-video-col{flex:0 0 auto;width:min(42%,220px)}
 .ref-shoot-row .shoot-col{flex:1;min-width:0}
 @media(max-width:480px){.ref-shoot-row{flex-direction:column}.ref-shoot-row .ref-video-col{width:100%}}
@@ -105,7 +105,7 @@
 .shooting-guide-list li{font-size:13px;line-height:1.65;color:var(--text)}
     /* How to Cut */
     .howcut-section{margin:20px 16px 0}
-    .howcut-card{background:var(--card);border:1.5px solid var(--pink-mid);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+    .howcut-card{background:var(--card);border:1.5px solid var(--pink-mid);border-radius:var(--radius);padding:18px;box-shadow:0 6px 22px rgba(46,125,50,0.13)}
     .howcut-title{font-size:13px;font-weight:900;color:var(--pink-dark);margin-bottom:14px;display:flex;align-items:center;gap:6px}
     .howcut-card{display:flex;flex-direction:column;gap:16px}
     @media(min-width:600px){.howcut-card{flex-direction:row;align-items:flex-start}.howcut-img-wrap{width:300px;flex-shrink:0}}
@@ -119,17 +119,19 @@
     .howcut-key{font-size:13px;line-height:1.6;color:var(--pink-dark);background:var(--pink-light);border-left:3px solid var(--pink);border-radius:8px;padding:11px 13px}
     /* DOs & DON'Ts */
     .dosdonts-section{margin:20px 16px 0}
-    .dd-outer{background:var(--card);border:1.5px solid #e3e3ea;border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+    .dd-outer{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 22px rgba(46,125,50,0.12)}
     .dd-outer-title{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;color:var(--text);margin-bottom:14px}
-    .dd-cols{display:flex;flex-direction:column;gap:16px}
-    @media(min-width:520px){.dd-cols{flex-direction:row;gap:20px}}
-    .dd-col{flex:1}
-    .dd-col-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:5px}
-    .dd-col-title.dos{color:#1a7a43}.dd-col-title.donts{color:#c0392b}
+    .dd-cols{display:flex;flex-direction:column;gap:14px}
+    @media(min-width:520px){.dd-cols{flex-direction:row;gap:16px}}
+    .dd-col{flex:1;border-radius:12px;padding:14px 16px}
+    .dd-col.dos{background:#EAF7E3;border:1.5px solid #A5D98A}
+    .dd-col.donts{background:#FDEDEC;border:1.5px solid #F1A9A0}
+    .dd-col-title{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .dd-col-title.dos{color:#2E7D32}.dd-col-title.donts{color:#C0392B}
     .dd-list{display:flex;flex-direction:column}
     .dd-item{display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.55;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)}
     .dd-item:last-child{border-bottom:none}
-    .dd-col.dos .dd-item{color:#1a3a25}.dd-col.donts .dd-item{color:#5a1a1a}
+    .dd-col.dos .dd-item{color:#1f4d24}.dd-col.donts .dd-item{color:#7a2118}
     .dd-icon{font-size:14px;flex-shrink:0;margin-top:1px}
 </style>
 </head>
