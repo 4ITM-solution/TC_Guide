@@ -7,26 +7,29 @@
 <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
+      /* Navy/Sky theme — matched to Umbraphil_MAY_PR_CLEANSER palette */
       --pink:#4A90D9;--pink-dark:#1B5EA6;--pink-light:#E8F3FF;--pink-mid:#90C2F0;
       --blue:#1B5EA6;--green:#2ED573;--gold:#FFA502;--red:#FF4757;
+      --navy:#1B5EA6;--sky:#4A90D9;
       --text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px;
     }
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
     .site-header{background:linear-gradient(135deg,var(--pink) 0%,var(--pink-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
+    .site-header h1 .gl-product-name{display:block;margin-top:4px;font-size:0.85em;font-weight:800;opacity:0.95}
     .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
     .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
     .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
     .product-section{padding:16px 16px 0}
     .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);display:flex;flex-direction:column}
-    @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover;transform:scale(1.6);transform-origin:center}}
-    .pb-img{background:#f0f0f0;overflow:hidden}
-    .pb-img img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;max-height:420px;object-position:center;background:#f0f5ff;transform:scale(1.6);transform-origin:center}
-    .pb-info{padding:24px 22px;display:flex;flex-direction:column;gap:16px;flex:1;justify-content:center}
-    .pb-name{font-size:19px;font-weight:900;line-height:1.3;color:var(--text)}
-    .pills{display:flex;flex-wrap:wrap;gap:7px}
-    .pill{background:var(--pink-light);color:var(--pink-dark);font-size:13px;font-weight:700;padding:5px 14px;border-radius:100px}
-    .pill-blue{background:#E6F9F0;color:#0E8A5F}
-    .pb-section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:7px}
+    @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:340px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover;padding:0}}
+    .pb-img{background:var(--pink-light);overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:420px;object-position:center}
+    .pb-info{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
+    .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
+    .pills{display:flex;flex-wrap:wrap;gap:5px}
+    .pill{background:var(--pink-light);color:var(--pink-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+    .pill-blue{background:#e8f0fe;color:var(--blue)}
+    .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
     .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
     .pb-section-body li{margin-left:14px;margin-bottom:2px}
     .pb-divider{border:none;border-top:1px solid #f0f0f0;margin:0}
@@ -70,6 +73,23 @@
     .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
     .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}
     .caption-opt::before{content:'•';color:var(--pink);font-size:16px;line-height:1.2;flex-shrink:0}
+    /* DOs/DONTs block (PR-type fallback or per-guideline) */
+    .extra-section{margin:20px 16px 0;background:var(--card);border-radius:var(--radius);box-shadow:0 2px 12px rgba(0,0,0,0.07);overflow:hidden}
+    .extra-head{padding:14px 18px;background:var(--pink-light);border-bottom:1px solid var(--pink-mid)}
+    .extra-head h3{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:1.4px;color:var(--pink-dark);margin:0}
+    .extra-body{padding:16px 18px}
+    .dod-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:600px){.dod-grid{grid-template-columns:1fr 1fr}}
+    .dod-card{padding:14px;border-radius:10px}
+    .dod-do{background:#EAF4FE;border:1px solid #BCDAF6}
+    .dod-dont{background:#FCEAEC;border:1px solid #F4B5B8}
+    .dod-title{font-size:11px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .dod-do .dod-title{color:#3DBA72}
+    .dod-dont .dod-title{color:#E5484D}
+    .dod-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .dod-list li{font-size:12.5px;line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+    .dod-do .dod-list li::before{content:'✓';color:#3DBA72;font-weight:900;flex-shrink:0}
+    .dod-dont .dod-list li::before{content:'✕';color:#E5484D;font-weight:900;flex-shrink:0}
     .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
     @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
     .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
@@ -91,10 +111,10 @@
     .amazon-btn:hover{opacity:0.88}
     .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
     .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
-    .spinner{display:inline-block;width:24px;height:24px;border:3px solid #ffd6e8;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
+    .spinner{display:inline-block;width:24px;height:24px;border:3px solid #d6e7f7;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
-.ref-shoot-row{display:flex;gap:16px;margin:24px 0 0;padding:20px 16px;background:linear-gradient(135deg,#fff5f9 0%,#fdf0ff 100%);border-top:2px solid var(--pink-mid);border-bottom:2px solid var(--pink-mid);align-items:flex-start}
+.ref-shoot-row{display:flex;gap:16px;margin:24px 0 0;padding:20px 16px;background:linear-gradient(135deg,#F0F7FF 0%,#E0EEFF 100%);border-top:2px solid var(--pink-mid);border-bottom:2px solid var(--pink-mid);align-items:flex-start}
 .ref-shoot-row .ref-video-col{flex:0 0 auto;width:min(42%,220px)}
 .ref-shoot-row .shoot-col{flex:1;min-width:0}
 @media(max-width:480px){.ref-shoot-row{flex-direction:column}.ref-shoot-row .ref-video-col{width:100%}}
@@ -116,7 +136,7 @@
 
   <header class="site-header">
     <div class="header-badge">Contents Guideline Brief</div>
-    <h1 id="gl-title" style="white-space:pre-line"></h1>
+    <h1 id="gl-title"></h1>
     <p class="header-concept" id="gl-concept"></p>
   </header>
 
@@ -175,6 +195,22 @@
   </div>
 
   <div class="cuts-wrap" id="cuts-wrap"></div>
+
+  <div id="extra-dod" class="extra-section" style="display:none">
+    <div class="extra-head"><h3 id="x-dod-title">DOs &amp; DONTs</h3></div>
+    <div class="extra-body">
+      <div class="dod-grid">
+        <div class="dod-card dod-do">
+          <div class="dod-title">✓ DOs</div>
+          <ul class="dod-list" id="x-do-list"></ul>
+        </div>
+        <div class="dod-card dod-dont">
+          <div class="dod-title">✕ DONTs</div>
+          <ul class="dod-list" id="x-dont-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="hm-section">
     <div class="hm-card">
@@ -257,7 +293,7 @@ function buildCutCard(cut) {
 async function init() {
   try {
     const [glRows, cuts, variantRows] = await Promise.all([
-      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name)`),
+      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name,default_extra_sections)`),
       sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`),
       sbGet(`/rest/v1/gl_variants?product_id=eq.PLACEHOLDER&order=order.asc`)
         .catch(() => [])
@@ -270,8 +306,18 @@ async function init() {
     // Variants (re-fetch by product_id)
     const variants = await sbGet(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(() => []);
 
-    // Header
-    document.getElementById('gl-title').textContent = gl.angle_name || '';
+    // Header — split angle_name at emoji to break into two lines (brand/product on second line)
+    const titleEl = document.getElementById('gl-title');
+    if (titleEl) {
+      const raw = gl.angle_name || '';
+      // Match: hook phrase + optional emoji + brand+product
+      const m = raw.match(/^(.+?)([\p{Extended_Pictographic}✨])\s*(.*)$/u);
+      if (m && m[3]) {
+        titleEl.innerHTML = `${m[1]}${m[2]}<span class="gl-product-name">${m[3]}</span>`;
+      } else {
+        titleEl.textContent = raw;
+      }
+    }
     document.getElementById('gl-concept').textContent = gl.concept || '';
 
     // Product Brief
@@ -372,6 +418,19 @@ async function init() {
     const cutsWrap = document.getElementById('cuts-wrap');
     cutsWrap.innerHTML = '';
     cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
+
+    // DOs/DONTs (per-guideline override > gl_types fallback)
+    try {
+      const ownDod = gl.extra_sections && gl.extra_sections.dos_donts;
+      const typeDod = gl.gl_types && gl.gl_types.default_extra_sections && gl.gl_types.default_extra_sections.dos_donts;
+      const dod = ownDod || typeDod;
+      if (dod && (Array.isArray(dod.dos) || Array.isArray(dod.donts))) {
+        document.getElementById('extra-dod').style.display = '';
+        if (dod.title) document.getElementById('x-dod-title').textContent = dod.title;
+        if (Array.isArray(dod.dos)) document.getElementById('x-do-list').innerHTML = dod.dos.map(x => `<li>${x}</li>`).join('');
+        if (Array.isArray(dod.donts)) document.getElementById('x-dont-list').innerHTML = dod.donts.map(x => `<li>${x}</li>`).join('');
+      }
+    } catch(e) { console.warn('dod render failed', e); }
 
     // Hashtags
     const hashEl = document.getElementById('hashtags-wrap');

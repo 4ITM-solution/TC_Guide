@@ -28,7 +28,7 @@
     .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
     .pills{display:flex;flex-wrap:wrap;gap:5px}
     .pill{background:var(--pink-light);color:var(--pink-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
-    .pill-blue{background:#E6F9F0;color:#0E8A5F}
+    .pill-blue{background:#e8f0fe;color:var(--blue)}
     .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
     .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
     .pb-section-body li{margin-left:14px;margin-bottom:2px}
@@ -73,6 +73,23 @@
     .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
     .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}
     .caption-opt::before{content:'•';color:var(--pink);font-size:16px;line-height:1.2;flex-shrink:0}
+    /* DOs/DONTs block (PR-type fallback or per-guideline) */
+    .extra-section{margin:20px 16px 0;background:var(--card);border-radius:var(--radius);box-shadow:0 2px 12px rgba(0,0,0,0.07);overflow:hidden}
+    .extra-head{padding:14px 18px;background:var(--pink-light);border-bottom:1px solid var(--pink-mid)}
+    .extra-head h3{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:1.4px;color:var(--pink-dark);margin:0}
+    .extra-body{padding:16px 18px}
+    .dod-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:600px){.dod-grid{grid-template-columns:1fr 1fr}}
+    .dod-card{padding:14px;border-radius:10px}
+    .dod-do{background:#EAF4FE;border:1px solid #BCDAF6}
+    .dod-dont{background:#FCEAEC;border:1px solid #F4B5B8}
+    .dod-title{font-size:11px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .dod-do .dod-title{color:#3DBA72}
+    .dod-dont .dod-title{color:#E5484D}
+    .dod-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .dod-list li{font-size:12.5px;line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+    .dod-do .dod-list li::before{content:'✓';color:#3DBA72;font-weight:900;flex-shrink:0}
+    .dod-dont .dod-list li::before{content:'✕';color:#E5484D;font-weight:900;flex-shrink:0}
     .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
     @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
     .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
@@ -119,7 +136,7 @@
 
   <header class="site-header">
     <div class="header-badge">Contents Guideline Brief</div>
-    <h1 id="gl-title" style="white-space:pre-line"></h1>
+    <h1 id="gl-title"></h1>
     <p class="header-concept" id="gl-concept"></p>
   </header>
 
@@ -178,6 +195,22 @@
   </div>
 
   <div class="cuts-wrap" id="cuts-wrap"></div>
+
+  <div id="extra-dod" class="extra-section" style="display:none">
+    <div class="extra-head"><h3 id="x-dod-title">DOs &amp; DONTs</h3></div>
+    <div class="extra-body">
+      <div class="dod-grid">
+        <div class="dod-card dod-do">
+          <div class="dod-title">✓ DOs</div>
+          <ul class="dod-list" id="x-do-list"></ul>
+        </div>
+        <div class="dod-card dod-dont">
+          <div class="dod-title">✕ DONTs</div>
+          <ul class="dod-list" id="x-dont-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="hm-section">
     <div class="hm-card">
@@ -260,7 +293,7 @@ function buildCutCard(cut) {
 async function init() {
   try {
     const [glRows, cuts, variantRows] = await Promise.all([
-      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name)`),
+      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name,default_extra_sections)`),
       sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`),
       sbGet(`/rest/v1/gl_variants?product_id=eq.PLACEHOLDER&order=order.asc`)
         .catch(() => [])
@@ -385,6 +418,19 @@ async function init() {
     const cutsWrap = document.getElementById('cuts-wrap');
     cutsWrap.innerHTML = '';
     cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
+
+    // DOs/DONTs (per-guideline override > gl_types fallback)
+    try {
+      const ownDod = gl.extra_sections && gl.extra_sections.dos_donts;
+      const typeDod = gl.gl_types && gl.gl_types.default_extra_sections && gl.gl_types.default_extra_sections.dos_donts;
+      const dod = ownDod || typeDod;
+      if (dod && (Array.isArray(dod.dos) || Array.isArray(dod.donts))) {
+        document.getElementById('extra-dod').style.display = '';
+        if (dod.title) document.getElementById('x-dod-title').textContent = dod.title;
+        if (Array.isArray(dod.dos)) document.getElementById('x-do-list').innerHTML = dod.dos.map(x => `<li>${x}</li>`).join('');
+        if (Array.isArray(dod.donts)) document.getElementById('x-dont-list').innerHTML = dod.donts.map(x => `<li>${x}</li>`).join('');
+      }
+    } catch(e) { console.warn('dod render failed', e); }
 
     // Hashtags
     const hashEl = document.getElementById('hashtags-wrap');
