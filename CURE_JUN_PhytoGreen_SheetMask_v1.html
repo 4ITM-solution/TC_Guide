@@ -18,9 +18,9 @@
     .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
     .product-section{padding:16px 16px 0}
     .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 6px 22px rgba(46,125,50,0.14);display:flex;flex-direction:column}
-    @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover;transform:scale(1.6);transform-origin:center}}
-    .pb-img{background:#f0f0f0;overflow:hidden}
-    .pb-img img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;max-height:420px;object-position:center;background:#f0f5ff;transform:scale(1.6);transform-origin:center}
+    @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:contain}}
+    .pb-img{background:#eef3ec;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .pb-img img{width:100%;display:block;aspect-ratio:4/5;object-fit:contain;max-height:420px;object-position:center;background:#eef3ec}
     .pb-info{padding:24px 22px;display:flex;flex-direction:column;gap:16px;flex:1;justify-content:center}
     .pb-name{font-size:19px;font-weight:900;line-height:1.3;color:var(--text)}
     .pills{display:flex;flex-wrap:wrap;gap:7px}
@@ -62,7 +62,7 @@
     .field-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
     .field-scene{font-size:14px;font-weight:700;line-height:1.45}
     .cut-sep{border:none;border-top:1px solid #f0f0f0}
-    .field-direction{font-size:13px;line-height:1.65;color:var(--text)}
+    .field-direction{font-size:13px;line-height:1.65;color:var(--text);white-space:pre-line}
     .field-usp{display:inline-block;background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:800;padding:5px 14px;border-radius:100px;border:1px solid var(--pink-mid)}
     .field-pm{font-size:12px;line-height:1.7;color:var(--text);background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}
     .field-pm ol{margin-left:16px}
@@ -176,7 +176,7 @@
           <div class="pb-section-label">⚠️ Usage Precautions</div>
           <ul class="pb-section-body" id="pb-precautions"></ul>
         </div>
-        <a id="pb-amazon-btn" href="https://www.amazon.com/Troubless-Glass-Glow-Collagen-Sunscreen/dp/B0GL646LD7" target="_blank" class="amazon-btn">🛒 View on Amazon</a>
+        <a id="pb-amazon-btn" href="#" target="_blank" class="amazon-btn">🛒 View on Amazon</a>
       </div>
     </div>
   </section>
@@ -325,15 +325,12 @@ async function init() {
       sbGet(`/rest/v1/gl_variants?product_id=eq.PLACEHOLDER&order=order.asc`)
         .catch(() => [])
     ]);
-    // variantRows placeholder — re-fetch
     const gl = glRows[0];
     if (!gl) throw new Error('Guideline not found');
     const p = gl.gl_products || {};
 
-    // Variants (re-fetch by product_id)
     const variants = await sbGet(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(() => []);
 
-    // How to Cut section (image URL set once uploaded)
     var HOWCUT_IMG_URL = 'https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/cure-jun-phytogreen-sheetmask/howtocut.jpg';
     var howcutSec = document.getElementById('howcut-section');
     if (howcutSec && HOWCUT_IMG_URL) {
@@ -341,7 +338,6 @@ async function init() {
       howcutSec.style.display = '';
     }
 
-    // DOs & DON'Ts from gl_types.default_extra_sections (PR type)
     var extra = (gl.gl_types && gl.gl_types.default_extra_sections) || {};
     var dd = extra.dos_donts;
     if (dd && (Array.isArray(dd.dos) || Array.isArray(dd.donts))) {
@@ -358,21 +354,17 @@ async function init() {
       if (ddSec) ddSec.style.display = '';
     }
 
-    // Header
     document.getElementById('gl-title').textContent = gl.angle_name || '';
     document.getElementById('gl-concept').textContent = gl.concept || '';
 
-    // Product Brief
     if (p.product_img_url) document.getElementById('pb-img').src = p.product_img_url;
     document.getElementById('pb-name').textContent = p.name || '';
 
-    // USP Pills
     const pillsEl = document.getElementById('pb-pills');
     if (pillsEl && Array.isArray(p.usp_pills)) {
       pillsEl.innerHTML = p.usp_pills.map(pill => `<span class="pill">${pill}</span>`).join('');
     }
 
-    // Ingredient Pills
     const ingEl = document.getElementById('pb-ingredient-pills');
     if (ingEl && Array.isArray(p.ingredient_pills) && p.ingredient_pills.length) {
       ingEl.closest('.pb-ingredient-section').style.display = '';
@@ -381,7 +373,6 @@ async function init() {
       ingEl.closest('.pb-ingredient-section').style.display = 'none';
     }
 
-    // Usage Method
     const usageEl = document.getElementById('pb-usage');
     if (usageEl) {
       if (p.usage_method) {
@@ -394,7 +385,6 @@ async function init() {
       }
     }
 
-    // Precautions
     const precEl = document.getElementById('pb-precautions');
     if (precEl && p.precautions) {
       precEl.innerHTML = p.precautions.split('\n').map(line =>
@@ -402,8 +392,6 @@ async function init() {
       ).join('');
     }
 
-    // Texture Notes
-    // Variants
     const varWrap = document.getElementById('variant-wrap');
     if (varWrap) {
       if (variants.length > 0) {
@@ -415,30 +403,23 @@ async function init() {
             <span>${v.name}</span>
           </div>`
         ).join('');
-
-        // 클릭 인터랙션
         varWrap.querySelectorAll('.variant-item').forEach(el => {
           el.addEventListener('click', function() {
             const idx = parseInt(this.dataset.idx);
             const v = variants[idx];
-            // active 클래스 토글
             varWrap.querySelectorAll('.variant-item').forEach(e => e.classList.remove('active'));
             this.classList.add('active');
-            // 제품 이미지 변경
             const pbImg = document.getElementById('pb-img');
             if (pbImg && v.img_url) pbImg.src = v.img_url;
-            // 제품명 뱃지 업데이트
             const pbName = document.getElementById('pb-name');
             if (pbName && v.name) {
               const base = pbName.textContent.split('·')[0].trim();
               pbName.textContent = base + ' · ' + v.name;
             }
-            // 아마존 링크 업데이트
             const amazonBtn = document.getElementById('pb-amazon-btn');
             if (amazonBtn && v.footer_link) amazonBtn.href = v.footer_link;
             const footerLink = document.getElementById('footer-link');
             if (footerLink && v.footer_link) footerLink.href = v.footer_link;
-            // Key Ingredients 업데이트
             const pillsEl = document.getElementById('pb-ingredient-pills');
             if (pillsEl && Array.isArray(v.ingredient_pills) && v.ingredient_pills.length) {
               pillsEl.innerHTML = v.ingredient_pills.map(p => `<span class="pill">${p}</span>`).join('');
@@ -450,24 +431,20 @@ async function init() {
       }
     }
 
-    // Angle header
     const angleEl = document.getElementById('angle-name');
     if (angleEl) angleEl.textContent = gl.angle_name || '';
     const angleSubEl = document.getElementById('angle-sub');
     if (angleSubEl) angleSubEl.textContent = `Angle #1 · ${cuts.length} Cuts`;
 
-    // Cuts
     const cutsWrap = document.getElementById('cuts-wrap');
     cutsWrap.innerHTML = '';
     cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
 
-    // Hashtags
     const hashEl = document.getElementById('hashtags-wrap');
     if (hashEl && Array.isArray(gl.hashtags) && gl.hashtags.length) {
       hashEl.innerHTML = gl.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('');
     }
 
-    // Mentions
     const mentEl = document.getElementById('mentions-wrap');
     if (mentEl && Array.isArray(gl.mentions) && gl.mentions.length) {
       mentEl.innerHTML = gl.mentions.map(m =>
@@ -475,7 +452,6 @@ async function init() {
       ).join('');
     }
 
-    // Reference Video + Shooting Guide (side by side)
     const refShootRow = document.getElementById('ref-shoot-row');
     const refVideoPlayer = document.getElementById('ref-video-player');
     const sgWrap = document.getElementById('shooting-guide-wrap');
@@ -489,7 +465,6 @@ async function init() {
       if (!hasGuide) document.getElementById('shooting-guide-section').style.display = 'none';
     }
 
-    // Ref Videos
     const refsWrap = document.getElementById('refs-wrap');
     if (refsWrap) {
       if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
@@ -510,9 +485,6 @@ async function init() {
       }
     }
 
-    // Footer
-
-    // Amazon Button in product card
     const amazonBtnEl = document.getElementById('pb-amazon-btn');
     if (amazonBtnEl && p.footer_link) {
       amazonBtnEl.href = p.footer_link;
