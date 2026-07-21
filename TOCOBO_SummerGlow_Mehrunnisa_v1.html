@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guideline</title>
+<style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --pink:#5DBB3A;--pink-dark:#2E7D32;--pink-light:#EAF7E3;--pink-mid:#A5D98A;
+      --blue:#2E7D32;--green:#7AC943;--gold:#FFA502;--red:#E74C3C;
+      --text:#1e2e1e;--muted:#7d8a7d;--bg:#f3f8f0;--card:#fff;--radius:14px;
+    }
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    .site-header{background:linear-gradient(135deg,#7AC943 0%,#2E7D32 100%);color:#fff;padding:22px 18px 20px;text-align:center}
+    .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
+    .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
+    .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
+    .product-section{padding:16px 16px 0}
+    .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 6px 22px rgba(46,125,50,0.14);display:flex;flex-direction:column}
+    @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:contain}}
+    .pb-img{background:#eef3ec;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .pb-img img{width:100%;display:block;aspect-ratio:4/5;object-fit:contain;max-height:420px;object-position:center;background:#eef3ec}
+    .pb-info{padding:24px 22px;display:flex;flex-direction:column;gap:16px;flex:1;justify-content:center}
+    .pb-name{font-size:19px;font-weight:900;line-height:1.3;color:var(--text)}
+    .pills{display:flex;flex-wrap:wrap;gap:7px}
+    .pill{background:var(--pink-light);color:var(--pink-dark);font-size:13px;font-weight:700;padding:5px 14px;border-radius:100px}
+    .pill-blue{background:#E6F9F0;color:#0E8A5F}
+    .pb-section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:7px}
+    .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}
+    .pb-section-body li{margin-left:14px;margin-bottom:2px}
+    .pb-divider{border:none;border-top:1px solid #f0f0f0;margin:0}
+    .variant-strip{padding:14px 16px 0}
+    .variant-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+    .variant-thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+    .variant-thumbs::-webkit-scrollbar{height:3px}
+    .variant-thumbs::-webkit-scrollbar-thumb{background:var(--pink-mid);border-radius:2px}
+    .variant-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;width:68px}
+    .variant-item img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:2px solid transparent;transition:border-color .2s}
+    .variant-item.active img{border-color:var(--pink)}
+    .variant-item span{font-size:10px;font-weight:700;color:var(--muted);text-align:center;line-height:1.2}
+    .variant-item.active span{color:var(--pink-dark)}
+    .angle-header{margin:20px 16px 10px}
+    .angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}
+    .angle-header h2{font-size:22px;font-weight:900;color:var(--text);white-space:pre-line}
+    .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
+    .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 6px 22px rgba(46,125,50,0.13)}
+    .cut-inner{display:flex;flex-direction:column}
+    @media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
+    .cut-img-wrap{position:relative;background:#111}
+    .cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
+    @media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
+    .cut-no-img{width:100%;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;background:#f5f5f8}
+    @media(min-width:520px){.cut-no-img{height:100%;max-height:88vh;aspect-ratio:auto}}
+    .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
+    .cut-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
+    .label-hook{background:var(--red)}
+    .label-cut{background:var(--blue)}
+    .label-result{background:var(--green);color:#1a1a1a}
+    .cut-ts{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.45);padding:3px 8px;border-radius:100px}
+    .cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:11px}
+    .field-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
+    .field-scene{font-size:14px;font-weight:700;line-height:1.45}
+    .cut-sep{border:none;border-top:1px solid #f0f0f0}
+    .field-direction{font-size:13px;line-height:1.65;color:var(--text);white-space:pre-line}
+    .field-usp{display:inline-block;background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:800;padding:5px 14px;border-radius:100px;border:1px solid var(--pink-mid)}
+    .field-pm{font-size:12px;line-height:1.7;color:var(--text);background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}
+    .field-pm ol{margin-left:16px}
+    .field-pm li{margin-bottom:3px}
+    .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+    .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}
+    .caption-opt::before{content:'•';color:var(--pink);font-size:16px;line-height:1.2;flex-shrink:0}
+    .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
+    @media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
+    .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 22px rgba(46,125,50,0.12);flex:1}
+    .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
+    .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}
+    .hashtag{background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
+    .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+    .mention-item:last-child{border-bottom:none}
+    .mention-at{color:var(--pink-dark);font-weight:700}
+    .refs-section{margin:20px 16px 0}
+    .refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+    .ref-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
+    .ref-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+    .ref-info{flex:1;min-width:0}
+    .ref-title{font-size:13px;font-weight:700;margin-bottom:2px}
+    .ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ref-arrow{color:var(--muted);font-size:18px}
+        .amazon-btn{display:inline-block;margin-top:4px;background:var(--pink);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
+    .amazon-btn:hover{opacity:0.88}
+    .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
+    .loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
+    .spinner{display:inline-block;width:24px;height:24px;border:3px solid #d4ebc4;border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .error-state{text-align:center;padding:40px 16px;color:#e05555;font-size:14px}
+.ref-shoot-row{display:flex;gap:16px;margin:24px 0 0;padding:20px 16px;background:linear-gradient(135deg,#f0f9ea 0%,#eaf7e3 100%);border-top:2px solid var(--pink-mid);border-bottom:2px solid var(--pink-mid);align-items:flex-start}
+.ref-shoot-row .ref-video-col{flex:0 0 auto;width:min(42%,220px)}
+.ref-shoot-row .shoot-col{flex:1;min-width:0}
+@media(max-width:480px){.ref-shoot-row{flex-direction:column}.ref-shoot-row .ref-video-col{width:100%}}
+.ref-video-player{width:100%;border-radius:10px;overflow:hidden;background:#000;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.ref-video-player video{width:100%;display:block;border-radius:10px}
+.ref-shoot-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--pink-dark);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.shooting-guide-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:10px}
+.shooting-guide-list li{font-size:13px;line-height:1.65;color:var(--text)}
+    /* How to Cut */
+    .howcut-section{margin:20px 16px 0}
+    .howcut-card{background:var(--card);border:1.5px solid var(--pink-mid);border-radius:var(--radius);padding:18px;box-shadow:0 6px 22px rgba(46,125,50,0.13)}
+    .howcut-title{font-size:13px;font-weight:900;color:var(--pink-dark);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+    .howcut-card{display:flex;flex-direction:column;gap:16px}
+    @media(min-width:600px){.howcut-card{flex-direction:row;align-items:flex-start}.howcut-img-wrap{width:300px;flex-shrink:0}}
+    .howcut-img-wrap img{width:100%;border-radius:10px;display:block}
+    .howcut-body{flex:1}
+    .howcut-lead{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px}
+    .howcut-order{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:9px}
+    .howcut-order li{font-size:13px;line-height:1.5;color:var(--text);display:flex;align-items:center;gap:9px;font-weight:600}
+    .hc-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;display:inline-block}
+    .hc-red{background:#ff3b30}.hc-orange{background:#ff7a1a}.hc-yellow{background:#ffcc00}.hc-green{background:#2ecc40}
+    .howcut-key{font-size:13px;line-height:1.6;color:var(--pink-dark);background:var(--pink-light);border-left:3px solid var(--pink);border-radius:8px;padding:11px 13px}
+    /* DOs & DON'Ts */
+    .dosdonts-section{margin:20px 16px 0}
+    .dd-outer{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 22px rgba(46,125,50,0.12)}
+    .dd-outer-title{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;color:var(--text);margin-bottom:14px}
+    .dd-cols{display:flex;flex-direction:column;gap:14px}
+    @media(min-width:520px){.dd-cols{flex-direction:row;gap:16px}}
+    .dd-col{flex:1;border-radius:12px;padding:14px 16px}
+    .dd-col.dos{background:#EAF7E3;border:1.5px solid #A5D98A}
+    .dd-col.donts{background:#FDEDEC;border:1.5px solid #F1A9A0}
+    .dd-col-title{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .dd-col-title.dos{color:#2E7D32}.dd-col-title.donts{color:#C0392B}
+    .dd-list{display:flex;flex-direction:column}
+    .dd-item{display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.55;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)}
+    .dd-item:last-child{border-bottom:none}
+    .dd-col.dos .dd-item{color:#1f4d24}.dd-col.donts .dd-item{color:#7a2118}
+    .dd-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+</style>
+</head>
+<body>
+
+<div id="loading-overlay" class="loading-state">
+  <div><div class="spinner"></div></div>
+  <div>Loading guideline…</div>
+</div>
+
+<div id="main-content" style="display:none">
+
+  <header class="site-header">
+    <div class="header-badge">Contents Guideline Brief</div>
+    <h1 id="gl-title" style="white-space:pre-line"></h1>
+    <p class="header-concept" id="gl-concept"></p>
+  </header>
+
+  <section class="product-section">
+    <div class="product-brief">
+      <div class="pb-img">
+        <img id="pb-img" src="" alt="Product">
+      </div>
+      <div class="pb-info">
+        <div class="pb-name" id="pb-name"></div>
+        <div>
+          <div class="pb-section-label">Key USP</div>
+          <div class="pills" id="pb-pills"></div>
+        </div>
+        <hr class="pb-divider">
+        <div class="pb-ingredient-section">
+          <div class="pb-section-label">Key Ingredients</div>
+          <div class="pills" id="pb-ingredient-pills"></div>
+        </div>
+        <div class="pb-usage-section">
+          <hr class="pb-divider">
+          <div class="pb-section-label">Usage Method</div>
+          <ol class="pb-section-body" id="pb-usage"></ol>
+        </div>
+        <hr class="pb-divider">
+        <div>
+          <div class="pb-section-label">⚠️ Usage Precautions</div>
+          <ul class="pb-section-body" id="pb-precautions"></ul>
+        </div>
+        <a id="pb-amazon-btn" href="#" target="_blank" class="amazon-btn">🛒 View on Amazon</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="howcut-section" class="howcut-section" style="display:none">
+    <div class="howcut-card">
+      <div class="howcut-title">✂️ How to Cut the Mask</div>
+      <div class="howcut-img-wrap"><img id="howcut-img" src="" alt="How to cut the sheet mask"></div>
+      <div class="howcut-body">
+        <p class="howcut-lead">Cut along the lines in this order:</p>
+        <ol class="howcut-order">
+          <li><span class="hc-dot hc-red"></span>Red — across the brow line (between the eyes)</li>
+          <li><span class="hc-dot hc-orange"></span>Orange — diagonally out from each outer eye corner</li>
+          <li><span class="hc-dot hc-yellow"></span>Yellow — diagonally out at both smile lines (sides of the mouth)</li>
+          <li><span class="hc-dot hc-green"></span>Green — from under the nose down through the mouth, and straight down the chin</li>
+        </ol>
+        <p class="howcut-key">Make clean cuts, then press the mask down with <strong>no white folds or gaps</strong> — it should sit completely flush against every curve of the face.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="variant-strip" class="variant-strip">
+    <div class="variant-label" id="variant-count"></div>
+    <div class="variant-thumbs" id="variant-wrap"></div>
+  </div>
+
+  <div class="angle-header">
+    <div class="ah-sub" id="angle-sub"></div>
+    <h2 id="angle-name"></h2>
+  </div>
+
+  <div class="ref-shoot-row" id="ref-shoot-row" style="display:none">
+    <div class="ref-video-col" id="ref-video-section">
+      <div class="ref-shoot-label">🎬 Reference Video</div>
+      <div class="ref-video-player">
+        <video id="ref-video-player" controls playsinline preload="metadata"></video>
+      </div>
+    </div>
+    <div class="shoot-col" id="shooting-guide-section">
+      <div class="ref-shoot-label">📋 Shooting Guide</div>
+      <ol class="shooting-guide-list" id="shooting-guide-wrap"></ol>
+    </div>
+  </div>
+
+  <div class="cuts-wrap" id="cuts-wrap"></div>
+
+  <div id="dosdonts-section" class="dosdonts-section" style="display:none">
+    <div class="dd-outer">
+      <div class="dd-outer-title" id="dd-title">DOs &amp; DON'Ts</div>
+      <div class="dd-cols">
+        <div class="dd-col dos">
+          <div class="dd-col-title dos">Do's</div>
+          <div class="dd-list" id="dos-list"></div>
+        </div>
+        <div class="dd-col donts">
+          <div class="dd-col-title donts">Don'ts</div>
+          <div class="dd-list" id="donts-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hm-section">
+    <div class="hm-card">
+      <div class="hm-title"># Hashtags</div>
+      <div class="hashtag-wrap" id="hashtags-wrap"></div>
+    </div>
+    <div class="hm-card">
+      <div class="hm-title">@ Mention Accounts</div>
+      <div id="mentions-wrap"></div>
+    </div>
+  </div>
+
+  <div class="refs-section" id="refs-section">
+    <h3>📎 Additional Reference Videos</h3>
+    <div id="refs-wrap"></div>
+  </div>
+
+  <div class="site-footer">
+    AI-generated guideline · For influencer reference only<br>
+    <a id="footer-link" href="#" target="_blank" style="color:var(--pink)">View Product</a>
+  </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL = 'https://dynqedcbmanvyfdlruni.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
+const GUIDELINE_ID = 'c95c2385-8895-438e-b93e-30dfb72417ae';
+
+async function sbGet(path) {
+  const res = await fetch(SUPABASE_URL + path, {
+    headers: {'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY}
+  });
+  if (!res.ok) throw new Error('DB error ' + res.status);
+  return res.json();
+}
+
+function labelClass(label) {
+  if (label === 'HOOK' || label.startsWith('HOOK')) return 'cut-label label-hook';
+  if (label === 'RESULT') return 'cut-label label-result';
+  return 'cut-label label-cut';
+}
+
+function buildCutCard(cut) {
+  const imgHtml = cut.img_url
+    ? `<img src="${cut.img_url}" alt="${cut.label}" />`
+    : `<div class="cut-no-img">No image</div>`;
+
+  let body = '';
+  if (cut.main_usp) body += `<div><div class="field-label">Main USP</div><div class="field-usp">${cut.main_usp}</div></div>`;
+  if (cut.production_method) {
+    const steps = cut.production_method.split('\n').filter(s => s.trim());
+    body += `<div><div class="field-label">Production Method</div><div class="field-pm"><ol>${steps.map(s => `<li>${s.replace(/^\d+\.\s*/, '')}</li>`).join('')}</ol></div></div>`;
+  }
+  if (cut.main_usp || cut.production_method) body += '<hr class="cut-sep">';
+  body += `<div><div class="field-label">Scene</div><div class="field-scene">${cut.scene || ''}</div></div>`;
+  body += '<hr class="cut-sep">';
+  body += `<div><div class="field-label">Direction</div><div class="field-direction">${cut.direction || ''}</div></div>`;
+  const captions = Array.isArray(cut.captions) ? cut.captions : [];
+  if (captions.length) {
+    body += '<hr class="cut-sep">';
+    body += `<div><div class="field-label">Caption Options</div><div class="caption-options">${captions.map(c => `<div class="caption-opt">${c}</div>`).join('')}</div></div>`;
+  }
+
+  const el = document.createElement('div');
+  el.className = 'cut-card';
+  el.innerHTML = `<div class="cut-inner">
+    <div class="cut-img-wrap">${imgHtml}
+      <div class="cut-badge-row">
+        <span class="${labelClass(cut.label)}">${cut.label}</span>
+        ${cut.pacing ? `<span class="cut-ts">${cut.pacing}</span>` : ''}
+      </div>
+    </div>
+    <div class="cut-body">${body}</div>
+  </div>`;
+  return el;
+}
+
+async function init() {
+  try {
+    const [glRows, cuts, variantRows] = await Promise.all([
+      sbGet(`/rest/v1/gl_guidelines?id=eq.${GUIDELINE_ID}&select=*,gl_products(*),gl_types(name,default_extra_sections)`),
+      sbGet(`/rest/v1/gl_cuts?guideline_id=eq.${GUIDELINE_ID}&order=order.asc`),
+      sbGet(`/rest/v1/gl_variants?product_id=eq.PLACEHOLDER&order=order.asc`)
+        .catch(() => [])
+    ]);
+    const gl = glRows[0];
+    if (!gl) throw new Error('Guideline not found');
+    const p = gl.gl_products || {};
+
+    const variants = await sbGet(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(() => []);
+
+    var HOWCUT_IMG_URL = 'https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/cure-jun-phytogreen-sheetmask/howtocut.jpg';
+    var howcutSec = document.getElementById('howcut-section');
+    if (false && howcutSec && HOWCUT_IMG_URL) {
+      document.getElementById('howcut-img').src = HOWCUT_IMG_URL;
+      howcutSec.style.display = '';
+    }
+
+    var extra = (gl.gl_types && gl.gl_types.default_extra_sections) || {};
+    var dd = extra.dos_donts;
+    if (dd && (Array.isArray(dd.dos) || Array.isArray(dd.donts))) {
+      var ddSec = document.getElementById('dosdonts-section');
+      if (dd.title) document.getElementById('dd-title').textContent = dd.title;
+      var dosList = document.getElementById('dos-list');
+      var dontsList = document.getElementById('donts-list');
+      if (dosList && Array.isArray(dd.dos)) {
+        dosList.innerHTML = dd.dos.map(function(d){return '<div class="dd-item"><span class="dd-icon">✅</span><span>'+d+'</span></div>';}).join('');
+      }
+      if (dontsList && Array.isArray(dd.donts)) {
+        dontsList.innerHTML = dd.donts.map(function(d){return '<div class="dd-item"><span class="dd-icon">🚫</span><span>'+d+'</span></div>';}).join('');
+      }
+      if (ddSec) ddSec.style.display = '';
+    }
+
+    document.getElementById('gl-title').textContent = gl.angle_name || '';
+    document.getElementById('gl-concept').textContent = gl.concept || '';
+
+    if (p.product_img_url) document.getElementById('pb-img').src = p.product_img_url;
+    document.getElementById('pb-name').textContent = p.name || '';
+
+    const pillsEl = document.getElementById('pb-pills');
+    if (pillsEl && Array.isArray(p.usp_pills)) {
+      pillsEl.innerHTML = p.usp_pills.map(pill => `<span class="pill">${pill}</span>`).join('');
+    }
+
+    const ingEl = document.getElementById('pb-ingredient-pills');
+    if (ingEl && Array.isArray(p.ingredient_pills) && p.ingredient_pills.length) {
+      ingEl.closest('.pb-ingredient-section').style.display = '';
+      ingEl.innerHTML = p.ingredient_pills.map(pill => `<span class="pill pill-blue">${pill}</span>`).join('');
+    } else if (ingEl) {
+      ingEl.closest('.pb-ingredient-section').style.display = 'none';
+    }
+
+    const usageEl = document.getElementById('pb-usage');
+    if (usageEl) {
+      if (p.usage_method) {
+        usageEl.closest('.pb-usage-section').style.display = '';
+        usageEl.innerHTML = p.usage_method.split('\n').map((line, i) =>
+          `<li>${line.replace(/^\d+\.\s*/, '')}</li>`
+        ).join('');
+      } else {
+        usageEl.closest('.pb-usage-section').style.display = 'none';
+      }
+    }
+
+    const precEl = document.getElementById('pb-precautions');
+    if (precEl && p.precautions) {
+      precEl.innerHTML = p.precautions.split('\n').map(line =>
+        `<li>${line.replace(/^•\s*/, '')}</li>`
+      ).join('');
+    }
+
+    const varWrap = document.getElementById('variant-wrap');
+    if (varWrap) {
+      if (variants.length > 0) {
+        document.getElementById('variant-strip').style.display = '';
+        document.getElementById('variant-count').textContent = variants.length + ' Variants Available';
+        varWrap.innerHTML = variants.map((v, idx) =>
+          `<div class="variant-item${v.is_active ? ' active' : ''}" data-idx="${idx}" style="cursor:pointer">
+            ${v.img_url ? `<img src="${v.img_url}" alt="${v.name}">` : `<div style="width:60px;height:60px;background:#eee;border-radius:10px"></div>`}
+            <span>${v.name}</span>
+          </div>`
+        ).join('');
+        varWrap.querySelectorAll('.variant-item').forEach(el => {
+          el.addEventListener('click', function() {
+            const idx = parseInt(this.dataset.idx);
+            const v = variants[idx];
+            varWrap.querySelectorAll('.variant-item').forEach(e => e.classList.remove('active'));
+            this.classList.add('active');
+            const pbImg = document.getElementById('pb-img');
+            if (pbImg && v.img_url) pbImg.src = v.img_url;
+            const pbName = document.getElementById('pb-name');
+            if (pbName && v.name) {
+              const base = pbName.textContent.split('·')[0].trim();
+              pbName.textContent = base + ' · ' + v.name;
+            }
+            const amazonBtn = document.getElementById('pb-amazon-btn');
+            if (amazonBtn && v.footer_link) amazonBtn.href = v.footer_link;
+            const footerLink = document.getElementById('footer-link');
+            if (footerLink && v.footer_link) footerLink.href = v.footer_link;
+            const pillsEl = document.getElementById('pb-ingredient-pills');
+            if (pillsEl && Array.isArray(v.ingredient_pills) && v.ingredient_pills.length) {
+              pillsEl.innerHTML = v.ingredient_pills.map(p => `<span class="pill">${p}</span>`).join('');
+            }
+          });
+        });
+      } else {
+        document.getElementById('variant-strip').style.display = 'none';
+      }
+    }
+
+    const angleEl = document.getElementById('angle-name');
+    if (angleEl) angleEl.textContent = gl.angle_name || '';
+    const angleSubEl = document.getElementById('angle-sub');
+    if (angleSubEl) angleSubEl.textContent = `Angle #1 · ${cuts.length} Cuts`;
+
+    const cutsWrap = document.getElementById('cuts-wrap');
+    cutsWrap.innerHTML = '';
+    cuts.forEach(cut => cutsWrap.appendChild(buildCutCard(cut)));
+
+    const hashEl = document.getElementById('hashtags-wrap');
+    if (hashEl && Array.isArray(gl.hashtags) && gl.hashtags.length) {
+      hashEl.innerHTML = gl.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('');
+    }
+
+    const mentEl = document.getElementById('mentions-wrap');
+    if (mentEl && Array.isArray(gl.mentions) && gl.mentions.length) {
+      mentEl.innerHTML = gl.mentions.map(m =>
+        `<div class="mention-item"><span class="mention-at">${m}</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div>`
+      ).join('');
+    }
+
+    const refShootRow = document.getElementById('ref-shoot-row');
+    const refVideoPlayer = document.getElementById('ref-video-player');
+    const sgWrap = document.getElementById('shooting-guide-wrap');
+    const hasVideo = gl.ref_video_url && refVideoPlayer;
+    const hasGuide = Array.isArray(gl.shooting_guide) && gl.shooting_guide.length && sgWrap;
+    if (hasVideo || hasGuide) {
+      if (refShootRow) refShootRow.style.display = '';
+      if (hasVideo) refVideoPlayer.src = gl.ref_video_url;
+      if (!hasVideo) document.getElementById('ref-video-section').style.display = 'none';
+      if (hasGuide) sgWrap.innerHTML = gl.shooting_guide.map(s => `<li>${s}</li>`).join('');
+      if (!hasGuide) document.getElementById('shooting-guide-section').style.display = 'none';
+    }
+
+    const refsWrap = document.getElementById('refs-wrap');
+    if (refsWrap) {
+      if (Array.isArray(gl.ref_videos) && gl.ref_videos.length) {
+        document.getElementById('refs-section').style.display = '';
+        refsWrap.innerHTML = gl.ref_videos.map(r => {
+          const domain = r.url.replace(/https?:\/\//, '').split('/')[0];
+          return `<a class="ref-card" href="${r.url}" target="_blank">
+            <div class="ref-icon">🎵</div>
+            <div class="ref-info">
+              <div class="ref-title">${r.title}</div>
+              <div class="ref-url">${domain + r.url.replace(/https?:\/\/[^/]+/, '').substring(0, 40)}</div>
+            </div>
+            <div class="ref-arrow">›</div>
+          </a>`;
+        }).join('');
+      } else {
+        document.getElementById('refs-section').style.display = 'none';
+      }
+    }
+
+    const amazonBtnEl = document.getElementById('pb-amazon-btn');
+    if (amazonBtnEl && p.footer_link) {
+      amazonBtnEl.href = p.footer_link;
+      amazonBtnEl.style.display = '';
+    }
+    const footerLinkEl = document.getElementById('footer-link');
+    if (footerLinkEl) {
+      if (p.footer_link) {
+        footerLinkEl.href = p.footer_link;
+        footerLinkEl.style.display = '';
+      } else {
+        footerLinkEl.style.display = 'none';
+      }
+    }
+
+    document.getElementById('loading-overlay').style.display = 'none';
+    document.getElementById('main-content').style.display = '';
+
+  } catch(e) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-state">⚠️ ${e.message}</div>`;
+  }
+}
+
+init();
+
+</script>
+</body>
+</html>
