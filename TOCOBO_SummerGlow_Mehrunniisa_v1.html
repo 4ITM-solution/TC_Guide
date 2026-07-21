@@ -290,8 +290,8 @@ function buildCutCard(cut) {
   let body = '';
   if (cut.main_usp) body += `<div><div class="field-label">Main USP</div><div class="field-usp">${cut.main_usp}</div></div>`;
   if (cut.production_method) {
-    const steps = cut.production_method.split('\n').filter(s => s.trim());
-    body += `<div><div class="field-label">Production Method</div><div class="field-pm"><ol>${steps.map(s => `<li>${s.replace(/^\d+\.\s*/, '')}</li>`).join('')}</ol></div></div>`;
+    const pmHtml = cut.production_method.split('\n').filter(s => s.trim()).map(s => s.replace(/^\d+\.\s*/, '')).join('<br>');
+    body += `<div><div class="field-label">🎬 Filming Note</div><div class="field-pm">${pmHtml}</div></div>`;
   }
   if (cut.main_usp || cut.production_method) body += '<hr class="cut-sep">';
   body += `<div><div class="field-label">Scene</div><div class="field-scene">${cut.scene || ''}</div></div>`;
