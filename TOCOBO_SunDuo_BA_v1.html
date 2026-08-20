@@ -15,6 +15,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pb-img{background:#f0efec}.pb-img img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:1/1}
 .pb-info{padding:18px;display:flex;flex-direction:column;gap:11px;flex:1}
 .pb-name{font-size:15px;font-weight:900;line-height:1.35}
+.role{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--amb);padding:3px 10px;border-radius:100px}
 .lbl{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .pills{display:flex;flex-wrap:wrap;gap:5px}.pill{background:var(--amb-l);color:var(--amb-d);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
 .vars{display:flex;gap:8px;flex-wrap:wrap}
@@ -135,20 +136,24 @@ async function init(){try{
   const p=g.gl_products||{}; const t=g.gl_types||{};
   const ex=Object.assign({},(t.default_extra_sections||{}),(g.extra_sections||{}));
   const cuts=await sb(`/rest/v1/gl_cuts?guideline_id=eq.${GID}&order=order.asc`);
-  const variants=p.id?await sb(`/rest/v1/gl_variants?product_id=eq.${p.id}&order=order.asc`).catch(()=>[]):[];
+  const links=await sb(`/rest/v1/gl_guideline_products?guideline_id=eq.${GID}&select=order,role,gl_products(*)&order=order.asc`).catch(()=>[]);
+  const products=links.length?links.map(l=>Object.assign({},l.gl_products,{_role:l.role})):(p.id?[Object.assign({},p,{_role:null})]:[]);
   let h='';
   h+=`<div class="hd"><div class="bdg">Contents Guideline Brief</div><h1>${br(g.angle_name)}</h1>
     <div class="cc">${esc(g.concept||'')}</div><div class="tp">Type: ${esc(t.name||'')} · ${cuts.length} cuts · ${esc(g.status||'')}</div></div>`;
-  // product
-  const varHtml=variants.length?`<div><div class="lbl">Duo / Variants</div><div class="vars">${variants.map(v=>`<div class="var"><b>${esc(v.name)}</b><div class="pills">${pillList(v.usp_pills)}</div></div>`).join('')}</div></div>`:'';
-  const usage=p.usage_method?`<hr class="divider"><div><div class="lbl">How to Use</div><ul class="pb-body">${p.usage_method.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x.replace(/^\d+\.\s*/,''))}</li>`).join('')}</ul></div>`:'';
-  const prec=p.precautions?`<hr class="divider"><div><div class="lbl">⚠️ Precautions</div><ul class="pb-body">${p.precautions.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
-  h+=`<div class="sec"><div class="sec-h">Product</div><div class="card pb">
-    ${p.product_img_url?`<div class="pb-img"><img src="${esc(p.product_img_url)}"></div>`:''}
-    <div class="pb-info"><div class="pb-name">${esc((p.brand?p.brand+' · ':'')+ (p.name||''))}</div>
-    <div><div class="lbl">Key USP</div><div class="pills">${pillList(p.usp_pills)}</div></div>
-    ${varHtml?'<hr class="divider">'+varHtml:''}${usage}${prec}
-    ${p.footer_link?`<a class="amazon" href="${esc(p.footer_link)}" target="_blank">🛒 View product</a>`:''}</div></div></div>`;
+  // products (each linked product = its own card)
+  function productCard(pr){
+    const usage=pr.usage_method?`<hr class="divider"><div><div class="lbl">How to Use</div><ul class="pb-body">${pr.usage_method.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x.replace(/^\d+\.\s*/,''))}</li>`).join('')}</ul></div>`:'';
+    const prec=pr.precautions?`<hr class="divider"><div><div class="lbl">⚠️ Precautions</div><ul class="pb-body">${pr.precautions.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
+    const role=pr._role?`<span class="role">${esc(pr._role)}</span>`:'';
+    return `<div class="card pb" style="margin-bottom:12px">
+      ${pr.product_img_url?`<div class="pb-img"><img src="${esc(pr.product_img_url)}"></div>`:''}
+      <div class="pb-info"><div>${role}</div><div class="pb-name">${esc((pr.brand?pr.brand+' · ':'')+(pr.name||''))}</div>
+      <div><div class="lbl">Key USP</div><div class="pills">${pillList(pr.usp_pills)}</div></div>
+      ${usage}${prec}
+      ${pr.footer_link?`<a class="amazon" href="${esc(pr.footer_link)}" target="_blank">🛒 View on Amazon</a>`:''}</div></div>`;
+  }
+  h+=`<div class="sec"><div class="sec-h">Products${products.length>1?' ('+products.length+')':''}</div>${products.map(productCard).join('')}</div>`;
   // key visual
   h+=keyVisual(ex.key_visual);
   // cuts
