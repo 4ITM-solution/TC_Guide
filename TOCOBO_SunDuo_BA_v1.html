@@ -64,6 +64,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pm{font-size:12px;line-height:1.65;background:#fbf4ec;border-left:3px solid var(--amb);padding:8px 11px;border-radius:0 8px 8px 0}
 .pm ol{margin-left:15px}
 .fdir{font-size:12.5px;line-height:1.6}
+.fvo{font-size:13px;line-height:1.6;background:#fbf4ec;border-left:3px solid var(--amb);padding:8px 11px;border-radius:0 8px 8px 0;font-weight:600;color:#5a3a15}
 .caps{display:flex;flex-direction:column;gap:5px;margin-top:3px}
 .cap{font-size:12.5px;line-height:1.45;padding-left:14px;position:relative;font-weight:700;color:var(--amb-d)}
 .cap::before{content:'●';position:absolute;left:0;font-size:8px;top:5px;color:var(--amb)}
@@ -147,9 +148,10 @@ function cutCard(c){
   if(c.production_method){const st=c.production_method.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x.replace(/^\d+\.\s*/,''))}</li>`).join('');b+=`<div class="lbl">Production Method</div><div class="pm"><ol>${st}</ol></div>`;}
   if(c.main_usp||c.production_method)b+='<hr class="cs">';
   b+=`<div class="lbl">Scene</div><div class="fscene">${esc(c.scene||'')}</div><hr class="cs">`;
-  b+=`<div class="lbl">Direction / Voice-over</div><div class="fdir">${br(c.direction||'')}</div>`;
+  b+=`<div class="lbl">Direction</div><div class="fdir">${br(c.direction||'')}</div>`;
+  if(c.voice_over){b+=`<hr class="cs"><div class="lbl">🎙️ Voice-over</div><div class="fvo">${esc(c.voice_over)}</div>`;}
   const caps=Array.isArray(c.captions)?c.captions:[];
-  if(caps.length){b+='<hr class="cs"><div class="lbl">On-Screen Text</div><div class="caps">'+caps.map(x=>`<div class="cap">${esc(x)}</div>`).join('')+'</div>';}
+  if(caps.length){b+='<hr class="cs"><div class="lbl">💬 On-Screen Text</div><div class="caps">'+caps.map(x=>`<div class="cap">${esc(x)}</div>`).join('')+'</div>';}
   const ts=c.pacing?`<span class="cts">${esc(c.pacing)}</span>`:'';
   return `<div class="card cut"><div class="cut-media">${media}<div class="cut-badges"><span class="${clabel(c.label)}">${esc(c.label)}</span>${ts}</div></div><div class="cut-body">${b}</div></div>`;
 }
