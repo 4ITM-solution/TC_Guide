@@ -37,15 +37,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ba .lab{position:absolute;bottom:8px;left:8px;right:8px;font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:6px}
 .arrow{align-self:center;font-size:24px;color:var(--amb);font-weight:900}
 .vd{margin:0 12px 14px;background:#fbf4ec;border-left:4px solid var(--amb);border-radius:0 10px 10px 0;padding:13px 15px}
-.vd-h{font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;color:var(--amb-d);margin-bottom:9px}
-.vd-k{font-size:11px;font-weight:800;margin:8px 0 2px}
-.vd-cols{display:flex;gap:14px;align-items:flex-start}
-.vd-text{flex:1;min-width:0}
-.vd-ex{flex:0 0 auto;width:min(34%,150px);margin:0}
-.vd-ex img{width:100%;border-radius:8px;display:block;aspect-ratio:9/16;object-fit:cover}
-.vd-ex figcaption{font-size:9.5px;color:#9a5a1e;text-align:center;margin-top:4px;font-weight:700;line-height:1.3}
-@media(max-width:520px){.vd-cols{flex-direction:column}.vd-ex{width:100%;max-width:170px}}.vd-v{font-size:12.5px;line-height:1.55;color:#3a3f47}
-.chip{display:inline-block;background:#fff;border:1px solid var(--amb-m);color:var(--amb-d);font-size:11px;font-weight:700;padding:2px 9px;border-radius:100px;margin:2px 3px 0 0}
+.vd-h{font-size:14px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;color:var(--amb-d);margin-bottom:10px}
+.vd-intro{font-size:14.5px;font-weight:700;line-height:1.55;color:#7a4a18;background:#fff;border:1px dashed var(--amb-m);border-radius:9px;padding:12px 14px;margin-bottom:12px}
+.vd-k{font-size:13px;font-weight:800;color:var(--amb-d);margin:14px 0 5px}
+.vd-ex{width:100%;max-width:500px;margin:2px auto 12px}
+.vd-ex img{width:100%;height:auto;border-radius:10px;display:block}
+.vd-ex figcaption{font-size:11.5px;color:#9a5a1e;text-align:center;margin-top:6px;font-weight:700;line-height:1.35}
+.vd-v{font-size:13.5px;line-height:1.6;color:#3a3f47}
+.vd-chips{margin-top:2px}
+.chip{display:inline-block;background:#fff;border:1px solid var(--amb-m);color:var(--amb-d);font-size:13px;font-weight:800;padding:5px 13px;border-radius:100px;margin:3px 5px 0 0}
 .warn{font-size:11.5px;color:#9a5a1e;background:#fff6ec;border-radius:8px;padding:7px 10px;margin-top:8px;line-height:1.5}
 /* cuts */
 .cuts{display:flex;flex-direction:column;gap:14px}
@@ -132,11 +132,11 @@ function keyVisual(kv){
     <div class="kv-sub">${esc(kv.concern||'')} · The angle-defining Before &amp; After hero.</div>
     <div class="ba">${fig(kv.before,'b','BEFORE')}<div class="arrow">→</div>${fig(kv.after,'a','AFTER')}</div>
     ${bd&&(bd.title||chips)?`<div class="vd"><div class="vd-h">🎨 ${esc(bd.title||'Visual Direction')}</div>
-      <div class="vd-cols"><div class="vd-text">
-      ${chips?`<div class="vd-k">Pick your hook (one concern)</div><div>${chips}</div>`:''}
-      ${methods?`<div class="vd-k">Create the visual (one of)</div>${methods}`:''}
-      ${bd.staging?`<div class="vd-k">Stage the B&amp;A</div><div class="vd-v">${esc(bd.staging)}</div>`:''}
-      </div>${bd.example_img_url?`<figure class="vd-ex"><img src="${esc(bd.example_img_url)}"><figcaption>Hook example<br>recreate — don't copy</figcaption></figure>`:''}</div>
+      ${bd.intro?`<div class="vd-intro">${esc(bd.intro)}</div>`:''}
+      ${bd.example_img_url?`<figure class="vd-ex"><img src="${esc(bd.example_img_url)}"><figcaption>Examples — direction only. Pick one, then find or create your OWN; don't copy these.</figcaption></figure>`:''}
+      ${chips?`<div class="vd-k">① Pick your hook — one concern</div><div class="vd-chips">${chips}</div>`:''}
+      ${methods?`<div class="vd-k">② Find or create your own hook image (one of)</div>${methods}`:''}
+      ${bd.staging?`<div class="vd-k">③ Stage the B&amp;A</div><div class="vd-v">${esc(bd.staging)}</div>`:''}
       ${bd.note?`<div class="warn">⚠️ ${esc(bd.note)}</div>`:''}</div>`:''}
   </div></div>`;
 }
