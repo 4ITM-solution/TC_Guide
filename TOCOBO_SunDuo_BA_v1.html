@@ -82,6 +82,29 @@ hr.cs{border:none;border-top:1px solid #f0f0f0;margin:3px 0}
 .tags{display:flex;flex-wrap:wrap;gap:6px}.tag{background:var(--amb-l);color:var(--amb-d);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
 .ment{font-size:12.5px;color:var(--text);font-weight:700}.ment span{color:var(--amb-d)}
 .refs a{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:10px;padding:11px 14px;box-shadow:0 2px 10px rgba(0,0,0,.05);text-decoration:none;color:var(--text);font-size:12.5px;font-weight:600;margin-bottom:8px}
+.variant-strip{margin-top:12px}
+.variant-label{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.variant-thumbs{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.variant-item{flex:0 0 auto;width:76px;text-align:center;cursor:pointer}
+.variant-item img,.vi-noimg{width:72px;height:72px;object-fit:cover;border-radius:10px;border:2px solid transparent;background:#f0efec;display:block;margin:0 auto}
+.variant-item.active img,.variant-item.active .vi-noimg{border-color:var(--amb)}
+.variant-item span{display:block;font-size:10px;font-weight:700;color:var(--muted);margin-top:4px;line-height:1.2}
+.variant-item.active span{color:var(--amb-d)}
+.hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
+@media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
+.hm-card{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.06);flex:1}
+.hm-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.hashtag{background:var(--amb-l);color:var(--amb-d);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
+.mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.mention-item:last-child{border-bottom:none}
+.mention-at{color:var(--amb-d);font-weight:700}
+.mention-role{color:var(--muted);font-size:11px;margin-left:auto}
+.ref-ic{width:40px;height:40px;background:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:14px}
+.ref-meta{flex:1;min-width:0;display:flex;flex-direction:column}
+.ref-t{font-weight:700;font-size:13px}
+.ref-u{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ref-arr{color:var(--muted);font-size:18px}
 .ft{text-align:center;padding:24px 16px 34px;color:var(--muted);font-size:11.5px}
 .load{text-align:center;padding:70px 20px;color:var(--muted)}
 .spin{width:26px;height:26px;border:3px solid var(--amb-l);border-top-color:var(--amb);border-radius:50%;animation:s .7s linear infinite;margin:0 auto 12px}
@@ -149,19 +172,17 @@ async function init(){try{
   let h='';
   h+=`<div class="hd"><div class="bdg">Contents Guideline Brief</div><h1>${br(g.angle_name)}</h1>
     <div class="cc">${esc(g.concept||'')}</div><div class="tp">Type: ${esc(t.name||'')} · ${cuts.length} cuts · ${esc(g.status||'')}</div></div>`;
-  // products (each linked product = its own card)
-  function productCard(pr){
-    const usage=pr.usage_method?`<hr class="divider"><div><div class="lbl">How to Use</div><ul class="pb-body">${pr.usage_method.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x.replace(/^\d+\.\s*/,''))}</li>`).join('')}</ul></div>`:'';
-    const prec=pr.precautions?`<hr class="divider"><div><div class="lbl">⚠️ Precautions</div><ul class="pb-body">${pr.precautions.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
+  // products — single card + switcher strip (matches existing variant behavior)
+  function prodInner(pr){
+    const ing=(Array.isArray(pr.ingredient_pills)&&pr.ingredient_pills.length)?`<hr class="divider"><div><div class="lbl">Key Ingredients</div><div class="pills">${pillList(pr.ingredient_pills,'pill-blue')}</div></div>`:'';
+    const usage=pr.usage_method?`<hr class="divider"><div><div class="lbl">Usage Method</div><ul class="pb-body">${pr.usage_method.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x.replace(/^\d+\.\s*/,''))}</li>`).join('')}</ul></div>`:'';
+    const tex=pr.texture_notes?`<hr class="divider"><div><div class="lbl">💧 Texture Notes</div><div class="pb-body">${esc(pr.texture_notes)}</div></div>`:'';
+    const prec=pr.precautions?`<hr class="divider"><div><div class="lbl">⚠️ Usage Precautions</div><ul class="pb-body">${pr.precautions.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
     const role=pr._role?`<span class="role">${esc(pr._role)}</span>`:'';
-    return `<div class="card pb" style="margin-bottom:12px">
-      ${pr.product_img_url?`<div class="pb-img"><img src="${esc(pr.product_img_url)}"></div>`:''}
-      <div class="pb-info"><div>${role}</div><div class="pb-name">${esc((pr.brand?pr.brand+' · ':'')+(pr.name||''))}</div>
-      <div><div class="lbl">Key USP</div><div class="pills">${pillList(pr.usp_pills)}</div></div>
-      ${usage}${prec}
-      ${pr.footer_link?`<a class="amazon" href="${esc(pr.footer_link)}" target="_blank">🛒 View on Amazon</a>`:''}</div></div>`;
+    return `${pr.product_img_url?`<div class="pb-img"><img src="${esc(pr.product_img_url)}"></div>`:'<div class="pb-img"></div>'}<div class="pb-info">${role?`<div>${role}</div>`:''}<div class="pb-name">${esc((pr.brand?pr.brand+' · ':'')+(pr.name||''))}</div><div><div class="lbl">Key USP</div><div class="pills">${pillList(pr.usp_pills)}</div></div>${ing}${usage}${tex}${prec}${pr.footer_link?`<a class="amazon" href="${esc(pr.footer_link)}" target="_blank">🛒 View on Amazon</a>`:''}</div>`;
   }
-  h+=`<div class="sec"><div class="sec-h">Products${products.length>1?' ('+products.length+')':''}</div>${products.map(productCard).join('')}</div>`;
+  function prodThumb(pr,i){return `<div class="variant-item${i===0?' active':''}" data-idx="${i}">${pr.product_img_url?`<img src="${esc(pr.product_img_url)}">`:'<div class="vi-noimg"></div>'}<span>${esc(pr.name||'')}</span></div>`;}
+  h+=`<div class="sec"><div class="sec-h">Product</div><div class="card pb" id="pcard">${prodInner(products[0])}</div>${products.length>1?`<div class="variant-strip"><div class="variant-label">${products.length} Products · tap to switch</div><div class="variant-thumbs">${products.map(prodThumb).join('')}</div></div>`:''}</div>`;
   // key visual
   h+=keyVisual(ex.key_visual);
   // cuts
@@ -172,13 +193,17 @@ async function init(){try{
   h+=twoCol((ex.dos_donts&&ex.dos_donts.title)||"Do's & Don'ts",ex.dos_donts,'dos','donts',"✅ DO","🚫 DON'T");
   // reference note
   if(ex.reference_note){h+=`<div class="sec"><div class="sec-h">${esc(ex.reference_note.title||'How to Use This Guideline')}</div><div class="card note"><b>Reference only</b>${esc(ex.reference_note.body||'')}</div></div>`;}
-  // hashtags / mentions
-  if(Array.isArray(g.hashtags)&&g.hashtags.length)h+=`<div class="sec"><div class="sec-h"># Hashtags</div><div class="tags">${g.hashtags.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</div>
-    ${Array.isArray(g.mentions)&&g.mentions.length?`<div class="ment" style="margin-top:8px">@ Mention: ${g.mentions.map(m=>`<span>${esc(m)}</span>`).join(' · ')}</div>`:''}</div>`;
+  // hashtags + mentions (two cards side by side)
+  if((Array.isArray(g.hashtags)&&g.hashtags.length)||(Array.isArray(g.mentions)&&g.mentions.length)){
+    const htags=(g.hashtags||[]).map(x=>`<span class="hashtag">${esc(x)}</span>`).join('');
+    const ments=(g.mentions||[]).map(m=>`<div class="mention-item"><span class="mention-at">${esc(m)}</span><span class="mention-role">Brand</span></div>`).join('');
+    h+=`<div class="hm-section"><div class="hm-card"><div class="hm-title"># Hashtags</div><div class="hashtag-wrap">${htags}</div></div><div class="hm-card"><div class="hm-title">@ Mention Accounts</div><div>${ments}</div></div></div>`;
+  }
   // refs
-  if(Array.isArray(g.ref_videos)&&g.ref_videos.length)h+=`<div class="sec"><div class="sec-h">📎 Reference Videos</div><div class="refs">${g.ref_videos.map(r=>`<a href="${esc(r.url)}" target="_blank"><span>🎵</span><span>${esc(r.title)}</span></a>`).join('')}</div></div>`;
+  if(Array.isArray(g.ref_videos)&&g.ref_videos.length)h+=`<div class="sec"><div class="sec-h">📎 Reference Videos</div><div class="refs">${g.ref_videos.map(r=>{const dom=(r.url||'').replace(/^https?:\/\//,'');return `<a href="${esc(r.url)}" target="_blank"><span class="ref-ic">▶</span><span class="ref-meta"><span class="ref-t">${esc(r.title)}</span><span class="ref-u">${esc(dom)}</span></span><span class="ref-arr">›</span></a>`;}).join('')}</div></div>`;
   h+=`<div class="ft">AI-generated guideline · For influencer reference only · Reference frames are style references, not for direct reuse</div>`;
   document.getElementById('app').innerHTML=h;
+  document.querySelectorAll('.variant-item').forEach(el=>el.addEventListener('click',()=>{const i=+el.dataset.idx;const pc=document.getElementById('pcard');if(pc)pc.innerHTML=prodInner(products[i]);document.querySelectorAll('.variant-item').forEach(e=>e.classList.remove('active'));el.classList.add('active');}));
   document.getElementById('load').style.display='none';
   document.getElementById('app').style.display='';
 }catch(e){document.getElementById('load').innerHTML='⚠️ '+e.message;}}
