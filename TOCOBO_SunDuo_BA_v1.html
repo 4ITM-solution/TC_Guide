@@ -47,6 +47,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .vd-chips{margin-top:2px}
 .chip{display:inline-block;background:#fff;border:1px solid var(--amb-m);color:var(--amb-d);font-size:13px;font-weight:800;padding:5px 13px;border-radius:100px;margin:3px 5px 0 0}
 .warn{font-size:11.5px;color:#9a5a1e;background:#fff6ec;border-radius:8px;padding:7px 10px;margin-top:8px;line-height:1.5}
+.ai-warn{font-size:15px;font-weight:800;line-height:1.62;color:#8a2d0b;background:#fff1e8;border:2px solid #e8834a;border-radius:10px;padding:14px 16px;margin-top:12px;letter-spacing:-.1px}
+.ai-warn .aw-hd{display:block;font-size:16px;font-weight:900;margin-bottom:6px;color:#c0390d}
 /* cuts */
 .cuts{display:flex;flex-direction:column;gap:14px}
 .cut{overflow:hidden;display:flex;flex-direction:column}
@@ -136,7 +138,7 @@ function keyVisual(kv){
       ${bd.intro?`<div class="vd-intro">${esc(bd.intro)}</div>`:''}
       ${bd.example_img_url?`<figure class="vd-ex"><img src="${esc(bd.example_img_url)}"><figcaption>Examples — direction only. Pick one, then find or create your OWN; don't copy these.</figcaption></figure>`:''}
       ${chips?`<div class="vd-k">① Pick your hook — one concern</div><div class="vd-chips">${chips}</div>`:''}
-      ${methods?`<div class="vd-k">② Find or create your own hook image (one of)</div>${methods}`:''}
+      ${methods?`<div class="vd-k">② Find or create your own hook image (one of)</div>${methods}${bd.ai_warning?`<div class="ai-warn"><span class="aw-hd">※ ${esc(bd.ai_warning_title||'IF YOU USE AI, IT MUST LOOK LIKE A REAL PHOTO.')}</span>${br(bd.ai_warning)}</div>`:''}`:''}
       ${bd.staging?`<div class="vd-k">③ Stage the B&amp;A</div><div class="vd-v">${esc(bd.staging)}</div>`:''}
       ${bd.note?`<div class="warn">⚠️ ${esc(bd.note)}</div>`:''}</div>`:''}
   </div></div>`;
