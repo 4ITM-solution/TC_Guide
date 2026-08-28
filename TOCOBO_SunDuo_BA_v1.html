@@ -80,6 +80,12 @@ hr.cs{border:none;border-top:1px solid #f0f0f0;margin:3px 0}
 .box li{font-size:12.5px;line-height:1.45;padding-left:18px;position:relative}
 .box.g li::before{content:'✔';position:absolute;left:0;color:var(--green);font-weight:900}
 .box.r li::before{content:'✘';position:absolute;left:0;color:var(--red);font-weight:900}
+.tn{margin:18px 16px 0;background:#fff6ec;border:2px solid #e8834a;border-left-width:6px;border-radius:12px;padding:15px 17px}
+.tn-h{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:900;letter-spacing:.9px;text-transform:uppercase;color:#a83a10;margin-bottom:9px}
+.tn-b{font-size:13px;line-height:1.68;color:#5c2a12;font-weight:600}
+.tn-b p{margin-bottom:7px;padding-left:14px;position:relative}
+.tn-b p:last-child{margin-bottom:0}
+.tn-b p::before{content:"—";position:absolute;left:0;color:#e8834a;font-weight:800}
 .note{padding:14px 16px;border-top:3px solid var(--amb);font-size:12.5px;line-height:1.6}
 .note b{display:block;font-size:12px;color:var(--amb-d);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .tags{display:flex;flex-wrap:wrap;gap:6px}.tag{background:var(--amb-l);color:var(--amb-d);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
@@ -176,6 +182,11 @@ async function init(){try{
   let h='';
   h+=`<div class="hd"><div class="bdg">Contents Guideline Brief</div><h1>${br(g.angle_name)}</h1>
     <div class="cc">${esc(g.concept||'')}</div><div class="tp">Type: ${esc(t.name||'')} · ${cuts.length} cuts · ${esc(g.status||'')}</div></div>`;
+  // top notice — pinned compliance framing, must sit above everything
+  if(ex.top_notice&&ex.top_notice.body){
+    const tnb=String(ex.top_notice.body).split('\n').filter(x=>x.trim()).map(x=>`<p>${esc(x)}</p>`).join('');
+    h+=`<div class="tn"><div class="tn-h">⚠️ ${esc(ex.top_notice.title||'Read First')}</div><div class="tn-b">${tnb}</div></div>`;
+  }
   // products — single card + switcher strip (matches existing variant behavior)
   function prodInner(pr){
     const ing=(Array.isArray(pr.ingredient_pills)&&pr.ingredient_pills.length)?`<hr class="divider"><div><div class="lbl">Key Ingredients</div><div class="pills">${pillList(pr.ingredient_pills,'pill-blue')}</div></div>`:'';
