@@ -1,226 +1,94 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guideline</title><style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--amb:#4AAEE8;--amb-d:#1B6FA8;--amb-l:#E6F4FC;--amb-m:#A5D8F2;--red:#FF4757;--green:#2ED573;--blue:#3D4EAB;--text:#20232a;--muted:#8a8f98;--bg:#f6f5f3;--card:#fff;--r:14px}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);max-width:940px;margin:0 auto}
-.hd{background:linear-gradient(135deg,var(--amb),var(--amb-d));color:#fff;padding:24px 20px;text-align:center}
-.hd .bdg{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.45);font-size:10px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:10px}
-.hd h1{font-size:clamp(19px,4.5vw,27px);font-weight:900;line-height:1.28}
-.hd .cc{font-size:12.5px;color:rgba(255,255,255,.9);margin-top:8px;line-height:1.5}
-.hd .tp{font-size:11px;color:rgba(255,255,255,.85);margin-top:8px;font-weight:700;letter-spacing:.4px}
-.sec{margin:20px 16px 0}.sec-h{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.card{background:var(--card);border-radius:var(--r);box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.pb{display:flex;flex-direction:column;overflow:hidden}
-@media(min-width:600px){.pb{flex-direction:row}.pb-img{width:250px;flex-shrink:0}}
-.pb-img{background:#f0efec}.pb-img img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:1/1}
-.pb-info{padding:18px;display:flex;flex-direction:column;gap:11px;flex:1}
-.pb-name{font-size:15px;font-weight:900;line-height:1.35}
-.role{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--amb);padding:3px 10px;border-radius:100px}
-.lbl{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.pills{display:flex;flex-wrap:wrap;gap:5px}.pill{background:var(--amb-l);color:var(--amb-d);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
-.vars{display:flex;gap:8px;flex-wrap:wrap}
-.var{flex:1;min-width:150px;border:1px solid #d9ecf7;border-radius:10px;padding:10px 12px}
-.var b{font-size:12.5px;font-weight:800;display:block;margin-bottom:5px}
-.var .pill{font-size:10px;padding:2px 8px}
-.divider{border:none;border-top:1px solid #f0f0f0;margin:2px 0}
-.pb-body{font-size:12.5px;line-height:1.6}.pb-body li{margin-left:15px;margin-bottom:2px}
-.amazon{display:inline-block;margin-top:2px;background:var(--amb);color:#fff;font-size:12px;font-weight:700;padding:9px 18px;border-radius:100px;text-decoration:none;align-self:flex-start}
-/* key visual */
-.kv{border-top:3px solid var(--amb);overflow:hidden}
-.kv-top{display:flex;justify-content:space-between;align-items:baseline;padding:13px 16px 0}
-.kv-cap{font-size:13px;font-weight:900;color:var(--amb-d)}.kv-sub{font-size:11.5px;color:var(--muted);padding:3px 16px 10px}
-.ba{display:flex;gap:10px;padding:0 12px 12px;align-items:stretch}
-.ba figure{flex:1;margin:0;position:relative;border-radius:10px;overflow:hidden;background:#111}
-.ba img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
-.ba .tg{position:absolute;top:8px;left:8px;font-size:10px;font-weight:800;color:#fff;padding:3px 9px;border-radius:100px}
-.tg.b{background:var(--red)}.tg.a{background:var(--green);color:#123}
-.ba .lab{position:absolute;bottom:8px;left:8px;right:8px;font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:6px}
-.arrow{align-self:center;font-size:24px;color:var(--amb);font-weight:900}
-.vd{margin:0 12px 14px;background:#eff8fd;border-left:4px solid var(--amb);border-radius:0 10px 10px 0;padding:13px 15px}
-.vd-h{font-size:14px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;color:var(--amb-d);margin-bottom:10px}
-.vd-intro{font-size:14.5px;font-weight:700;line-height:1.55;color:#15547d;background:#fff;border:1px dashed var(--amb-m);border-radius:9px;padding:12px 14px;margin-bottom:12px}
-.vd-k{font-size:13px;font-weight:800;color:var(--amb-d);margin:14px 0 5px}
-.vd-ex{width:100%;max-width:500px;margin:2px auto 12px}
-.vd-ex img{width:100%;height:auto;border-radius:10px;display:block}
-.vd-ex figcaption{font-size:11.5px;color:#1a6a99;text-align:center;margin-top:6px;font-weight:700;line-height:1.35}
-.vd-v{font-size:13.5px;line-height:1.6;color:#3a3f47}
-.vd-chips{margin-top:2px}
-.chip{display:inline-block;background:#fff;border:1px solid var(--amb-m);color:var(--amb-d);font-size:13px;font-weight:800;padding:5px 13px;border-radius:100px;margin:3px 5px 0 0}
-.warn{font-size:11.5px;color:#1a6a99;background:#eaf5fc;border-radius:8px;padding:7px 10px;margin-top:8px;line-height:1.5}
-.ai-warn{font-size:15px;font-weight:800;line-height:1.62;color:#8a2d0b;background:#fff1e8;border:2px solid #e8834a;border-radius:10px;padding:14px 16px;margin-top:12px;letter-spacing:-.1px}
-.ai-warn .aw-hd{display:block;font-size:16px;font-weight:900;margin-bottom:6px;color:#c0390d}
-/* cuts */
-.cuts{display:flex;flex-direction:column;gap:14px}
-.cut{overflow:hidden;display:flex;flex-direction:column}
-@media(min-width:600px){.cut{flex-direction:row}.cut-media{width:36%;flex-shrink:0}}
-.cut-media{position:relative;background:#111;min-height:120px}
-.cut-media img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
-.cut-noimg{aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--amb-l);color:var(--amb-d);font-size:12px;font-weight:800;padding:20px}
-.cut-badges{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between}
-.cl{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#fff;padding:3px 10px;border-radius:100px}
-.cl-h{background:var(--red)}.cl-c{background:var(--blue)}.cl-r{background:var(--green);color:#123}
-.cts{font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:100px}
-.cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:5px}
-.fscene{font-size:15px;font-weight:800;line-height:1.35;margin-bottom:4px}
-.usp{display:inline-block;background:var(--amb-l);color:var(--amb-d);font-size:11.5px;font-weight:800;padding:4px 12px;border-radius:100px;border:1px solid var(--amb-m);align-self:flex-start}
-.pm{font-size:12px;line-height:1.65;background:#eff8fd;border-left:3px solid var(--amb);padding:8px 11px;border-radius:0 8px 8px 0}
-.pm ol{margin-left:15px}
-.fdir{font-size:12.5px;line-height:1.6}
-.fvo{font-size:13px;line-height:1.6;background:#eff8fd;border-left:3px solid var(--amb);padding:8px 11px;border-radius:0 8px 8px 0;font-weight:600;color:#164a6b}
-.caps{display:flex;flex-direction:column;gap:5px;margin-top:3px}
-.cap{font-size:12.5px;line-height:1.45;padding-left:14px;position:relative;font-weight:700;color:var(--amb-d)}
-.cap::before{content:'●';position:absolute;left:0;font-size:8px;top:5px;color:var(--amb)}
-hr.cs{border:none;border-top:1px solid #f0f0f0;margin:3px 0}
-/* generic 2-col */
-.two{display:flex;gap:12px;flex-wrap:wrap}
-.box{flex:1;min-width:230px;padding:14px 16px}
-.box.g{border-top:3px solid var(--green)}.box.r{border-top:3px solid var(--red)}
-.box h4{font-size:12px;font-weight:900;margin-bottom:8px}.box.g h4{color:#17a95a}.box.r h4{color:var(--red)}
-.box ul{list-style:none;display:flex;flex-direction:column;gap:6px}
-.box li{font-size:12.5px;line-height:1.45;padding-left:18px;position:relative}
-.box.g li::before{content:'✔';position:absolute;left:0;color:var(--green);font-weight:900}
-.box.r li::before{content:'✘';position:absolute;left:0;color:var(--red);font-weight:900}
-.tn{margin:18px 16px 0;background:#fff6ec;border:2px solid #e8834a;border-left-width:6px;border-radius:12px;padding:15px 17px}
-.tn-h{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:900;letter-spacing:.9px;text-transform:uppercase;color:#a83a10;margin-bottom:9px}
-.tn-b{font-size:13px;line-height:1.68;color:#5c2a12;font-weight:600}
-.tn-b p{margin-bottom:7px;padding-left:14px;position:relative}
-.tn-b p:last-child{margin-bottom:0}
-.tn-b p::before{content:"—";position:absolute;left:0;color:#e8834a;font-weight:800}
-.note{padding:14px 16px;border-top:3px solid var(--amb);font-size:12.5px;line-height:1.6}
-.note b{display:block;font-size:12px;color:var(--amb-d);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-.tags{display:flex;flex-wrap:wrap;gap:6px}.tag{background:var(--amb-l);color:var(--amb-d);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
-.ment{font-size:12.5px;color:var(--text);font-weight:700}.ment span{color:var(--amb-d)}
-.refs a{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:10px;padding:11px 14px;box-shadow:0 2px 10px rgba(0,0,0,.05);text-decoration:none;color:var(--text);font-size:12.5px;font-weight:600;margin-bottom:8px}
-.variant-strip{margin-top:12px}
-.variant-label{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.variant-thumbs{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
-.variant-item{flex:0 0 auto;width:76px;text-align:center;cursor:pointer}
-.variant-item img,.vi-noimg{width:72px;height:72px;object-fit:cover;border-radius:10px;border:2px solid transparent;background:#f0efec;display:block;margin:0 auto}
-.variant-item.active img,.variant-item.active .vi-noimg{border-color:var(--amb)}
-.variant-item span{display:block;font-size:10px;font-weight:700;color:var(--muted);margin-top:4px;line-height:1.2}
-.variant-item.active span{color:var(--amb-d)}
-.hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}
-@media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
-.hm-card{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.06);flex:1}
-.hm-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px}
-.hashtag{background:var(--amb-l);color:var(--amb-d);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
-.mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
-.mention-item:last-child{border-bottom:none}
-.mention-at{color:var(--amb-d);font-weight:700}
-.mention-role{color:var(--muted);font-size:11px;margin-left:auto}
-.ref-ic{width:40px;height:40px;background:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:14px}
-.ref-meta{flex:1;min-width:0;display:flex;flex-direction:column}
-.ref-t{font-weight:700;font-size:13px}
-.ref-u{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ref-arr{color:var(--muted);font-size:18px}
-.ft{text-align:center;padding:24px 16px 34px;color:var(--muted);font-size:11.5px}
-.load{text-align:center;padding:70px 20px;color:var(--muted)}
-.spin{width:26px;height:26px;border:3px solid var(--amb-l);border-top-color:var(--amb);border-radius:50%;animation:s .7s linear infinite;margin:0 auto 12px}
-@keyframes s{to{transform:rotate(360deg)}}
-</style></head><body>
-<div id="load" class="load"><div class="spin"></div>Loading guideline…</div>
-<div id="app" style="display:none"></div>
-<script>
-const SB='https://dynqedcbmanvyfdlruni.supabase.co';
-const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5bnFlZGNibWFudnlmZGxydW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMzA1NDYsImV4cCI6MjA3OTcwNjU0Nn0.gqr_SArOEaJ3kuzeOTu03OOj5QT2G96XobBIONQlpPQ';
-const GID='e235d5e7-de2c-4b95-b177-ab4181895210';
-const esc=s=>(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-const br=s=>esc(s).replace(/\n/g,'<br>');
-async function sb(p){const r=await fetch(SB+p,{headers:{apikey:KEY,Authorization:'Bearer '+KEY}});if(!r.ok)throw new Error('DB '+r.status);return r.json();}
-function clabel(l){if(!l)return'cl cl-c';if(l.startsWith('HOOK'))return'cl cl-h';if(l==='RESULT')return'cl cl-r';return'cl cl-c';}
-function pillList(a,cls){return (Array.isArray(a)?a:[]).map(x=>`<span class="pill ${cls||''}">${esc(x)}</span>`).join('');}
-function keyVisual(kv){
-  if(!kv)return'';
-  const bd=kv.ba_visual_direction||{};
-  const chips=(bd.hook_concerns||[]).map(c=>`<span class="chip">${esc(c)}</span>`).join('');
-  const methods=(bd.create_methods||[]).map(m=>`<div class="vd-v">• ${esc(m)}</div>`).join('');
-  const fig=(o,cls,tag)=>o&&o.img_url?`<figure><span class="tg ${cls}">${tag}</span><img src="${esc(o.img_url)}"><span class="lab">${esc(o.label||'')}${o.caption?' — '+esc(o.caption):''}</span></figure>`:'';
-  return `<div class="sec"><div class="sec-h">🖼️ Key Visual</div><div class="card kv">
-    <div class="kv-top"><span class="kv-cap">${esc(kv.title||'Key Visual')}</span></div>
-    <div class="kv-sub">${esc(kv.concern||'')} · The angle-defining Before &amp; After hero.</div>
-    <div class="ba">${fig(kv.before,'b','BEFORE')}<div class="arrow">→</div>${fig(kv.after,'a','AFTER')}</div>
-    ${bd&&(bd.title||chips)?`<div class="vd"><div class="vd-h">🎨 ${esc(bd.title||'Visual Direction')}</div>
-      ${bd.intro?`<div class="vd-intro">${esc(bd.intro)}</div>`:''}
-      ${bd.example_img_url?`<figure class="vd-ex"><img src="${esc(bd.example_img_url)}"><figcaption>Examples — direction only. Pick one, then find or create your OWN; don't copy these.</figcaption></figure>`:''}
-      ${chips?`<div class="vd-k">① Pick your hook — one concern</div><div class="vd-chips">${chips}</div>`:''}
-      ${methods?`<div class="vd-k">② Find or create your own hook image (one of)</div>${methods}${bd.ai_warning?`<div class="ai-warn"><span class="aw-hd">※ ${esc(bd.ai_warning_title||'IF YOU USE AI, IT MUST LOOK LIKE A REAL PHOTO.')}</span>${br(bd.ai_warning)}</div>`:''}`:''}
-      ${bd.staging?`<div class="vd-k">③ Stage the B&amp;A</div><div class="vd-v">${esc(bd.staging)}</div>`:''}
-      ${bd.note?`<div class="warn">⚠️ ${esc(bd.note)}</div>`:''}</div>`:''}
-  </div></div>`;
-}
-function cutCard(c){
-  const media=c.img_url?`<img src="${esc(c.img_url)}" alt="${esc(c.label)}">`:`<div class="cut-noimg">🎥 Creator-shot</div>`;
-  let b='';
-  if(c.main_usp)b+=`<div class="lbl">Main USP</div><div><span class="usp">${esc(c.main_usp)}</span></div>`;
-  if(c.production_method){const st=c.production_method.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x.replace(/^\d+\.\s*/,''))}</li>`).join('');b+=`<div class="lbl">Production Method</div><div class="pm"><ol>${st}</ol></div>`;}
-  if(c.main_usp||c.production_method)b+='<hr class="cs">';
-  b+=`<div class="lbl">Scene</div><div class="fscene">${esc(c.scene||'')}</div><hr class="cs">`;
-  b+=`<div class="lbl">Direction</div><div class="fdir">${br(c.direction||'')}</div>`;
-  if(c.voice_over){b+=`<hr class="cs"><div class="lbl">🎙️ Voice-over</div><div class="fvo">${esc(c.voice_over)}</div>`;}
-  const caps=Array.isArray(c.captions)?c.captions:[];
-  if(caps.length){b+='<hr class="cs"><div class="lbl">💬 On-Screen Text</div><div class="caps">'+caps.map(x=>`<div class="cap">${esc(x)}</div>`).join('')+'</div>';}
-  const ts=c.pacing?`<span class="cts">${esc(c.pacing)}</span>`:'';
-  return `<div class="card cut"><div class="cut-media">${media}<div class="cut-badges"><span class="${clabel(c.label)}">${esc(c.label)}</span>${ts}</div></div><div class="cut-body">${b}</div></div>`;
-}
-function twoCol(title,obj,useKey,avoidKey,useLbl,avoidLbl){
-  if(!obj)return'';
-  const u=(obj[useKey]||[]).map(x=>`<li>${esc(x)}</li>`).join('');
-  const a=(obj[avoidKey]||[]).map(x=>`<li>${esc(x)}</li>`).join('');
-  return `<div class="sec"><div class="sec-h">${esc(title)}</div><div class="two">
-    <div class="card box g"><h4>${useLbl}</h4><ul>${u}</ul></div>
-    <div class="card box r"><h4>${avoidLbl}</h4><ul>${a}</ul></div></div></div>`;
-}
-async function init(){try{
-  const rows=await sb(`/rest/v1/gl_guidelines?id=eq.${GID}&select=*,gl_products(*),gl_types(name,default_extra_sections)`);
-  const g=rows[0];if(!g)throw new Error('Guideline not found');
-  const p=g.gl_products||{}; const t=g.gl_types||{};
-  const ex=Object.assign({},(t.default_extra_sections||{}),(g.extra_sections||{}));
-  const cuts=await sb(`/rest/v1/gl_cuts?guideline_id=eq.${GID}&order=order.asc`);
-  const links=await sb(`/rest/v1/gl_guideline_products?guideline_id=eq.${GID}&select=order,role,gl_products(*)&order=order.asc`).catch(()=>[]);
-  const products=links.length?links.map(l=>Object.assign({},l.gl_products,{_role:l.role})):(p.id?[Object.assign({},p,{_role:null})]:[]);
-  let h='';
-  h+=`<div class="hd"><div class="bdg">Contents Guideline Brief</div><h1>${br(g.angle_name)}</h1>
-    <div class="cc">${esc(g.concept||'')}</div><div class="tp">Type: ${esc(t.name||'')} · ${cuts.length} cuts · ${esc(g.status||'')}</div></div>`;
-  // top notice — pinned compliance framing, must sit above everything
-  if(ex.top_notice&&ex.top_notice.body){
-    const tnb=String(ex.top_notice.body).split('\n').filter(x=>x.trim()).map(x=>`<p>${esc(x)}</p>`).join('');
-    h+=`<div class="tn"><div class="tn-h">⚠️ ${esc(ex.top_notice.title||'Read First')}</div><div class="tn-b">${tnb}</div></div>`;
-  }
-  // products — single card + switcher strip (matches existing variant behavior)
-  function prodInner(pr){
-    const ing=(Array.isArray(pr.ingredient_pills)&&pr.ingredient_pills.length)?`<hr class="divider"><div><div class="lbl">Key Ingredients</div><div class="pills">${pillList(pr.ingredient_pills,'pill-blue')}</div></div>`:'';
-    const usage=pr.usage_method?`<hr class="divider"><div><div class="lbl">Usage Method</div><ul class="pb-body">${pr.usage_method.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x.replace(/^\d+\.\s*/,''))}</li>`).join('')}</ul></div>`:'';
-    const tex=pr.texture_notes?`<hr class="divider"><div><div class="lbl">💧 Texture Notes</div><div class="pb-body">${esc(pr.texture_notes)}</div></div>`:'';
-    const prec=pr.precautions?`<hr class="divider"><div><div class="lbl">⚠️ Usage Precautions</div><ul class="pb-body">${pr.precautions.split('\n').filter(x=>x.trim()).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
-    const role=pr._role?`<span class="role">${esc(pr._role)}</span>`:'';
-    return `${pr.product_img_url?`<div class="pb-img"><img src="${esc(pr.product_img_url)}"></div>`:'<div class="pb-img"></div>'}<div class="pb-info">${role?`<div>${role}</div>`:''}<div class="pb-name">${esc((pr.brand?pr.brand+' · ':'')+(pr.name||''))}</div><div><div class="lbl">Key USP</div><div class="pills">${pillList(pr.usp_pills)}</div></div>${ing}${usage}${tex}${prec}${pr.footer_link?`<a class="amazon" href="${esc(pr.footer_link)}" target="_blank">🛒 View on Amazon</a>`:''}</div>`;
-  }
-  function prodThumb(pr,i){return `<div class="variant-item${i===0?' active':''}" data-idx="${i}">${pr.product_img_url?`<img src="${esc(pr.product_img_url)}">`:'<div class="vi-noimg"></div>'}<span>${esc(pr.name||'')}</span></div>`;}
-  h+=`<div class="sec"><div class="sec-h">Product</div><div class="card pb" id="pcard">${prodInner(products[0])}</div>${products.length>1?`<div class="variant-strip"><div class="variant-label">${products.length} Products · tap to switch</div><div class="variant-thumbs">${products.map(prodThumb).join('')}</div></div>`:''}</div>`;
-  // key visual
-  h+=keyVisual(ex.key_visual);
-  // cuts
-  h+=`<div class="sec"><div class="sec-h">🎬 Cut-by-Cut</div><div class="cuts">${cuts.map(cutCard).join('')}</div></div>`;
-  // claim safe
-  h+=twoCol('Claim-Safe Language',ex.claim_safe,'use','avoid','✅ Use','🚫 Avoid');
-  // dos donts
-  h+=twoCol((ex.dos_donts&&ex.dos_donts.title)||"Do's & Don'ts",ex.dos_donts,'dos','donts',"✅ DO","🚫 DON'T");
-  // reference note
-  if(ex.reference_note){h+=`<div class="sec"><div class="sec-h">${esc(ex.reference_note.title||'How to Use This Guideline')}</div><div class="card note"><b>Reference only</b>${esc(ex.reference_note.body||'')}</div></div>`;}
-  // hashtags + mentions (two cards side by side)
-  if((Array.isArray(g.hashtags)&&g.hashtags.length)||(Array.isArray(g.mentions)&&g.mentions.length)){
-    const htags=(g.hashtags||[]).map(x=>`<span class="hashtag">${esc(x)}</span>`).join('');
-    const ments=(g.mentions||[]).map(m=>`<div class="mention-item"><span class="mention-at">${esc(m)}</span><span class="mention-role">Brand</span></div>`).join('');
-    h+=`<div class="hm-section"><div class="hm-card"><div class="hm-title"># Hashtags</div><div class="hashtag-wrap">${htags}</div></div><div class="hm-card"><div class="hm-title">@ Mention Accounts</div><div>${ments}</div></div></div>`;
-  }
-  // refs
-  if(Array.isArray(g.ref_videos)&&g.ref_videos.length)h+=`<div class="sec"><div class="sec-h">📎 Reference Videos</div><div class="refs">${g.ref_videos.map(r=>{const dom=(r.url||'').replace(/^https?:\/\//,'');return `<a href="${esc(r.url)}" target="_blank"><span class="ref-ic">▶</span><span class="ref-meta"><span class="ref-t">${esc(r.title)}</span><span class="ref-u">${esc(dom)}</span></span><span class="ref-arr">›</span></a>`;}).join('')}</div></div>`;
-  h+=`<div class="ft">AI-generated guideline · For influencer reference only · Reference frames are style references, not for direct reuse</div>`;
-  document.getElementById('app').innerHTML=h;
-  document.querySelectorAll('.variant-item').forEach(el=>el.addEventListener('click',()=>{const i=+el.dataset.idx;const pc=document.getElementById('pcard');if(pc)pc.innerHTML=prodInner(products[i]);document.querySelectorAll('.variant-item').forEach(e=>e.classList.remove('active'));el.classList.add('active');}));
-  document.getElementById('load').style.display='none';
-  document.getElementById('app').style.display='';
-}catch(e){document.getElementById('load').innerHTML='⚠️ '+e.message;}}
-init();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Still Skipping SPF? It's Time to Start with TOCOBO.</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--brand:#FF6B9D;--brand-dark:#E8447A;--brand-light:#FFE8F2;--brand-mid:#FFB3D0;--blue:#1A73E8;--green:#2ED573;--gold:#FFA502;--red:#FF4757;--text:#1e1e2e;--muted:#888;--bg:#f7f7fa;--card:#fff;--radius:14px}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .site-header{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;padding:22px 18px 20px;text-align:center}
+  .header-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.45);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;padding:4px 14px;border-radius:100px;margin-bottom:12px}
+  .site-header h1{font-size:clamp(18px,5vw,26px);font-weight:900;line-height:1.25;letter-spacing:-0.3px}
+  .header-concept{font-size:13px;color:rgba(255,255,255,0.82);margin-top:6px;font-weight:500}
+  .product-section{padding:16px 16px 0}
+  .product-brief{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);display:flex;flex-direction:column}
+  @media(min-width:600px){.product-brief{flex-direction:row;align-items:stretch}.pb-img{width:280px;flex-shrink:0}.pb-img img{aspect-ratio:auto;width:100%;height:100%;max-height:none;object-fit:cover}}
+  .pb-img{background:#f0f0f0;overflow:hidden}.pb-img img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover;max-height:340px;object-position:center}
+  .pb-info{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .pb-name{font-size:14px;font-weight:900;line-height:1.35;color:var(--text)}
+  .pills{display:flex;flex-wrap:wrap;gap:5px}
+  .pill{background:var(--brand-light);color:var(--brand-dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+  .pill-blue{background:#e8f0fe;color:var(--blue)}
+  .pb-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
+  .pb-section-body{font-size:12px;line-height:1.6;color:var(--text)}.pb-section-body li{margin-left:14px;margin-bottom:2px}
+  .pb-divider{border:none;border-top:1px solid #f0f0f0;margin:0}
+  .amazon-btn{display:inline-block;margin-top:4px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:100px;text-decoration:none;align-self:flex-start}
+  .amazon-btn:hover{opacity:0.88}
+  .variant-strip{padding:14px 16px 0}
+  .variant-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .variant-thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+  .variant-thumbs::-webkit-scrollbar{height:3px}.variant-thumbs::-webkit-scrollbar-thumb{background:var(--brand-mid);border-radius:2px}
+  .variant-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;width:68px;cursor:pointer}
+  .variant-item img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:2px solid transparent;transition:border-color .2s}
+  .variant-item.active img{border-color:var(--brand)}
+  .variant-item span{font-size:10px;font-weight:700;color:var(--muted);text-align:center;line-height:1.2}
+  .variant-item.active span{color:var(--brand-dark)}
+  .angle-header{margin:20px 16px 10px}.angle-header .ah-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:4px}.angle-header h2{font-size:22px;font-weight:900;color:var(--text)}
+  .cuts-wrap{padding:0 16px;display:flex;flex-direction:column;gap:16px}
+  .cut-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07)}
+  .cut-inner{display:flex;flex-direction:column}@media(min-width:520px){.cut-inner{flex-direction:row}.cut-img-wrap{width:30%;flex-shrink:0;max-height:88vh}}
+  .cut-img-wrap{position:relative;background:#111}.cut-img-wrap img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}@media(min-width:520px){.cut-img-wrap img{aspect-ratio:auto;width:100%;height:100%;max-height:88vh;object-fit:cover}}
+  .cut-no-img{width:100%;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;background:#f5f5f8}@media(min-width:520px){.cut-no-img{height:100%;max-height:88vh;aspect-ratio:auto}}
+  .cut-badge-row{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
+  .cut-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;color:#fff}
+  .label-hook{background:var(--red)}.label-cut{background:var(--blue)}.label-result{background:var(--green);color:#1a1a1a}
+  .cut-ts{font-size:10px;font-weight:700;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.45);padding:3px 8px;border-radius:100px}
+  .cut-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:11px}
+  .field-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:3px}
+  .field-scene{font-size:14px;font-weight:700;line-height:1.45}.cut-sep{border:none;border-top:1px solid #f0f0f0}
+  .field-direction{font-size:13px;line-height:1.65;color:var(--text)}
+  .field-usp{display:inline-block;background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:800;padding:5px 14px;border-radius:100px;border:1px solid var(--brand-mid)}
+  .field-pm{font-size:12px;line-height:1.7;color:var(--text);background:#fffbf0;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 8px 8px 0}.field-pm ol{margin-left:16px}.field-pm li{margin-bottom:3px}
+  .caption-options{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .caption-opt{display:flex;align-items:flex-start;gap:7px;font-size:13px;line-height:1.5;color:var(--text)}.caption-opt::before{content:'\u2022';color:var(--brand);font-size:16px;line-height:1.2;flex-shrink:0}
+  .hm-section{margin:24px 16px 0;display:flex;flex-direction:column;gap:12px}@media(min-width:520px){.hm-section{flex-direction:row;gap:16px}}
+  .hm-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);flex:1}
+  .hm-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px}
+  .hashtag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px}.hashtag{background:var(--brand-light);color:var(--brand-dark);font-size:12px;font-weight:700;padding:4px 11px;border-radius:100px}
+  .mention-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}.mention-item:last-child{border-bottom:none}.mention-at{color:var(--brand-dark);font-weight:700}
+  .refs-section{margin:20px 16px 0}.refs-section h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+  .ref-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);margin-bottom:10px}
+  .ref-icon{width:40px;height:40px;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+  .ref-info{flex:1;min-width:0}.ref-title{font-size:13px;font-weight:700;margin-bottom:2px}.ref-url{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ref-arrow{color:var(--muted);font-size:18px}
+  .site-footer{text-align:center;padding:24px 16px 32px;color:var(--muted);font-size:12px}
+  .sg-section{margin:20px 16px 0}
+  .sg-card{background:#f0f7ff;border:1.5px solid #b3d4f5;border-radius:var(--radius);padding:16px 18px}
+  .sg-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#1a5fa8;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+  .sg-list{display:flex;flex-direction:column;gap:8px}
+  .sg-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#1e3a5f;line-height:1.55}
+  .sg-num{min-width:22px;height:22px;background:#1a5fa8;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}
+  .cut-tip{display:flex;align-items:flex-start;gap:8px;background:#fff8e6;border:1.5px solid #f5c842;border-radius:8px;padding:9px 12px;font-size:12px;color:#7a5200;line-height:1.6;margin-top:2px}
+  .cut-tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+  .cut-tip-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#c47f00;margin-bottom:3px}</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-badge">Contents Guideline Brief</div>
+  <p style="font-size:11px;color:rgba(255,255,255,0.75);font-weight:700;letter-spacing:0.5px;margin-bottom:6px">TOCOBO Bio Watery Sun Cream SPF50</p>
+  <h1>Still Skipping SPF? It's Time to Start with TOCOBO.</h1>
+  <p class="header-concept">The SPF Duo I Keep Coming Back To · Bio Watery Sun Screen to Start · Cotton Airy Sun Stick to Stay</p>
+</header>
+<section class="product-section"><div class="product-brief"><div class="pb-img"><img id="pb-main-img" src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tocobo-sunduo-ba-v1/biowatery_product.jpg" alt="" style="transition:opacity .2s"></div><div class="pb-info"><div class="pb-name" id="pb-main-name">TOCOBO Bio Watery Sun Cream SPF50</div><div><div class="pb-section-label">Key USP</div><div class="pills"><span class="pill">Hydration</span><span class="pill">Watery Texture</span><span class="pill">UV Protection</span><span class="pill">Makeup Friendly</span><span class="pill">100-hour hydration (clinically proven)</span></div></div><hr class="pb-divider"><div><div class="pb-section-label">Key Ingredients</div><div class="pills"><span class="pill pill-blue">Panthenol (Vit B5)</span><span class="pill pill-blue">Vitamin E</span><span class="pill pill-blue">Centella Asiatica</span></div></div><hr class="pb-divider"><div class="pb-section-label">&#x26A0;&#xFE0F; Precautions</div><ul class="pb-section-body" style="margin-left:16px"><li style="margin-bottom:2px">Broad Spectrum SPF50 PA++++</li><li style="margin-bottom:2px">Apply 15 min before sun exposure</li><li style="margin-bottom:2px">Reapply at least every 2 hours</li><li style="margin-bottom:2px">For external use only</li></ul><a id="pb-amazon-btn" href="https://www.amazon.com/dp/B0F67GLF54" target="_blank" class="amazon-btn">&#x1F6D2; View on Amazon</a></div></div></section>
+
+
+<div class="sg-section"><div class="sg-card"><div class="sg-title">&#x1F4F8; Shooting Guide</div><div class="sg-list"><div class="sg-item"><span class="sg-num">1</span><span>The key is achieving a natural glow. Use appropriate studio lighting or natural window light to bring out the finish at its best.</span></div><div class="sg-item"><span class="sg-num">2</span><span>If there's excess sebum around the nose or forehead, lightly blot with a tissue or cotton pad before filming the After shot. (Use a transition cut)</span></div></div></div></div>
+<div class="angle-header">
+  <div class="ah-sub">Shooting Angle</div>
+  <h2>Still Skipping SPF? It's Time to Start with TOCOBO.</h2>
+</div>
+<div class="cuts-wrap"><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tocobo-sunduo-ba-v1/keyvisual_before.jpg" alt="HOOK 1" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-hook">HOOK 1</span></div></div><div class="cut-body"><div class="field-usp">Future-Skin Shock</div><div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px"><li>Open full-screen on your chosen concern with the recognizable detail large - no greeting, no product, no setup.</li></ol></div><hr class="cut-sep"><div><div class="field-label">Scene</div><div class="field-scene">This Is What Skipping SPF Can Look Like</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Start immediately with ONE strong skin concern — no greeting, product intro or routine setup. Make it clear the image represents a possible cumulative result of repeatedly skipping SPF, not a change that happened overnight.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">&#x1F4AC; WHAT SKIPPING SPF ADDS UP TO</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tocobo-sunduo-ba-v1/cut01_damage.jpg" alt="CUT 01" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 01</span></div></div><div class="cut-body"><div class="field-usp">What UV Damage Actually Does</div><div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px"><li>Hold the concern visual close and full-screen while you explain the damage, then transition away from it before any product appears.</li></ol></div><hr class="cut-sep"><div><div class="field-label">Scene</div><div class="field-scene">What Unprotected Skin Actually Goes Through</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Make one point clearly, in talking or in the on-screen caption: too much UV exposure breaks down the skin barrier, and that is what causes these problems. The detail lives in the voice-over, so keep the on-screen text short and say the same thing.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">&#x1F4AC; TOO MUCH UV BREAKS DOWN YOUR SKIN BARRIER</div><div class="caption-opt">&#x1F4AC; THAT'S WHAT CAUSES ALL OF THIS</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tocobo-sunduo-ba-v1/cut02_duo.jpg" alt="CUT 02" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 02</span></div></div><div class="cut-body"><div class="field-usp">Beauty-Hero Duo Reveal</div><div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px"><li>One clean beauty-hero frame with both products in the same shot, names facing camera.</li></ol></div><hr class="cut-sep"><div><div class="field-label">Scene</div><div class="field-scene">Meet the TOCOBO Sun Duo</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Your first beauty-hero moment: look polished, confident and aspirational with fresh, healthy-looking skin. Bring Bio Watery Sun Screen and Cotton Airy Sun Stick into the SAME shot as one continuous routine — not two separate recommendations. This is an aspirational reveal, not proof the products removed the opening concern.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">&#x1F4AC; MY TOCOBO SUN DUO</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tocobo-sunduo-ba-v1/cut03_biowatery.jpg" alt="CUT 03" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 03</span></div></div><div class="cut-body"><div class="field-usp">AM First Layer</div><div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px"><li>Texture close-up, then real application on your face, then the final skin finish in natural light.</li></ol></div><hr class="cut-sep"><div><div class="field-label">Scene</div><div class="field-scene">Bio Watery Sun Screen: The First SPF Layer</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Position Bio Watery Sun Screen as the SPF used to start the day. Communicate its lightweight, hydrating feel and fresh base while showing genuine application.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">&#x1F4AC; AM: BIO WATERY SUN SCREEN — FIRST SPF LAYER</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tocobo-sunduo-ba-v1/cut04_cottonairy.jpg" alt="CUT 04" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 04</span></div></div><div class="cut-body"><div class="field-usp">On-the-Go Reapply</div><div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px"><li>Pull it from a real bag away from the morning setup and show the full take-out, apply and put-away in a few genuine passes.</li></ol></div><hr class="cut-sep"><div><div class="field-label">Scene</div><div class="field-scene">Cotton Airy Sun Stick: Easy Reapplication</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Position Cotton Airy Sun Stick as what keeps sun care going outside the morning routine. Communicate invisible, weightless, mess-free application with a smooth matte finish.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">&#x1F4AC; ON-THE-GO: COTTON AIRY SUN STICK</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tocobo-sunduo-ba-v1/cut05_daily.jpg" alt="CUT 05" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-cut">CUT 05</span></div></div><div class="cut-body"><div class="field-usp">Never Leave Without It</div><div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px"><li>Keep the reach-for-it gesture unhurried and familiar as the setting changes, and end with Cotton Airy Sun Stick going back into its usual spot in your bag.</li></ol></div><hr class="cut-sep"><div><div class="field-label">Scene</div><div class="field-scene">The SPF Duo I Never Leave Without</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Show the TOCOBO Sun Duo living inside your everyday life - the two you would notice missing. Pick 2-3 settings that are genuinely yours: a walk to work, a cafe terrace, a car ride, a lunch break outside, a weekend errand, a day out with friends. Let the warmth come from familiarity - you already know exactly where they sit in your bag.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">&#x1F4AC; THE SPF DUO I NEVER LEAVE WITHOUT</div><div class="caption-opt">&#x1F4AC; My everyday SPF duo — wherever the day takes me.</div></div></div></div></div></div><div class="cut-card"><div class="cut-inner"><div class="cut-img-wrap"><img src="https://dynqedcbmanvyfdlruni.supabase.co/storage/v1/object/public/cut-images/tocobo-sunduo-ba-v1/keyvisual_after.jpg" alt="RESULT" loading="lazy"><div class="cut-badge-row"><span class="cut-label label-result">RESULT</span></div></div><div class="cut-body"><div class="field-usp">CTA</div><div class="field-pm"><strong style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Production Method</strong><ol style="margin-top:6px;margin-left:16px"><li>End on a clean duo shot with your face visible - one CTA and one hero line only.</li></ol></div><hr class="cut-sep"><div><div class="field-label">Scene</div><div class="field-scene">Still Skipping SPF? Start with TOCOBO</div></div><hr class="cut-sep"><div><div class="field-label">Direction</div><div class="field-direction">Finish with one clear action. Keep your face and both products visible, and connect the direct CTA with the emotional ownership line. Call out that the duo is on sale on Amazon right now and point viewers to the link.</div></div><hr class="cut-sep"><div><div class="field-label">Caption Options</div><div class="caption-options"><div class="caption-opt">&#x1F4AC; STILL SKIPPING SPF? START WITH TOCOBO.</div><div class="caption-opt">&#x1F4AC; 🛒 ON SALE NOW ON AMAZON</div></div></div></div></div></div></div>
+<div class="hm-section"><div class="hm-card"><div class="hm-title"># Hashtags</div><div class="hashtag-wrap"><span class="hashtag">#TOCOBO</span><span class="hashtag">#sunstick</span><span class="hashtag">#Koreansunscreen</span><span class="hashtag">#Koreanskincare</span><span class="hashtag">#Kbeauty</span></div></div><div class="hm-card"><div class="hm-title">@ Mention Accounts</div><div class="mention-item"><span class="mention-at">@tocobo.us</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div><div class="mention-item"><span class="mention-at">@tocobo_official</span><span style="color:var(--muted);font-size:11px;margin-left:auto">Brand</span></div></div></div>
+<div class="refs-section"><h3>&#x1F4CE; Additional Reference Videos</h3><a href="https://www.tiktok.com/@makeup_mabell/video/7673995993288936735" target="_blank" class="ref-card"><div class="ref-icon">&#x1F3B5;</div><div class="ref-info"><div class="ref-title">@makeup_mabell — future-skin visual hook (pacing/direction only)</div><div class="ref-url">https://www.tiktok.com/@makeup_mabell/video/7673995993288936735</div></div><span class="ref-arrow">&#x203A;</span></a><a href="https://www.tiktok.com/@_skincarewithroyce/video/7655137380822797582" target="_blank" class="ref-card"><div class="ref-icon">&#x1F3B5;</div><div class="ref-info"><div class="ref-title">@_skincarewithroyce — Cuts 01-02: talking hook, 'why I started wearing SPF every single day' for dark-spot prevention (direction only; competitor sunscreen on screen)</div><div class="ref-url">https://www.tiktok.com/@_skincarewithroyce/video/7655137380822797582</div></div><span class="ref-arrow">&#x203A;</span></a><a href="https://www.tiktok.com/@skin.to.soul/video/7642708347992558869" target="_blank" class="ref-card"><div class="ref-icon">&#x1F3B5;</div><div class="ref-info"><div class="ref-title">@skin.to.soul — HOOK & RESULT: hyperpigmentation Before & After with close-up inset over a talking shot (direction only)</div><div class="ref-url">https://www.tiktok.com/@skin.to.soul/video/7642708347992558869</div></div><span class="ref-arrow">&#x203A;</span></a></div>
+<div class="site-footer">AI-generated guideline · For influencer reference only<br><a href="https://www.amazon.com/dp/B0F67GLF54" target="_blank" style="color:var(--brand)">View Product</a></div>
+
+</body>
+</html>
